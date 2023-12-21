@@ -2,11 +2,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using LMS.Domain.Models.Common;
 
 namespace LMS.Domain.Models
 {
 
-    public class Company
+    public class Company : BaseEntityClass
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -31,8 +32,8 @@ namespace LMS.Domain.Models
 
         [Required]
         public string PrimaryContact { get; set; }
-
-        public string AlternateContact { get; set; }
+        
+        public string? AlternateContact { get; set; }
 
         [Required]
         public string Address { get; set; }
@@ -48,6 +49,12 @@ namespace LMS.Domain.Models
 
         [Required]
         public string Pincode { get; set; }
+
+        public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Domains> Domains { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<FileBank> FileBanks { get; set; }
+        public virtual ICollection<Quiz> Quizes { get; set; }
     }
 
 }
