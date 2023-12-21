@@ -19,7 +19,7 @@ namespace LMS.Domain.Models
         public int Company_Id { get; set; }
 
         [ForeignKey("SubDomain")]
-        public int? SubDomain_Id { get; set; }
+        public int SubDomain_Id { get; set; }
         public bool IsMandatory { get; set; }
         public DateTime? EndDate { get; set; }
 

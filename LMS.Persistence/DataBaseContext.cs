@@ -25,7 +25,7 @@ namespace LMS.Persistence
         public virtual DbSet<Domains> Domains { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeCourse> EmployeeCourses { get; set; }
-        public virtual DbSet<EmployeeQuiz> EmployeeQuizzes { get; set; }
+        public virtual DbSet<EmployeeQuiz> EmployeeQuizes { get; set; }
         public virtual DbSet<EmployeeQuizAnswer> EmployeeQuizAnswers { get; set; }
         public virtual DbSet<EmployeeSubDomain> EmployeeSubDomains { get; set; }
         public virtual DbSet<FileBank> FileBanks { get; set; }
@@ -165,7 +165,7 @@ namespace LMS.Persistence
 
                 modelBuilder.Entity<Quiz>()
                    .HasOne(c => c.Company)
-                   .WithMany(t => t.Quizzes)
+                   .WithMany(t => t.Quizes)
                    .HasForeignKey(c => c.Company_Id)
                    .OnDelete(DeleteBehavior.Restrict);
 
@@ -175,7 +175,7 @@ namespace LMS.Persistence
             {
                 modelBuilder.Entity<EmployeeQuiz>()
                     .HasOne(c => c.Employee)
-                    .WithMany(t => t.EmployeeQuizzes)
+                    .WithMany(t => t.EmployeeQuizes)
                     .HasForeignKey(c => c.Employee_Id)
                     .OnDelete(DeleteBehavior.Restrict);
 
@@ -187,7 +187,7 @@ namespace LMS.Persistence
 
                 modelBuilder.Entity<EmployeeQuiz>()
                    .HasOne(c => c.Group)
-                   .WithMany(t=>t.EmployeeQuizzes)
+                   .WithMany(t=>t.EmployeeQuizes)
                    .HasForeignKey(c => c.Group_Id)
                    .OnDelete(DeleteBehavior.Restrict);
 

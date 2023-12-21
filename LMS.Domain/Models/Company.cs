@@ -14,41 +14,41 @@ namespace LMS.Domain.Models
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
-        public string Description { get; set; }
-
-        [Required]
-        [EmailAddress]
-        public string OfficialMailId { get; set; }
+        public string Description { get; set; } = null!;
 
         [Required]
         [EmailAddress]
-        public string PrimaryMailId { get; set; }
+        public string OfficialMailId { get; set; } = null!;
 
         [Required]
-        public string Password { get; set; }
+        [EmailAddress]
+        public string PrimaryMailId { get; set; } = null!;
 
         [Required]
-        public string PrimaryContact { get; set; }
-        
-        public string? AlternateContact { get; set; }
+        public string Password { get; set; } = null!;
 
         [Required]
-        public string Address { get; set; }
+        public string PrimaryContact { get; set; } = null!;
+
+        public string? AlternateContact { get; set; } = null!;
 
         [Required]
-        public string City { get; set; }
+        public string Address { get; set; } = null!;
 
         [Required]
-        public string State { get; set; }
+        public string City { get; set; } = null!;
 
         [Required]
-        public string Country { get; set; }
+        public string State { get; set; } = null!;
 
         [Required]
-        public string Pincode { get; set; }
+        public string Country { get; set; } = null!;
+
+        [Required]
+        public string Pincode { get; set; } = null!;
 
         public virtual ICollection<Course> Courses { get; set; }
         public virtual ICollection<Domains> Domains { get; set; }
