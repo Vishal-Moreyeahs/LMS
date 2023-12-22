@@ -21,6 +21,6 @@ namespace LMS.Domain.Models
 
 
         public virtual Employee Employees { get; set; }
-        public virtual ICollection<EmployeeQuiz> EmployeeQuizzes { get; set; }
+        public virtual ICollection<EmployeeQuiz> EmployeeQuizes { get; set; }
     }
 }

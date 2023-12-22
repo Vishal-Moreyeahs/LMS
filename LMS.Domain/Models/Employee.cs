@@ -34,7 +34,7 @@ namespace LMS.Domain.Models
 
         public virtual Company Company { get; set; }
         public virtual Role Role { get; set; }
-        public virtual ICollection<EmployeeQuiz> EmployeeQuizzes { get; set; }
+        public virtual ICollection<EmployeeQuiz> EmployeeQuizes { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
     }
 }
