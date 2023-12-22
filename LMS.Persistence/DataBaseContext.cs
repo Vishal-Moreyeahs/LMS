@@ -113,14 +113,14 @@ namespace LMS.Persistence
                     .HasForeignKey(d => d.Employee_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
-                entity.HasOne(d => d.GroupId1Navigation)
+                entity.HasOne(d => d.Group)
                     .WithMany(p => p.EmployeeQuizes)
                     .HasForeignKey(d => d.Group_Id)
                     .HasPrincipalKey(d => d.GroupId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
                 entity.HasOne(d => d.Quiz)
-                    .WithMany(p => p.EmployeeQuizzes)
+                    .WithMany(p => p.EmployeeQuizes)
                     .HasForeignKey(d => d.Quiz_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });

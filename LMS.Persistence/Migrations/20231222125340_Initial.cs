@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LMS.Persistence.Migrations
 {
-    public partial class first : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -179,7 +179,7 @@ namespace LMS.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GroupId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Employees_Id = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -316,7 +316,7 @@ namespace LMS.Persistence.Migrations
                 {
                     Employee_Id = table.Column<int>(type: "int", nullable: false),
                     Courses_Id = table.Column<int>(type: "int", nullable: false),
-                    Group_Id = table.Column<int>(type: "int", nullable: false),
+                    Group_Id = table.Column<int>(type: "int", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -353,7 +353,7 @@ namespace LMS.Persistence.Migrations
                     Time = table.Column<int>(type: "int", nullable: false),
                     RetakeCount = table.Column<int>(type: "int", nullable: false),
                     PassingCriteria = table.Column<int>(type: "int", nullable: false),
-                    IsMandatory = table.Column<bool>(type: "bit", nullable: true),
+                    IsMandatory = table.Column<bool>(type: "bit", nullable: false),
                     SubDomain_Id = table.Column<int>(type: "int", nullable: false),
                     Courses_Id = table.Column<int>(type: "int", nullable: false),
                     Company_Id = table.Column<int>(type: "int", nullable: false),

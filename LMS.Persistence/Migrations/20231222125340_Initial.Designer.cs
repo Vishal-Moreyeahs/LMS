@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20231222121226_first3")]
-    partial class first3
+    [Migration("20231222125340_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -946,19 +946,19 @@ namespace LMS.Persistence.Migrations
                         .HasForeignKey("Employee_Id")
                         .IsRequired();
 
-                    b.HasOne("LMS.Domain.Models.Group", "GroupId1Navigation")
+                    b.HasOne("LMS.Domain.Models.Group", "Group")
                         .WithMany("EmployeeQuizes")
                         .HasForeignKey("Group_Id")
                         .HasPrincipalKey("GroupId");
 
                     b.HasOne("LMS.Domain.Models.Quiz", "Quiz")
-                        .WithMany("EmployeeQuizzes")
+                        .WithMany("EmployeeQuizes")
                         .HasForeignKey("Quiz_Id")
                         .IsRequired();
 
                     b.Navigation("Employee");
 
-                    b.Navigation("GroupId1Navigation");
+                    b.Navigation("Group");
 
                     b.Navigation("Quiz");
                 });
@@ -1149,7 +1149,7 @@ namespace LMS.Persistence.Migrations
 
             modelBuilder.Entity("LMS.Domain.Models.Quiz", b =>
                 {
-                    b.Navigation("EmployeeQuizzes");
+                    b.Navigation("EmployeeQuizes");
 
                     b.Navigation("QuizQuestions");
                 });

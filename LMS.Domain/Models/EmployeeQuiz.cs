@@ -22,7 +22,7 @@ namespace LMS.Domain.Models
         public DateTime? EndDate { get; set; }
 
         public virtual Employee Employee { get; set; } = null!;
-        public virtual Group GroupId1Navigation { get; set; } = null!;
+        public virtual Group Group { get; set; } = null!;
         public virtual Quiz Quiz { get; set; } = null!;
         public virtual ICollection<Report> Reports { get; set; }
     }

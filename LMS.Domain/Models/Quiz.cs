@@ -27,7 +27,7 @@ namespace LMS.Domain.Models
         public virtual Company Company { get; set; } = null!;
         public virtual Course Courses { get; set; } = null!;
         public virtual SubDomain SubDomain { get; set; } = null!;
-        public virtual ICollection<EmployeeQuiz> EmployeeQuizzes { get; set; }
+        public virtual ICollection<EmployeeQuiz> EmployeeQuizes { get; set; }
         public virtual ICollection<QuizQuestion> QuizQuestions { get; set; }
     }
 }
