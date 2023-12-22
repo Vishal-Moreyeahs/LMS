@@ -28,12 +28,13 @@ namespace LMS.Domain.Models
         public string PrimaryMailId { get; set; } = null!;
 
         [Required]
-        public string Password { get; set; } = null!;
+        public byte[] Password { get; set; } = null!;
 
         [Required]
         public string PrimaryContact { get; set; } = null!;
 
-        public string? AlternateContact { get; set; } = null!;
+        [Required]
+        public string AlternateContact { get; set; } = null!;
 
         [Required]
         public string Address { get; set; } = null!;

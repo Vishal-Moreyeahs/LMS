@@ -13,14 +13,13 @@ namespace LMS.Domain.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        [ForeignKey("Employee")]
-        public int Employees_Id { get; set; }
+        public int Id { get; set; } //need to check
+        public int GroupId { get; set; }
         public string Name { get; set; }
+        public int Employees_Id { get; set; }
 
-
-        public virtual Employee Employees { get; set; }
+        public virtual Employee Employees { get; set; } = null!;
         public virtual ICollection<EmployeeQuiz> EmployeeQuizes { get; set; }
+
     }
 }

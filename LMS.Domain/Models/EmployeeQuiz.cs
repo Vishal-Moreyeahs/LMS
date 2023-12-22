@@ -16,21 +16,14 @@ namespace LMS.Domain.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int Attempt { get; set; }
-
-        //[ForeignKey("Employee")]
         public int Employee_Id { get; set; }
-
-        //[ForeignKey("Quiz")]
         public int Quiz_Id { get; set; }
+        public int? Group_Id { get; set; }
+        public DateTime? EndDate { get; set; }
 
-        public DateTime EndDate { get; set; }
-
-        //[ForeignKey("Group")]
-        public int Group_Id { get; set; }
-
-        public virtual Employee Employee { get; set; }
-        public virtual Group Group { get; set; }
-        public virtual Quiz Quiz { get; set; } 
+        public virtual Employee Employee { get; set; } = null!;
+        public virtual Group GroupId1Navigation { get; set; } = null!;
+        public virtual Quiz Quiz { get; set; } = null!;
         public virtual ICollection<Report> Reports { get; set; }
     }
 }

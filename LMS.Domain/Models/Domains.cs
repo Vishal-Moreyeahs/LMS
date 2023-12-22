@@ -16,11 +16,9 @@ namespace LMS.Domain.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-
-        [ForeignKey("Company")]
         public int Company_Id { get; set; }
 
-        public virtual Company Company { get; set; }
+        public virtual Company Company { get; set; } = null!;
         public virtual ICollection<SubDomain> SubDomains { get; set; }
     }
 }

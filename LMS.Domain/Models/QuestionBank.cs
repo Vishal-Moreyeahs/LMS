@@ -16,14 +16,12 @@ namespace LMS.Domain.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public bool IsImageAttached { get; set; }
-        public byte[] ImagePath { get; set; }
-
-        [ForeignKey("SubDomain")]
+        public byte[]? ImagePath { get; set; }
         public int SubDomain_Id { get; set; }
 
-        public virtual SubDomain SubDomain { get; set; }
+        public virtual SubDomain SubDomain { get; set; } = null!;
         public virtual ICollection<QuizOption> QuizOptions { get; set; }
         public virtual ICollection<QuizQuestion> QuizQuestions { get; set; }
     }

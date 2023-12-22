@@ -15,9 +15,7 @@ namespace LMS.Domain.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; } 
-        public string Description { get; set; }
-
-        [ForeignKey("Domain")]
+        public string? Description { get; set; }
         public int Domain_Id { get; set; }
 
         public virtual Domains Domain { get; set; } = null!;

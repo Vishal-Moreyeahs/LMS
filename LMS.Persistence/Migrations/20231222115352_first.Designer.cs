@@ -4,6 +4,7 @@ using LMS.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231222115352_first")]
+    partial class first
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -318,7 +320,7 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Employee_Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Group_Id")
+                    b.Property<int>("Group_Id")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -519,14 +521,14 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Employees_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UpdatedBy")
@@ -614,7 +616,7 @@ namespace LMS.Persistence.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsMandatory")
+                    b.Property<bool?>("IsMandatory")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -928,7 +930,8 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.Group", "Group")
                         .WithMany()
                         .HasForeignKey("Group_Id")
-                        .HasPrincipalKey("GroupId");
+                        .HasPrincipalKey("GroupId")
+                        .IsRequired();
 
                     b.Navigation("Courses");
 

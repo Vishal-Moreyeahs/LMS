@@ -14,15 +14,13 @@ namespace LMS.Domain.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string OptionValue { get; set; }
+        public string? OptionValue { get; set; }
         public bool IsImageAttached { get; set; }
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
         public bool IsCorrect { get; set; }
-
-        [ForeignKey("QuestionBank")]
         public int QuestionBank_Id { get; set; }
 
-        public virtual QuestionBank QuestionBank { get; set; }
+        public virtual QuestionBank QuestionBank { get; set; } = null!;
 
     }
 }

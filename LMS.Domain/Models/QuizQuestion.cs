@@ -15,11 +15,7 @@ namespace LMS.Domain.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int SequenceNo { get; set; }
-
-        [ForeignKey("Quiz")]
         public int Quiz_Id { get; set; }
-
-        [ForeignKey("QuestionBank")]
         public int QuestionBank_Id { get; set; }
         public int Mark { get; set; }
 

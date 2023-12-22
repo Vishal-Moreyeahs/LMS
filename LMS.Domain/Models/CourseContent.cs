@@ -15,10 +15,7 @@ namespace LMS.Domain.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int Sequence { get; set; }
-
-        [ForeignKey("Course")]
         public int Courses_Id { get; set; }
-
         public string Type { get; set; }
         public string Media { get; set; }
 

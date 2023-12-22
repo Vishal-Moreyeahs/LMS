@@ -42,156 +42,198 @@ namespace LMS.Persistence
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataBaseContext).Assembly);
 
-            modelBuilder
-                .Entity<EmployeeCourse>(
-                    eb =>
-                    {
-                        eb.HasNoKey();
-                    });
-
-            modelBuilder.Entity<EmployeeQuizAnswer>(entity =>
-            {
-                entity.HasNoKey();
-
-                modelBuilder.Entity<EmployeeQuizAnswer>()
-                   .HasOne(c => c.EmployeeQuiz)
-                   .WithMany()
-                   .HasForeignKey(c => c.EmployeeQuiz_Id)
-                   .OnDelete(DeleteBehavior.Restrict);
-
-                modelBuilder.Entity<EmployeeQuizAnswer>()
-                    .HasOne(c => c.QuizQuestions)
-                    .WithMany()
-                    .HasForeignKey(c => c.QuizQuestion_Id)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
-
-            modelBuilder
-                .Entity<EmployeeSubDomain>(
-                    eb =>
-                    {
-                        eb.HasNoKey();
-                    });
-
             modelBuilder.Entity<Course>(entity =>
             {
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.Courses)
+                    .HasForeignKey(d => d.Company_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
 
-                modelBuilder.Entity<Course>()
-                   .HasOne(c => c.Company)
-                   .WithMany(t => t.Courses)
-                   .HasForeignKey(c => c.Company_Id)
-                   .OnDelete(DeleteBehavior.Restrict);
-
-                modelBuilder.Entity<Course>()
-                    .HasOne(c => c.SubDomain)
-                    .WithMany(t => t.Courses)
-                    .HasForeignKey(c => c.SubDomain_Id)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
-
-            modelBuilder.Entity<Group>(entity =>
-            {
-
-                modelBuilder.Entity<Group>()
-                   .HasOne(c => c.Employees)
-                   .WithMany(t => t.Groups)
-                   .HasForeignKey(c => c.Employees_Id)
-                   .OnDelete(DeleteBehavior.Restrict);
-
+                entity.HasOne(d => d.SubDomain)
+                    .WithMany(p => p.Courses)
+                    .HasForeignKey(d => d.SubDomain_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<CourseContent>(entity =>
             {
 
-                modelBuilder.Entity<CourseContent>()
-                   .HasOne(c => c.Courses)
-                   .WithMany(t => t.CourseContents)
-                   .HasForeignKey(c => c.Courses_Id)
-                   .OnDelete(DeleteBehavior.Restrict);
-
+                entity.HasOne(d => d.Courses)
+                    .WithMany(p => p.CourseContents)
+                    .HasForeignKey(d => d.Courses_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
-            modelBuilder.Entity<EmployeeSubDomain>(entity =>
+            modelBuilder.Entity<Domains>(entity =>
             {
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.Domains)
+                    .HasForeignKey(d => d.Company_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
 
-                modelBuilder.Entity<EmployeeSubDomain>()
-                   .HasOne(c => c.SubDomain)
-                   .WithMany()
-                   .HasForeignKey(c => c.SubDomain_Id)
-                   .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Employee>(entity =>
+            {
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.Employees)
+                    .HasForeignKey(d => d.Company_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
 
-                modelBuilder.Entity<EmployeeSubDomain>()
-                    .HasOne(c => c.Employee)
-                    .WithMany()
-                    .HasForeignKey(c => c.Employee_Id)
-                    .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Employees)
+                    .HasForeignKey(d => d.Role_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<EmployeeCourse>(entity =>
             {
+                entity.HasNoKey();
 
-                modelBuilder.Entity<EmployeeCourse>()
-                   .HasOne(c => c.Group)
-                   .WithMany()
-                   .HasForeignKey(c => c.Group_Id)
-                   .OnDelete(DeleteBehavior.Restrict);
-
-                modelBuilder.Entity<EmployeeCourse>()
-                    .HasOne(c => c.Employee)
+                entity.HasOne(d => d.Courses)
                     .WithMany()
-                    .HasForeignKey(c => c.Employee_Id)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .HasForeignKey(d => d.Courses_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
 
-                modelBuilder.Entity<EmployeeCourse>()
-                   .HasOne(c => c.Courses)
-                   .WithMany()
-                   .HasForeignKey(c => c.Courses_Id)
-                   .OnDelete(DeleteBehavior.Restrict);
-            });
+                entity.HasOne(d => d.Employee)
+                    .WithMany()
+                    .HasForeignKey(d => d.Employee_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
 
-            modelBuilder.Entity<Quiz>(entity =>
-            {
-                modelBuilder.Entity<Quiz>()
-                    .HasOne(c => c.SubDomain)
-                    .WithMany(t => t.Quizes)
-                    .HasForeignKey(c => c.SubDomain_Id)
-                    .OnDelete(DeleteBehavior.Restrict);
-
-                modelBuilder.Entity<Quiz>()
-                   .HasOne(c => c.Courses)
-                   .WithMany(t => t.Quizes)
-                   .HasForeignKey(c => c.Courses_Id)
-                   .OnDelete(DeleteBehavior.Restrict);
-
-                modelBuilder.Entity<Quiz>()
-                   .HasOne(c => c.Company)
-                   .WithMany(t => t.Quizes)
-                   .HasForeignKey(c => c.Company_Id)
-                   .OnDelete(DeleteBehavior.Restrict);
-
+                entity.HasOne(d => d.Group)
+                    .WithMany()
+                    .HasForeignKey(d => d.Group_Id)
+                    .HasPrincipalKey(d => d.GroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<EmployeeQuiz>(entity =>
             {
-                modelBuilder.Entity<EmployeeQuiz>()
-                    .HasOne(c => c.Employee)
-                    .WithMany(t => t.EmployeeQuizes)
-                    .HasForeignKey(c => c.Employee_Id)
-                    .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.EmployeeQuizes)
+                    .HasForeignKey(d => d.Employee_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
 
-                modelBuilder.Entity<EmployeeQuiz>()
-                   .HasOne(c => c.Quiz)
-                   .WithMany(t=>t.EmployeeQuizes)
-                   .HasForeignKey(c => c.Quiz_Id)
-                   .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.GroupId1Navigation)
+                    .WithMany(p => p.EmployeeQuizes)
+                    .HasForeignKey(d => d.Group_Id)
+                    .HasPrincipalKey(d => d.GroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
 
-                modelBuilder.Entity<EmployeeQuiz>()
-                   .HasOne(c => c.Group)
-                   .WithMany(t=>t.EmployeeQuizes)
-                   .HasForeignKey(c => c.Group_Id)
-                   .OnDelete(DeleteBehavior.Restrict);
-
+                entity.HasOne(d => d.Quiz)
+                    .WithMany(p => p.EmployeeQuizzes)
+                    .HasForeignKey(d => d.Quiz_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
+
+            modelBuilder.Entity<EmployeeQuizAnswer>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.HasOne(d => d.EmployeeQuiz)
+                    .WithMany()
+                    .HasForeignKey(d => d.EmployeeQuiz_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.QuizQuestions)
+                    .WithMany()
+                    .HasForeignKey(d => d.QuizQuestion_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<EmployeeSubDomain>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany()
+                    .HasForeignKey(d => d.Employee_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.SubDomain)
+                    .WithMany()
+                    .HasForeignKey(d => d.SubDomain_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<FileBank>(entity =>
+            {
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.FileBanks)
+                    .HasForeignKey(d => d.Company_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<Group>(entity =>
+            {
+                entity.HasOne(d => d.Employees)
+                    .WithMany(p => p.Groups)
+                    .HasForeignKey(d => d.Employees_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<QuestionBank>(entity =>
+            {
+                entity.HasOne(d => d.SubDomain)
+                    .WithMany(p => p.QuestionBanks)
+                    .HasForeignKey(d => d.SubDomain_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<Quiz>(entity =>
+            {
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.Quizes)
+                    .HasForeignKey(d => d.Company_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Courses)
+                    .WithMany(p => p.Quizes)
+                    .HasForeignKey(d => d.Courses_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.SubDomain)
+                    .WithMany(p => p.Quizes)
+                    .HasForeignKey(d => d.SubDomain_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<QuizOption>(entity =>
+            {
+                entity.HasOne(d => d.QuestionBank)
+                    .WithMany(p => p.QuizOptions)
+                    .HasForeignKey(d => d.QuestionBank_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<QuizQuestion>(entity =>
+            {
+                entity.HasOne(d => d.QuestionBank)
+                    .WithMany(p => p.QuizQuestions)
+                    .HasForeignKey(d => d.QuestionBank_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Quiz)
+                    .WithMany(p => p.QuizQuestions)
+                    .HasForeignKey(d => d.Quiz_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<Report>(entity =>
+            {
+                entity.HasOne(d => d.EmployeeQuiz)
+                    .WithMany(p => p.Reports)
+                    .HasForeignKey(d => d.EmployeeQuiz_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<SubDomain>(entity =>
+            {
+                entity.HasOne(d => d.Domain)
+                    .WithMany(p => p.SubDomains)
+                    .HasForeignKey(d => d.Domain_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
         }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20231221123448_First")]
-    partial class First
+    [Migration("20231222121226_first3")]
+    partial class first3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,10 +48,10 @@ namespace LMS.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -69,9 +69,9 @@ namespace LMS.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<byte[]>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Pincode")
                         .IsRequired()
@@ -89,10 +89,10 @@ namespace LMS.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -111,13 +111,14 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Company_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("EndDate")
@@ -133,14 +134,13 @@ namespace LMS.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SubDomain_Id")
-                        .IsRequired()
+                    b.Property<int>("SubDomain_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -163,10 +163,10 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Courses_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -183,10 +183,10 @@ namespace LMS.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -207,10 +207,10 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Company_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -224,10 +224,10 @@ namespace LMS.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -246,16 +246,15 @@ namespace LMS.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AlternateNo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Company_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -270,35 +269,32 @@ namespace LMS.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<byte[]>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("PermanemtAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReportingManager")
+                    b.Property<int?>("ReportingManager")
                         .HasColumnType("int");
 
                     b.Property<int>("Role_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("TemporaryAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -315,25 +311,25 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Courses_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Employee_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Group_Id")
+                    b.Property<int?>("Group_Id")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasIndex("Courses_Id");
@@ -356,19 +352,19 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Attempt")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Employee_Id")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Group_Id")
+                    b.Property<int?>("Group_Id")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -377,10 +373,10 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Quiz_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -391,15 +387,15 @@ namespace LMS.Persistence.Migrations
 
                     b.HasIndex("Quiz_Id");
 
-                    b.ToTable("EmployeeQuizzes");
+                    b.ToTable("EmployeeQuizes");
                 });
 
             modelBuilder.Entity("LMS.Domain.Models.EmployeeQuizAnswer", b =>
                 {
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("EmployeeQuiz_Id")
@@ -414,10 +410,10 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("QuizQuestion_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasIndex("EmployeeQuiz_Id");
@@ -429,10 +425,10 @@ namespace LMS.Persistence.Migrations
 
             modelBuilder.Entity("LMS.Domain.Models.EmployeeSubDomain", b =>
                 {
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Employee_Id")
@@ -444,10 +440,10 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("SubDomain_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasIndex("Employee_Id");
@@ -468,14 +464,13 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Company_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Format")
@@ -490,17 +485,16 @@ namespace LMS.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Size")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -518,13 +512,16 @@ namespace LMS.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Employees_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -534,10 +531,10 @@ namespace LMS.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -555,18 +552,16 @@ namespace LMS.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("ImagePath")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<bool>("IsActive")
@@ -582,10 +577,10 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("SubDomain_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -609,14 +604,13 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Courses_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -641,10 +635,10 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Time")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -666,14 +660,13 @@ namespace LMS.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -686,16 +679,15 @@ namespace LMS.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("OptionValue")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuestionBank_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -713,10 +705,10 @@ namespace LMS.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -734,10 +726,10 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("SequenceNo")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -757,10 +749,10 @@ namespace LMS.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("EmployeeQuiz_Id")
@@ -784,10 +776,10 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("TotalNoOfQuestion")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -805,10 +797,10 @@ namespace LMS.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -818,10 +810,10 @@ namespace LMS.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -837,14 +829,13 @@ namespace LMS.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CreatedBy")
+                    b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Domain_Id")
@@ -857,10 +848,10 @@ namespace LMS.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -875,13 +866,11 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.Company", "Company")
                         .WithMany("Courses")
                         .HasForeignKey("Company_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("LMS.Domain.Models.SubDomain", "SubDomain")
                         .WithMany("Courses")
                         .HasForeignKey("SubDomain_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Company");
@@ -894,7 +883,6 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.Course", "Courses")
                         .WithMany("CourseContents")
                         .HasForeignKey("Courses_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Courses");
@@ -905,7 +893,6 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.Company", "Company")
                         .WithMany("Domains")
                         .HasForeignKey("Company_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Company");
@@ -916,13 +903,11 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.Company", "Company")
                         .WithMany("Employees")
                         .HasForeignKey("Company_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("LMS.Domain.Models.Role", "Role")
                         .WithMany("Employees")
                         .HasForeignKey("Role_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Company");
@@ -935,20 +920,17 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.Course", "Courses")
                         .WithMany()
                         .HasForeignKey("Courses_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("LMS.Domain.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("Employee_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("LMS.Domain.Models.Group", "Group")
                         .WithMany()
                         .HasForeignKey("Group_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasPrincipalKey("GroupId");
 
                     b.Navigation("Courses");
 
@@ -960,26 +942,23 @@ namespace LMS.Persistence.Migrations
             modelBuilder.Entity("LMS.Domain.Models.EmployeeQuiz", b =>
                 {
                     b.HasOne("LMS.Domain.Models.Employee", "Employee")
-                        .WithMany("EmployeeQuizzes")
+                        .WithMany("EmployeeQuizes")
                         .HasForeignKey("Employee_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("LMS.Domain.Models.Group", "Group")
-                        .WithMany("EmployeeQuizzes")
+                    b.HasOne("LMS.Domain.Models.Group", "GroupId1Navigation")
+                        .WithMany("EmployeeQuizes")
                         .HasForeignKey("Group_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasPrincipalKey("GroupId");
 
                     b.HasOne("LMS.Domain.Models.Quiz", "Quiz")
-                        .WithMany("EmployeeQuizes")
+                        .WithMany("EmployeeQuizzes")
                         .HasForeignKey("Quiz_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Employee");
 
-                    b.Navigation("Group");
+                    b.Navigation("GroupId1Navigation");
 
                     b.Navigation("Quiz");
                 });
@@ -989,13 +968,11 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.EmployeeQuiz", "EmployeeQuiz")
                         .WithMany()
                         .HasForeignKey("EmployeeQuiz_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("LMS.Domain.Models.QuizQuestion", "QuizQuestions")
                         .WithMany()
                         .HasForeignKey("QuizQuestion_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("EmployeeQuiz");
@@ -1008,13 +985,11 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("Employee_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("LMS.Domain.Models.SubDomain", "SubDomain")
                         .WithMany()
                         .HasForeignKey("SubDomain_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -1027,7 +1002,6 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.Company", "Company")
                         .WithMany("FileBanks")
                         .HasForeignKey("Company_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Company");
@@ -1038,7 +1012,6 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.Employee", "Employees")
                         .WithMany("Groups")
                         .HasForeignKey("Employees_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Employees");
@@ -1049,7 +1022,6 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.SubDomain", "SubDomain")
                         .WithMany("QuestionBanks")
                         .HasForeignKey("SubDomain_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("SubDomain");
@@ -1058,21 +1030,18 @@ namespace LMS.Persistence.Migrations
             modelBuilder.Entity("LMS.Domain.Models.Quiz", b =>
                 {
                     b.HasOne("LMS.Domain.Models.Company", "Company")
-                        .WithMany("Quizzes")
+                        .WithMany("Quizes")
                         .HasForeignKey("Company_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("LMS.Domain.Models.Course", "Courses")
                         .WithMany("Quizes")
                         .HasForeignKey("Courses_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("LMS.Domain.Models.SubDomain", "SubDomain")
                         .WithMany("Quizes")
                         .HasForeignKey("SubDomain_Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Company");
@@ -1087,7 +1056,6 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.QuestionBank", "QuestionBank")
                         .WithMany("QuizOptions")
                         .HasForeignKey("QuestionBank_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("QuestionBank");
@@ -1098,13 +1066,11 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.QuestionBank", "QuestionBank")
                         .WithMany("QuizQuestions")
                         .HasForeignKey("QuestionBank_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("LMS.Domain.Models.Quiz", "Quiz")
                         .WithMany("QuizQuestions")
                         .HasForeignKey("Quiz_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("QuestionBank");
@@ -1117,7 +1083,6 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.EmployeeQuiz", "EmployeeQuiz")
                         .WithMany("Reports")
                         .HasForeignKey("EmployeeQuiz_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("EmployeeQuiz");
@@ -1128,7 +1093,6 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Models.Domains", "Domain")
                         .WithMany("SubDomains")
                         .HasForeignKey("Domain_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Domain");
@@ -1144,7 +1108,7 @@ namespace LMS.Persistence.Migrations
 
                     b.Navigation("FileBanks");
 
-                    b.Navigation("Quizzes");
+                    b.Navigation("Quizes");
                 });
 
             modelBuilder.Entity("LMS.Domain.Models.Course", b =>
@@ -1161,7 +1125,7 @@ namespace LMS.Persistence.Migrations
 
             modelBuilder.Entity("LMS.Domain.Models.Employee", b =>
                 {
-                    b.Navigation("EmployeeQuizzes");
+                    b.Navigation("EmployeeQuizes");
 
                     b.Navigation("Groups");
                 });
@@ -1173,7 +1137,7 @@ namespace LMS.Persistence.Migrations
 
             modelBuilder.Entity("LMS.Domain.Models.Group", b =>
                 {
-                    b.Navigation("EmployeeQuizzes");
+                    b.Navigation("EmployeeQuizes");
                 });
 
             modelBuilder.Entity("LMS.Domain.Models.QuestionBank", b =>
@@ -1185,7 +1149,7 @@ namespace LMS.Persistence.Migrations
 
             modelBuilder.Entity("LMS.Domain.Models.Quiz", b =>
                 {
-                    b.Navigation("EmployeeQuizes");
+                    b.Navigation("EmployeeQuizzes");
 
                     b.Navigation("QuizQuestions");
                 });

@@ -15,15 +15,13 @@ namespace LMS.Domain.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public string Format { get; set; }
-
-        [ForeignKey("Company")]
         public int Company_Id { get; set; }
-        public string Size { get; set; }
+        public string? Size { get; set; }
         public string Path { get; set; }
 
-        public virtual Company Company { get; set; }
+        public virtual Company Company { get; set; } = null!;
 
     }
 }

@@ -19,8 +19,6 @@ namespace LMS.Domain.Models
         public int TotalNoOfQuestion { get; set; }
         public bool ResultStatus { get; set; }
         public int Percentage { get; set; }
-
-        [ForeignKey("EmployeeQuiz")]
         public int EmployeeQuiz_Id { get; set; }
 
         public virtual EmployeeQuiz EmployeeQuiz { get; set; } = null!;

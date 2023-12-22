@@ -13,22 +13,16 @@ namespace LMS.Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string? Description { get; set; }
-
-        [ForeignKey("Company")]
+        public string Description { get; set; }
         public int Company_Id { get; set; }
-
-        [ForeignKey("SubDomain")]
         public int SubDomain_Id { get; set; }
         public bool IsMandatory { get; set; }
         public DateTime? EndDate { get; set; }
 
 
         // Navigation properties
-        public virtual Company Company { get; set; }
-        
-        public virtual SubDomain SubDomain { get; set; }
-
+        public virtual Company Company { get; set; } = null!;
+        public virtual SubDomain SubDomain { get; set; } = null!;
         public virtual ICollection<CourseContent> CourseContents { get; set; }
         public virtual ICollection<Quiz> Quizes { get; set; }
     }
