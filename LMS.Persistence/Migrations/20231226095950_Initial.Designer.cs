@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20231222125340_Initial")]
+    [Migration("20231226095950_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
