@@ -156,3 +156,5 @@ C:\LMS_Project\LMS\LMS.Api\obj\Debug\net6.0\refint\LMS.Api.dll
 C:\LMS_Project\LMS\LMS.Api\obj\Debug\net6.0\LMS.Api.pdb
 C:\LMS_Project\LMS\LMS.Api\obj\Debug\net6.0\LMS.Api.genruntimeconfig.cache
 C:\LMS_Project\LMS\LMS.Api\obj\Debug\net6.0\ref\LMS.Api.dll
+C:\LMS_Project\LMS\LMS.Api\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\LMS_Project\LMS\LMS.Api\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
