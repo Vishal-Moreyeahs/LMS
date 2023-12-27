@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using LMS.Domain.Models.Common;
@@ -27,8 +26,8 @@ namespace LMS.Domain.Models
         [EmailAddress]
         public string PrimaryMailId { get; set; } = null!;
 
-        [Required]
-        public byte[] Password { get; set; } = null!;
+        //[Required]
+        //public byte[] Password { get; set; } = null!;
 
         [Required]
         public string PrimaryContact { get; set; } = null!;

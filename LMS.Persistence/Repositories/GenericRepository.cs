@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LMS.Application.Contracts.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace LMS.Persistence.Repositories
 {

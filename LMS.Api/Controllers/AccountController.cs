@@ -28,12 +28,5 @@ namespace LMS.Api.Controllers
         {
             return Ok(await _authenticationService.Register(request));
         }
-
-        [Authorize(Roles = "SuperAdmin,Admin")]
-        [HttpPost("new")]
-        public async Task<ActionResult<RegistrationResponse>> New()
-        {
-            return Ok("Hii Bearer");
-        }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using LMS.Application.Request;
+using LMS.Application.Response;
 using LMS.Domain.Models;
 
 namespace LMS.Application.Profiles
@@ -14,6 +15,8 @@ namespace LMS.Application.Profiles
         public MappingProfile() 
         {
             CreateMap<RegistrationRequest, Employee>().ReverseMap();
+            CreateMap<CompanyRequest, Company>().ReverseMap();
+            CreateMap<CompanyData, Company>().ReverseMap();
         }
     }
 }

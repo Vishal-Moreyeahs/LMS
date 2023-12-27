@@ -93,18 +93,19 @@ namespace LMS.Infrastructure.Services
         private async Task<JwtSecurityToken> GenerateToken(Employee user)
         {
             //var userClaims = await _userManager.GetClaimsAsync(user);
-            var role = _roleRepository.Get(user.Role_Id);
+            var role = await _roleRepository.Get(user.Role_Id);
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                new Claim(JwtRegisteredClaimNames.Sub, user.FirstName),
-                new Claim(JwtRegisteredClaimNames.Sub, user.LastName),
-                new Claim("CompanyId", user.Company_Id.ToString()),
-                new Claim("RoleId", user.Role_Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.Role, role.Result.Name)
+                new Claim(JwtRegisteredClaimNames.Name, string.Concat(user.FirstName," ",user.LastName)),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
+                new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
+                new Claim(CustomClaimTypes.CompanyId, user.Company_Id.ToString()),
+                new Claim(CustomClaimTypes.RoleId, user.Role_Id.ToString()),
+                new Claim(CustomClaimTypes.EmployeeId, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Role, role.Name)
             };
 
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
@@ -118,5 +119,13 @@ namespace LMS.Infrastructure.Services
                 signingCredentials: signingCredentials);
             return jwtSecurityToken;
         }
+
+        public static class CustomClaimTypes
+        {
+            public const string CompanyId = "CompanyId";
+            public const string RoleId = "RoleId";
+            public const string EmployeeId = "EmployeeId";
+        }
+
     }
 }
