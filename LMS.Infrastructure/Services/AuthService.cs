@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using LMS.Application.Contracts.Infrastructure;
 using LMS.Application.Contracts.Persistence;
+using LMS.Application.Contracts.Repositories;
 using LMS.Application.Models;
 using LMS.Application.Request;
 using LMS.Application.Response;
@@ -25,16 +26,19 @@ namespace LMS.Infrastructure.Services
         private readonly IGenericRepository<Employee> _employeeRepository;
         private readonly JwtSettings _jwtSettings;
         private readonly ICryptographyService _cryptographyService;
+        private readonly IAuthenticatedUserService _authenticatedUserService;
 
         public AuthService(IGenericRepository<Role> roleRepository, 
                         IOptions<JwtSettings> jwtSettings, IGenericRepository<Employee> employeeRepository,
-                        IGenericRepository<Company> companyRepository,IMapper mapper, ICryptographyService cryptographyService)
+                        IGenericRepository<Company> companyRepository,IMapper mapper, ICryptographyService cryptographyService
+                        , IAuthenticatedUserService authenticatedUserService)
         {
             _roleRepository = roleRepository;
             _jwtSettings = jwtSettings.Value;
             _employeeRepository = employeeRepository;
             _mapper = mapper;
             _cryptographyService = cryptographyService;
+            _authenticatedUserService = authenticatedUserService;
         }
 
         public async Task<AuthResponse> Login(AuthRequest request)
@@ -75,14 +79,18 @@ namespace LMS.Infrastructure.Services
                 throw new Exception($"User '{request.Email}' already exists.");
             }
 
+            var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
+
             var user = _mapper.Map<Employee>(request);
             user.CreatedDate = DateTime.UtcNow;
             user.UpdatedDate = DateTime.UtcNow;
+            user.CreatedBy = loggedInUser.EmployeeId;
+            user.UpdatedBy = loggedInUser.EmployeeId;
             user.Password = _cryptographyService.EncryptPassword(request.Email+request.RealPassword);
 
             var registerUser = _employeeRepository.Add(user);
 
-            if (registerUser.Result == null)
+            if (registerUser == null)
             {
                 throw new Exception($"DataBase not Updated");
             }

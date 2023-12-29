@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "nifMLfOUIX3mn9ZPYvlP7nyMfM2+da2qjn/iA/aT/4c=",
+  "Source": "LMS.Api",
+  "BasePath": "_content/LMS.Api",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

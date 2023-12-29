@@ -36,7 +36,7 @@ namespace LMS.Application.Services.CompanyServices
                 {
                     Status = true,
                     Message = $"Company - {company.Name} Already Exist"
-                }; 
+                };
             }
 
             var loggedInUser= await _authenticatedUserService.GetLoggedInUser();

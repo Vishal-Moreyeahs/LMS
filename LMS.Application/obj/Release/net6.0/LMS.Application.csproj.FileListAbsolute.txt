@@ -1,0 +1,17 @@
+C:\LMS_Project\LMS\LMS.Application\bin\Release\net6.0\LMS.Application.deps.json
+C:\LMS_Project\LMS\LMS.Application\bin\Release\net6.0\LMS.Application.runtimeconfig.json
+C:\LMS_Project\LMS\LMS.Application\bin\Release\net6.0\LMS.Application.dll
+C:\LMS_Project\LMS\LMS.Application\bin\Release\net6.0\LMS.Application.pdb
+C:\LMS_Project\LMS\LMS.Application\bin\Release\net6.0\LMS.Domain.dll
+C:\LMS_Project\LMS\LMS.Application\bin\Release\net6.0\LMS.Domain.pdb
+C:\LMS_Project\LMS\LMS.Application\obj\Release\net6.0\LMS.Application.csproj.AssemblyReference.cache
+C:\LMS_Project\LMS\LMS.Application\obj\Release\net6.0\LMS.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\LMS_Project\LMS\LMS.Application\obj\Release\net6.0\LMS.Application.AssemblyInfoInputs.cache
+C:\LMS_Project\LMS\LMS.Application\obj\Release\net6.0\LMS.Application.AssemblyInfo.cs
+C:\LMS_Project\LMS\LMS.Application\obj\Release\net6.0\LMS.Application.csproj.CoreCompileInputs.cache
+C:\LMS_Project\LMS\LMS.Application\obj\Release\net6.0\LMS.Application.csproj.CopyComplete
+C:\LMS_Project\LMS\LMS.Application\obj\Release\net6.0\LMS.Application.dll
+C:\LMS_Project\LMS\LMS.Application\obj\Release\net6.0\refint\LMS.Application.dll
+C:\LMS_Project\LMS\LMS.Application\obj\Release\net6.0\LMS.Application.pdb
+C:\LMS_Project\LMS\LMS.Application\obj\Release\net6.0\LMS.Application.genruntimeconfig.cache
+C:\LMS_Project\LMS\LMS.Application\obj\Release\net6.0\ref\LMS.Application.dll

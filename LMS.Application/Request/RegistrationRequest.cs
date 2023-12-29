@@ -20,10 +20,6 @@ namespace LMS.Application.Request
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
-        [MinLength(6)]
-        public string UserName { get; set; }
-
         public string Address { get; set; }
 
         public string PhoneNo { get; set; }
