@@ -2,6 +2,7 @@ using LMS.Api.Middleware;
 using LMS.Api.Services;
 using LMS.Application;
 using LMS.Application.Contracts.Repositories;
+using LMS.Application.Services.AdminServices;
 using LMS.Infrastructure;
 using LMS.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -34,6 +35,7 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

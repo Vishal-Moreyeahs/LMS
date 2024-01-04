@@ -22,21 +22,23 @@ namespace LMS.Application.Request
 
         public string Address { get; set; }
 
+        [Required]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNo { get; set; }
 
         [Required]
-        [JsonPropertyName("CompanyId")]
+        [JsonPropertyName("companyId")]
         public int Company_Id { get; set; }
 
         [Required]
-        [JsonPropertyName("RoleId")]
+        [JsonPropertyName("roleId")]
         public int Role_Id { get; set; }
 
         public bool IsActive { get; set; } = true;
 
         [Required]
         [MinLength(6)]
-        [JsonPropertyName("Password")]
+        [JsonPropertyName("password")]
         public string RealPassword { get; set; }
     }
 }
