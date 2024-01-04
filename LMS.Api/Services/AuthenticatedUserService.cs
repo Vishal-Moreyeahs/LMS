@@ -14,7 +14,7 @@ namespace LMS.Api.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<UserResponse> GetLoggedInUser()
+        public async Task<AuthenticatedUserResponse> GetLoggedInUser()
         {
             var user = _httpContextAccessor.HttpContext?.User?.Identities.FirstOrDefault();
 
@@ -28,7 +28,7 @@ namespace LMS.Api.Services
 
                 if (companyIdClaim != null && employeeIdClaim != null && roleIdClaim != null && emailClaim != null && nameClaim != null)
                 {
-                    return new UserResponse
+                    return new AuthenticatedUserResponse
                     {
                         CompanyId = int.Parse(companyIdClaim.Value),
                         EmployeeId = int.Parse(employeeIdClaim.Value),

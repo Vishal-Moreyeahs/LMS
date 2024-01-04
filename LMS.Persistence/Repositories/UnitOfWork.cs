@@ -13,7 +13,7 @@ namespace LMS.Persistence.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DataBaseContext _dbContext;
-        public IAdminRepository Admin { get; private set; }
+        public IUserRepository Admin { get; private set; }
 
         public ICompanyRepository InvoiceMaster { get; private set; }
 

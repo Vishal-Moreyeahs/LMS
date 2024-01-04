@@ -40,13 +40,13 @@ namespace LMS.Infrastructure.Services
             {
                 throw new ApplicationException($"User with {request.Email} not found.");
             }
-            var userEncryptedPassword = _cryptographyService.EncryptPassword(request.Email+request.Password);
+            var userEncryptedPassword = _cryptographyService.EncryptPassword(request.Email + request.Password);
 
-            var result = _cryptographyService.ValidatePassword(user.Password, userEncryptedPassword);
+            var isValid = _cryptographyService.ValidatePassword(user.Password, userEncryptedPassword);
 
-            if (!result)
+            if (!isValid)
             {
-                throw new ApplicationException($"Credentials for '{request.Email} aren't valid'.");
+                throw new ApplicationException($"Credentials for '{request.Email} aren't valid.");
             }
 
             JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
@@ -70,9 +70,11 @@ namespace LMS.Infrastructure.Services
         {
             var existingUser = _unitOfWork.GetRepository<Employee>().GetAll().Result.Where(x => x.Email == request.Email).ToList();
 
+
             if (existingUser.Count > 0)
             {
-                throw new ApplicationException($"User '{request.Email}' already exists.");
+                return null;
+                //throw new ApplicationException($"User '{request.Email}' already exists.");
             }
 
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
@@ -82,15 +84,15 @@ namespace LMS.Infrastructure.Services
             user.UpdatedDate = DateTime.UtcNow;
             user.CreatedBy = loggedInUser.EmployeeId;
             user.UpdatedBy = loggedInUser.EmployeeId;
-            user.Password = _cryptographyService.EncryptPassword(request.Email+request.RealPassword);
+            user.Password = _cryptographyService.EncryptPassword(request.Email + request.RealPassword);
 
             var registerUser = await _unitOfWork.GetRepository<Employee>().Add(user);
-            await _unitOfWork.Save();
-
-            if (registerUser == null)
+            var isDataAdded = await _unitOfWork.Save();
+            if (isDataAdded <= 0)
             {
-                throw new ApplicationException($"DataBase not Updated");
+                throw new ApplicationException($"User {user.Email} should not be added");
             }
+
             var registrationResponse = new RegistrationResponse { UserId = registerUser.Id };
             var response = new Response<RegistrationResponse>
             {
@@ -103,7 +105,7 @@ namespace LMS.Infrastructure.Services
 
         private async Task<JwtSecurityToken> GenerateToken(Employee user)
         {
-            //var userClaims = await _userManager.GetClaimsAsync(user);
+            
             var role = await _unitOfWork.GetRepository<Role>().Get(user.Role_Id);
 
             var claims = new[]

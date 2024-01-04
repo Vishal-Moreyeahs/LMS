@@ -26,15 +26,24 @@ namespace LMS.Application.Request
         [DataType(DataType.PhoneNumber)]
         public string PhoneNo { get; set; }
 
-        [Required]
-        [JsonPropertyName("companyId")]
-        public int Company_Id { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        public string? AlternateNo { get; set; }
+
+        public string? PermanemtAddress { get; set; }
+        public string? TemporaryAddress { get; set; }
 
         [Required]
         [JsonPropertyName("roleId")]
         public int Role_Id { get; set; }
 
+        [Required]
+        [JsonPropertyName("companyId")]
+        public int Company_id { get; set; }
+
         public bool IsActive { get; set; } = true;
+
+        public int? ReportingManager { get; set; }
 
         [Required]
         [MinLength(6)]

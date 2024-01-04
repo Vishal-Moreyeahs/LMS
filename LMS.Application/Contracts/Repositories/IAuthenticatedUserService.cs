@@ -9,6 +9,6 @@ namespace LMS.Application.Contracts.Repositories
 {
     public interface IAuthenticatedUserService
     {
-       Task<UserResponse> GetLoggedInUser();
+       Task<AuthenticatedUserResponse> GetLoggedInUser();
     }
 }

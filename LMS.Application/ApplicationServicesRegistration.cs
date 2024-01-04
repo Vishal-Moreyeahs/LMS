@@ -14,7 +14,7 @@ namespace LMS.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddTransient<ICompanyRepository, CompanyRepository>();
-            services.AddTransient<IAdminRepository, AdminRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IDomainRepository, DomainRepository>();
             services.AddTransient<ISubDomainRepository, SubDomainRepository>();
 
