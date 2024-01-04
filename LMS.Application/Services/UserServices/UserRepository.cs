@@ -33,7 +33,7 @@ namespace LMS.Application.Services.AdminServices
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
             foreach (var user in users)
             {
-                var existingUser = _unitOfWork.GetRepository<Employee>().GetAll().Result.Where(x => x.Email == user.Email).ToList();
+                var existingUser = _unitOfWork.GetRepository<Employee>().GetAll().Result.Where(x => x.Email == user.Email && x.IsActive).ToList();
                 if (!(existingUser.Count > 0))
                 { 
                     await Register(user);
