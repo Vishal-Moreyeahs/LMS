@@ -14,9 +14,10 @@ namespace LMS.Persistence
         public DataBaseContext(DbContextOptions<DataBaseContext> options)
             : base(options)
         {
+            ChangeTracker.LazyLoadingEnabled = true;
         }
 
-        
+
 
         //Db Sets or tables
         public virtual DbSet<Company> Companies { get; set; }

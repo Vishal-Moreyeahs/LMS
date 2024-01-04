@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ifuu0C9o2dswiY5W3SvbuH1JIOdnDSqdVewd+2cImPlI3LeG1YNTx9Y5/R+zcb3pw4V5gojxGZhy1LscyAVsPQ==",
+  "dgSpecHash": "gf5/ENXkNU4bSImuOz9imk7AsW7bTTayidW7FNydSnTmYGuzk/jcEGqWI/MRUg7olY/Y54PNGHyL149ZNOij9A==",
   "success": true,
   "projectFilePath": "C:\\LMS_Project\\LMS\\LMS.Api\\LMS.Api.csproj",
   "expectedPackageFiles": [
@@ -58,6 +58,7 @@
     "C:\\Users\\user\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",

@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 using LMS.Application.Models;
 using LMS.Application.Request;
 using LMS.Application.Response;
+using LMS.Domain.Models;
 
 namespace LMS.Application.Contracts.Repositories
 {
     public interface IAdminRepository
     {
-        Task<ApiResponse<RegistrationResponse>> AddAdmin(RegistrationRequest admin);
+        Task<Response<RegistrationResponse>> AddAdmin(RegistrationRequest admin);
 
-        Task<ApiResponse<AdminData>> DeleteAdmin(int adminId);
-        Task<ApiResponse<AdminData>> UpdateAdmin(AdminData admin);
-        Task<ApiResponse<List<AdminData>>> GetAllAdmin();
+        Task<Response<AdminData>> DeleteAdmin(int adminId);
+        Task<Response<AdminData>> UpdateAdmin(AdminData admin);
+        Task<Response<List<AdminData>>> GetAllAdmin();
 
-        Task<ApiResponse<AdminData>> GetAdminById(int admninId);
+        Task<Response<AdminData>> GetAdminById(int admninId);
     }
 }

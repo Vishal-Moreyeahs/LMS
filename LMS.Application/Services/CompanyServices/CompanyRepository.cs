@@ -12,69 +12,71 @@ namespace LMS.Application.Services.CompanyServices
     {
         private readonly IGenericRepository<Company> _company;
         private IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthenticatedUserService _authenticatedUserService;
 
-        public CompanyRepository(IGenericRepository<Company> company, IMapper mapper, IAuthenticatedUserService authenticatedUserService)
+        public CompanyRepository(IGenericRepository<Company> company, IMapper mapper, IAuthenticatedUserService authenticatedUserService, IUnitOfWork unitOfWork)
         {
             _company = company;
             _mapper = mapper;
             _authenticatedUserService = authenticatedUserService;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CompanyResponse<CompanyData>> CreateCompany(CompanyRequest company)
         {
-            //Get all the companies
-            var companyList = await _company.GetAll();
+            try
+            { 
+                //Get all the companies
+                var companyList = await _unitOfWork.GetRepository<Company>().GetAll();
 
-            //Check if company already exist in database
-            bool isCompanyAlreadyExist = companyList.Any(x => x.PrimaryMailId == company.PrimaryMailId
-                                               || x.OfficialMailId == company.OfficialMailId || x.Name.Contains(company.Name));
+                //Check if company already exist in database
+                bool isCompanyAlreadyExist = companyList.Any(x => x.PrimaryMailId == company.PrimaryMailId
+                                                   || x.OfficialMailId == company.OfficialMailId || x.Name.Contains(company.Name));
 
-            if (isCompanyAlreadyExist)
-            {
-                return new CompanyResponse<CompanyData>
+                if (isCompanyAlreadyExist)
                 {
+                    throw new ApplicationException($"Company - {company.Name} Already Exist");
+                }
+
+                var loggedInUser= await _authenticatedUserService.GetLoggedInUser();
+
+                var data = _mapper.Map<Company>(company);
+                data.CreatedDate = DateTime.UtcNow;
+                data.UpdatedDate = DateTime.UtcNow;
+                data.UpdatedBy = loggedInUser.EmployeeId;
+                data.CreatedBy = loggedInUser.EmployeeId;
+
+                var companyData = await _unitOfWork.GetRepository<Company>().Add(data);
+                await _unitOfWork.Save();
+
+                if (companyData == null)
+                {
+                    throw new ApplicationException($"Error when adding Data in Database");
+                }
+
+                var response = new CompanyResponse<CompanyData> {
                     Status = true,
-                    Message = $"Company - {company.Name} Already Exist"
+                    Message = $"Company - {company.Name} Added Successfully",
+                    Data = _mapper.Map<CompanyData>(companyData)
                 };
+                return response;
             }
-
-            var loggedInUser= await _authenticatedUserService.GetLoggedInUser();
-
-            var data = _mapper.Map<Company>(company);
-            data.CreatedDate = DateTime.UtcNow;
-            data.UpdatedDate = DateTime.UtcNow;
-            data.UpdatedBy = loggedInUser.EmployeeId;
-            data.CreatedBy = loggedInUser.EmployeeId;
-
-            var companyData = await _company.Add(data);
-
-            if (companyData == null)
-            {
-                throw new Exception($"Error when adding Data in Database");
-            }
-
-            var response = new CompanyResponse<CompanyData> {
-                Status = true,
-                Message = $"Company - {company.Name} Added Successfully",
-                Data = _mapper.Map<CompanyData>(companyData)
-            };
-            return response;
+            catch(Exception ex) {throw;}
         }
 
         public async Task<CompanyResponse<CompanyData>> DeleteCompany(int companyId)
         {
-            var companyDetails = await _company.Get(companyId);
+            var companyDetails = await _unitOfWork.GetRepository<Company>().Get(companyId);
 
             if (companyDetails == null)
-            { 
-                return new CompanyResponse<CompanyData> { 
-                    Status= false,
-                    Message = $"Company with id - {companyId} not exists"
-                };
+            {
+                throw new ApplicationException($"Company with id - {companyId} not exists");
             }
 
-            var result = _company.Delete(companyDetails);
+            companyDetails.IsActive = false;
+            var result = _unitOfWork.GetRepository<Company>().Update(companyDetails);
+            await _unitOfWork.Save();
 
             var response = new CompanyResponse<CompanyData>
             {
@@ -91,12 +93,8 @@ namespace LMS.Application.Services.CompanyServices
             var companyData = await _company.GetAll();
 
             if (companyData == null)
-            { 
-                return new CompanyResponse<List<CompanyData>>
-                {
-                    Status = true,
-                    Message = $"No Data Found"
-                };
+            {
+                throw new ApplicationException($"No Data Found");
             }
 
             var response = new CompanyResponse<List<CompanyData>>
@@ -115,11 +113,7 @@ namespace LMS.Application.Services.CompanyServices
 
             if (companyDetails == null)
             {
-                return new CompanyResponse<CompanyData>
-                {
-                    Status = false,
-                    Message = $"Company with id - {companyId} not exists"
-                };
+                throw new ApplicationException($"Company with id - {companyId} not exists");
             }
 
             var response = new CompanyResponse<CompanyData>
@@ -138,11 +132,7 @@ namespace LMS.Application.Services.CompanyServices
 
             if (companyData == null)
             {
-                return new CompanyResponse<CompanyData>
-                {
-                    Status = false,
-                    Message = $"Company with id - {company.Id} not exists"
-                };
+                throw new ApplicationException($"Company with id - {company.Id} not exists");
             }
 
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
@@ -151,6 +141,7 @@ namespace LMS.Application.Services.CompanyServices
             companyData.UpdatedBy = loggedInUser.EmployeeId;
 
             var result = _company.Update(companyData);
+            await _unitOfWork.Save();
 
             var response = new CompanyResponse<CompanyData>
             {
