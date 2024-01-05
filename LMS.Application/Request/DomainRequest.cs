@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Newtonsoft.Json;
 
 namespace LMS.Application.Request
@@ -17,6 +11,7 @@ namespace LMS.Application.Request
 
         public bool IsActive { get; set; } = true;
 
+        public List<SubDomainRequest> SubDomains { get; set; }
         [Required]
         public string Description { get; set; }
 

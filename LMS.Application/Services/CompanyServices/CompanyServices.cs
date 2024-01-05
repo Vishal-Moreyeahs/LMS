@@ -8,14 +8,14 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace LMS.Application.Services.CompanyServices
 {
-    public class CompanyRepository : ICompanyRepository
+    public class CompanyServices : ICompanyRepository
     {
         private readonly IGenericRepository<Company> _company;
         private IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthenticatedUserService _authenticatedUserService;
 
-        public CompanyRepository(IGenericRepository<Company> company, IMapper mapper, IAuthenticatedUserService authenticatedUserService, IUnitOfWork unitOfWork)
+        public CompanyServices(IGenericRepository<Company> company, IMapper mapper, IAuthenticatedUserService authenticatedUserService, IUnitOfWork unitOfWork)
         {
             _company = company;
             _mapper = mapper;

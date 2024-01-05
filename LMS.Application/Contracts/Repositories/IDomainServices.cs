@@ -10,14 +10,19 @@ using LMS.Application.Response;
 
 namespace LMS.Application.Contracts.Repositories
 {
-    public interface IDomainRepository
+    public interface IDomainServices
     {
-        Task<Response<DomainRequest>> AddDomain(DomainRequest admin);
+        Task<Response<DomainDTO>> AddDomain(DomainRequest admin);
 
         Task<Response<DomainDTO>> DeleteDomain(int domainId);
         Task<Response<DomainDTO>> UpdateDomain(DomainDTO admin);
         Task<Response<List<DomainDTO>>> GetAllDomain();
 
         Task<Response<DomainDTO>> GetDomainById(int domainId);
+        Task<Response<SubDomainDTO>> AddSubDomain(List<SubDomainRequest> subDomain);
+        Task<Response<SubDomainDTO>> DeleteSubDomain(int domainId);
+        Task<Response<SubDomainDTO>> UpdateSubDomain(SubDomainDTO admin);
+        Task<Response<List<SubDomainDTO>>> GetAllSubDomain();
+        Task<Response<List<SubDomainDTO>>> GetSubDomainByDomainId(int domainId);
     }
 }
