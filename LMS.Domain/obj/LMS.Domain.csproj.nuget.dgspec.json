@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\LMS_Project\\LMS\\LMS.Domain\\LMS.Domain.csproj": {}
+    "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Domain\\LMS.Domain.csproj": {}
   },
   "projects": {
-    "C:\\LMS_Project\\LMS\\LMS.Domain\\LMS.Domain.csproj": {
+    "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Domain\\LMS.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\LMS_Project\\LMS\\LMS.Domain\\LMS.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Domain\\LMS.Domain.csproj",
         "projectName": "LMS.Domain",
-        "projectPath": "C:\\LMS_Project\\LMS\\LMS.Domain\\LMS.Domain.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\LMS_Project\\LMS\\LMS.Domain\\obj\\",
+        "projectPath": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Domain\\LMS.Domain.csproj",
+        "packagesPath": "C:\\Users\\visha\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\visha\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -75,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
         }
       }
     }

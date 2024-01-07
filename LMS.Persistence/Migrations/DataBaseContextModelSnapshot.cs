@@ -783,6 +783,38 @@ namespace LMS.Persistence.Migrations
                     b.ToTable("Reports");
                 });
 
+            modelBuilder.Entity("LMS.Domain.Models.ResetPasswordVerification", b =>
+                {
+                    b.Property<long>("ResetTokenId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ResetTokenId"), 1L, 1);
+
+                    b.Property<DateTime?>("GeneratedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GeneratedToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("VerificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("VerificationStatus")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ResetTokenId");
+
+                    b.ToTable("ResetPasswordVerifications");
+                });
+
             modelBuilder.Entity("LMS.Domain.Models.Role", b =>
                 {
                     b.Property<int>("Id")

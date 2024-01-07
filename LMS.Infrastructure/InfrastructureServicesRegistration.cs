@@ -10,6 +10,7 @@ using LMS.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using LMS.Application.ViewModels;
 
 namespace LMS.Infrastructure
 {
@@ -22,6 +23,9 @@ namespace LMS.Infrastructure
 
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<ICryptographyService, CryptographyService>();
+            services.AddTransient<IUserManagerServices, UserManagerServices>();
+
+            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
             services.AddAuthentication(options =>
             {

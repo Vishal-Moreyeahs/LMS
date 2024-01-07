@@ -36,6 +36,7 @@ namespace LMS.Persistence
         public virtual DbSet<QuizOption> QuizOptions { get; set; } 
         public virtual DbSet<QuizQuestion> QuizQuestions { get; set; }
         public virtual DbSet<Report> Reports { get; set; } 
+        public virtual DbSet<ResetPasswordVerification> ResetPasswordVerifications { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SubDomain> SubDomains { get; set; }
 

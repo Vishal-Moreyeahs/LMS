@@ -3,6 +3,7 @@ using LMS.Api.Services;
 using LMS.Application;
 using LMS.Application.Contracts.Repositories;
 using LMS.Application.Services.AdminServices;
+using LMS.Application.ViewModels;
 using LMS.Infrastructure;
 using LMS.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -24,6 +25,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 
+
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 
 builder.Services.AddCors(options =>
@@ -35,7 +37,7 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+//app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

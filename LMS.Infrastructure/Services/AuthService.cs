@@ -82,8 +82,8 @@ namespace LMS.Infrastructure.Services
             var user = _mapper.Map<Employee>(request);
             user.CreatedDate = DateTime.UtcNow;
             user.UpdatedDate = DateTime.UtcNow;
-            user.CreatedBy = loggedInUser.EmployeeId;
-            user.UpdatedBy = loggedInUser.EmployeeId;
+            //user.CreatedBy = loggedInUser.EmployeeId;
+            //user.UpdatedBy = loggedInUser.EmployeeId;
             user.Password = _cryptographyService.EncryptPassword(request.Email + request.RealPassword);
 
             var registerUser = await _unitOfWork.GetRepository<Employee>().Add(user);

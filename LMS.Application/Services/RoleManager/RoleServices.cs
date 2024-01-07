@@ -55,6 +55,10 @@ namespace LMS.Application.Services.RoleManager
             {
                 roleList = roleList.Where(x => x.Id != (int)RoleEnum.SuperAdmin && x.Id != (int)RoleEnum.Admin && x.Id != (int)RoleEnum.User).ToList();
             }
+            if (loggedInUser.RoleId == (int)RoleEnum.Guest)
+            {
+                roleList = null;
+            }
             response.Data = roleList.ToList();
             return response;
         }

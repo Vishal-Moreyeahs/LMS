@@ -26,3 +26,17 @@ C:\LMS_Project\LMS\LMS.Domain\obj\Debug\net6.0\refint\LMS.Domain.dll
 C:\LMS_Project\LMS\LMS.Domain\obj\Debug\net6.0\LMS.Domain.pdb
 C:\LMS_Project\LMS\LMS.Domain\obj\Debug\net6.0\LMS.Domain.genruntimeconfig.cache
 C:\LMS_Project\LMS\LMS.Domain\obj\Debug\net6.0\ref\LMS.Domain.dll
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\bin\Debug\net6.0\LMS.Domain.deps.json
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\bin\Debug\net6.0\LMS.Domain.runtimeconfig.json
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\bin\Debug\net6.0\LMS.Domain.dll
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\bin\Debug\net6.0\LMS.Domain.pdb
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\obj\Debug\net6.0\LMS.Domain.csproj.AssemblyReference.cache
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\obj\Debug\net6.0\LMS.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\obj\Debug\net6.0\LMS.Domain.AssemblyInfoInputs.cache
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\obj\Debug\net6.0\LMS.Domain.AssemblyInfo.cs
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\obj\Debug\net6.0\LMS.Domain.csproj.CoreCompileInputs.cache
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\obj\Debug\net6.0\LMS.Domain.dll
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\obj\Debug\net6.0\refint\LMS.Domain.dll
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\obj\Debug\net6.0\LMS.Domain.pdb
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\obj\Debug\net6.0\LMS.Domain.genruntimeconfig.cache
+C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Domain\obj\Debug\net6.0\ref\LMS.Domain.dll
