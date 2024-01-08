@@ -41,15 +41,24 @@ namespace LMS.Infrastructure.Services
                         FileBytes = ms.ToArray();
                         builder.Attachments.Add(file.FileName, FileBytes, ContentType.Parse(file.ContentType));
                     }
-
                 }
             }
             builder.HtmlBody = body;
             email.Body = builder.ToMessageBody();
             email.From.Add(new MailboxAddress("Vishal", _mailSettings.EmailFrom));
             using var smtp = new SmtpClient();
-            smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            smtp.Authenticate(_mailSettings.EmailFrom, _mailSettings.Password);
+            smtp.Connect("smtp-mail.outlook.com", 587, SecureSocketOptions.StartTls);
+            try
+            {
+                smtp.Authenticate(_mailSettings.EmailFrom, _mailSettings.Password);
+            }
+            catch (Exception ex)
+            {
+                // Log or print the exception details
+                Console.WriteLine($"Authentication failed: {ex.Message}");
+                throw; // Rethrow the exception or handle it appropriately
+            }
+
             await smtp.SendAsync(email);
             smtp.Disconnect(true);
         }

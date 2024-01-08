@@ -55,48 +55,47 @@ namespace LMS.Infrastructure.Services
 
         public void Send(Employee user)
         {
-            try
+            var emailVerficationToken = _authService.GenerateToken(user).Result;
+            var token = new JwtSecurityTokenHandler().WriteToken(emailVerficationToken);
+
+            ResetPasswordVerification model = new ResetPasswordVerification
             {
-                var emailVerficationToken = _authService.GenerateToken(user).Result;
-                var token = new JwtSecurityTokenHandler().WriteToken(emailVerficationToken);
+                GeneratedToken = token,
+                GeneratedDate = DateTime.Now,
+                UserId = user.Id,
+                VerificationStatus = false
+            };
 
-                ResetPasswordVerification model = new ResetPasswordVerification
-                {
-                    GeneratedToken = token,
-                    GeneratedDate = DateTime.Now,
-                    UserId = user.Id,
-                    VerificationStatus = false
-                };
+            _unitOfWork.GetRepository<ResetPasswordVerification>().Add(model);
+            _unitOfWork.Save();
+            var body = SendVerificationEmail(user, token);
 
-                _unitOfWork.GetRepository<ResetPasswordVerification>().Add(model);
-                _unitOfWork.Save();
-                var body = SendVerificationEmail(user, token);
+            _mailServices.SendEmailAsync(user.Email, "Reset Password Link", body);
 
-                _mailServices.SendEmailAsync(user.Email, "Reset Password Link", body);
-
-            }
-            catch (Exception ex) { throw; }
-            //;            MailMessage message = new MailMessage();
-            //            SmtpClient smtpClient = new SmtpClient();
-            //            try
-            //            {
-            //                MailAddress fromAddress = new MailAddress(_emailSettings.EmailFrom);
-            //                message.From = fromAddress;
-            //                message.To.Add(user.Email);
-            //                message.Subject = "Welcome to Web Secure";
-            //                message.IsBodyHtml = true;
-            //                message.Body = SendVerificationEmail(user, token);
-            //                smtpClient.Host = _emailSettings.Host;
-            //                smtpClient.Port = Convert.ToInt32(_emailSettings.Port);
-            //                smtpClient.EnableSsl = true;
-            //                smtpClient.UseDefaultCredentials = false;
-            //                smtpClient.Credentials = new System.Net.NetworkCredential(_emailSettings.EmailFrom, _emailSettings.Password);
-            //                smtpClient.Send(message);
-            //            }
-            //            catch (Exception)
-            //            {
-            //                throw;
-            //            }
+            //MailMessage message = new MailMessage();
+            //  SmtpClient smtpClient = new SmtpClient();
+            //  try
+            //  {
+            //      MailAddress fromAddress = new MailAddress(_emailSettings.EmailFrom);
+            //      message.From = fromAddress;
+            //      message.To.Add("Vishal.Pawar@moreyeahs.com");
+            //      message.Subject = "Welcome to Web Secure";
+            //      message.IsBodyHtml = true;
+            //      message.Body = SendVerificationEmail(user, token);
+            //      SmtpClient smtp = new SmtpClient("smtp.office365.com", 587);
+            //      smtp.Timeout = 1000000;
+            //      //smtpClient.Host = _emailSettings.Host;
+            //      //smtpClient.Port = Convert.ToInt32(_emailSettings.Port);
+            //      smtpClient.EnableSsl = true;
+            //      smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            //      smtpClient.UseDefaultCredentials = false;
+            //      smtpClient.Credentials = new System.Net.NetworkCredential("Vishal.Pawar@moreyeahs.com", "Vageta@123");
+            //      smtpClient.Send(message);
+            //  }
+            //  catch (Exception)
+            //  {
+            //      throw;
+            //  }
         }
 
         public string SendVerificationEmail(Employee user, string token)

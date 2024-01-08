@@ -39,7 +39,7 @@ namespace LMS.Api.Controllers
         }
 
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> Process(ForgotPasswordViewModel forgotPasswordViewModel)
+        public IActionResult Process(ForgotPasswordViewModel forgotPasswordViewModel)
         {
             _userManagerServices.ForgotPassword(forgotPasswordViewModel);
             return Ok();
