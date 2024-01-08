@@ -18,10 +18,9 @@ namespace LMS.Persistence.Repositories
             _dbContext = context;
         }
 
-        public async Task<T> Add(T entity)
+        public async Task Add(T entity)
         {
             await _dbContext.AddAsync(entity);
-            return entity;
         }
 
         public async Task Delete(T entity)

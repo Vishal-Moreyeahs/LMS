@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Persistence\\LMS.Persistence.csproj": {}
+    "C:\\LMS_Project\\LMS\\LMS.Persistence\\LMS.Persistence.csproj": {}
   },
   "projects": {
-    "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Application\\LMS.Application.csproj": {
+    "C:\\LMS_Project\\LMS\\LMS.Application\\LMS.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Application\\LMS.Application.csproj",
+        "projectUniqueName": "C:\\LMS_Project\\LMS\\LMS.Application\\LMS.Application.csproj",
         "projectName": "LMS.Application",
-        "projectPath": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Application\\LMS.Application.csproj",
-        "packagesPath": "C:\\Users\\visha\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Application\\obj\\",
+        "projectPath": "C:\\LMS_Project\\LMS\\LMS.Application\\LMS.Application.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\LMS_Project\\LMS\\LMS.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\visha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +32,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Domain\\LMS.Domain.csproj": {
-                "projectPath": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Domain\\LMS.Domain.csproj"
+              "C:\\LMS_Project\\LMS\\LMS.Domain\\LMS.Domain.csproj": {
+                "projectPath": "C:\\LMS_Project\\LMS\\LMS.Domain\\LMS.Domain.csproj"
               }
             }
           }
@@ -51,6 +55,10 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[2.1.1, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -91,21 +99,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Domain\\LMS.Domain.csproj": {
+    "C:\\LMS_Project\\LMS\\LMS.Domain\\LMS.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Domain\\LMS.Domain.csproj",
+        "projectUniqueName": "C:\\LMS_Project\\LMS\\LMS.Domain\\LMS.Domain.csproj",
         "projectName": "LMS.Domain",
-        "projectPath": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Domain\\LMS.Domain.csproj",
-        "packagesPath": "C:\\Users\\visha\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Domain\\obj\\",
+        "projectPath": "C:\\LMS_Project\\LMS\\LMS.Domain\\LMS.Domain.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\LMS_Project\\LMS\\LMS.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\visha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -162,21 +174,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Persistence\\LMS.Persistence.csproj": {
+    "C:\\LMS_Project\\LMS\\LMS.Persistence\\LMS.Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Persistence\\LMS.Persistence.csproj",
+        "projectUniqueName": "C:\\LMS_Project\\LMS\\LMS.Persistence\\LMS.Persistence.csproj",
         "projectName": "LMS.Persistence",
-        "projectPath": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Persistence\\LMS.Persistence.csproj",
-        "packagesPath": "C:\\Users\\visha\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Persistence\\obj\\",
+        "projectPath": "C:\\LMS_Project\\LMS\\LMS.Persistence\\LMS.Persistence.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\LMS_Project\\LMS\\LMS.Persistence\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\visha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -190,8 +206,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Application\\LMS.Application.csproj": {
-                "projectPath": "C:\\Users\\visha\\OneDrive\\Desktop\\LMS-Project\\LMS\\LMS.Application\\LMS.Application.csproj"
+              "C:\\LMS_Project\\LMS\\LMS.Application\\LMS.Application.csproj": {
+                "projectPath": "C:\\LMS_Project\\LMS\\LMS.Application\\LMS.Application.csproj"
               }
             }
           }
@@ -237,7 +253,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

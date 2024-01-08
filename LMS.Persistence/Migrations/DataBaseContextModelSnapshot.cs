@@ -798,14 +798,8 @@ namespace LMS.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("VerificationDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<bool>("VerificationStatus")
                         .HasColumnType("bit");

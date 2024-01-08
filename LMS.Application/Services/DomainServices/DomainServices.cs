@@ -176,7 +176,7 @@ namespace LMS.Application.Services.DomainServices
             data.UpdatedBy = loggedInUser.EmployeeId;
             data.CreatedBy = loggedInUser.EmployeeId;
 
-            var res = await _unitOfWork.GetRepository<SubDomain>().Add(data);
+             await _unitOfWork.GetRepository<SubDomain>().Add(data);
             var isDataAdded = await _unitOfWork.Save();
             if (isDataAdded <= 0)
             {
@@ -330,7 +330,7 @@ namespace LMS.Application.Services.DomainServices
                 }
             }
 
-            var res = await _unitOfWork.GetRepository<Domains>().Add(data);
+            await _unitOfWork.GetRepository<Domains>().Add(data);
             var isDataAdded = await _unitOfWork.Save();
             if (isDataAdded <= 0)
             {

@@ -16,8 +16,6 @@ namespace LMS.Domain.Models
         public string GeneratedToken { get; set; }
         public DateTime? GeneratedDate { get; set; }
         public bool VerificationStatus { get; set; }
-        public bool Status { get; set; }
         public int UserId { get; set; }
-        public DateTime? VerificationDate { get; set; }
     }
 }

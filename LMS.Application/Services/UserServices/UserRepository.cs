@@ -157,7 +157,7 @@ namespace LMS.Application.Services.AdminServices
             user.UpdatedBy = loggedInUser.EmployeeId;
             user.Password = _cryptographyService.EncryptPassword(request.Email + request.RealPassword);
 
-            var registerUser = await _unitOfWork.GetRepository<Employee>().Add(user);
+            await _unitOfWork.GetRepository<Employee>().Add(user);
             var isDataAdded = await _unitOfWork.Save();
             if (isDataAdded <= 0)
             {

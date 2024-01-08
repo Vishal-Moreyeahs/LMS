@@ -24,6 +24,7 @@ namespace LMS.Infrastructure
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<ICryptographyService, CryptographyService>();
             services.AddTransient<IUserManagerServices, UserManagerServices>();
+            services.AddTransient<IMailServices, MailServices>();
 
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 

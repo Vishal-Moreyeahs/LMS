@@ -47,10 +47,10 @@ namespace LMS.Application.Services.CompanyServices
                 data.UpdatedBy = loggedInUser.EmployeeId;
                 data.CreatedBy = loggedInUser.EmployeeId;
 
-                var companyData = await _unitOfWork.GetRepository<Company>().Add(data);
+                await _unitOfWork.GetRepository<Company>().Add(data);
                 await _unitOfWork.Save();
 
-                if (companyData == null)
+                if (data == null)
                 {
                     throw new ApplicationException($"Error when adding Data in Database");
                 }
@@ -58,7 +58,7 @@ namespace LMS.Application.Services.CompanyServices
                 var response = new CompanyResponse<CompanyData> {
                     Status = true,
                     Message = $"Company - {company.Name} Added Successfully",
-                    Data = _mapper.Map<CompanyData>(companyData)
+                    Data = _mapper.Map<CompanyData>(data)
                 };
                 return response;
             }

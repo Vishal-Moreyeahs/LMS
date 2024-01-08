@@ -6,6 +6,7 @@ using LMS.Infrastructure.Helpers;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -18,22 +19,33 @@ namespace LMS.Infrastructure.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly EmailSettings _emailSettings;
-        public UserManagerServices(IUnitOfWork unitOfWork, IOptions<EmailSettings> emailSettings)
+        private readonly IAuthService _authService;
+        private readonly IMailServices _mailServices;
+        public UserManagerServices(IUnitOfWork unitOfWork, IOptions<EmailSettings> emailSettings, IAuthService authService
+            , IMailServices mailServices)
         {
             _unitOfWork = unitOfWork;
             _emailSettings = emailSettings.Value;
+            _authService = authService;
+            _mailServices = mailServices;
         }
 
-        public string ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
+        public void ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
         {
-            var users = _unitOfWork.GetRepository<Employee>().GetAll().Result;
-            var user = users.Where(x => x.Email == forgotPasswordViewModel.EmailAddress).FirstOrDefault();
-            if (user == null)
+            try
             {
-                throw new ApplicationException($"User does not Exists");
+                var users = _unitOfWork.GetRepository<Employee>().GetAll().Result;
+                var user = users.Where(x => x.Email == forgotPasswordViewModel.EmailAddress).FirstOrDefault();
+                if (user == null)
+                {
+                    throw new ApplicationException($"User does not Exists");
+                }
+                Send(user);
             }
-            var res = SendVerificationEmail(user,"nsdkjfasdngkndgjansgfbasgjnsangjaib"); 
-            return res;
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public void ResetPassword()
@@ -41,45 +53,63 @@ namespace LMS.Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        //private void Send(Employee user)
-        //{
-        //    var emailVerficationToken = GenerateHashSha256.ComputeSha256Hash((GenerateRandomNumbers.RandomNumbers(6)));
-        //    _verificationRepository.SendResetVerificationToken(user.UserId, emailVerficationToken);
+        public void Send(Employee user)
+        {
+            try
+            {
+                var emailVerficationToken = _authService.GenerateToken(user).Result;
+                var token = new JwtSecurityTokenHandler().WriteToken(emailVerficationToken);
 
-        //    MailMessage message = new MailMessage();
-        //    SmtpClient smtpClient = new SmtpClient();
-        //    try
-        //    {
-        //        MailAddress fromAddress = new MailAddress(_appSettings.EmailFrom);
-        //        message.From = fromAddress;
-        //        message.To.Add(user.Email);
-        //        message.Subject = "Welcome to Web Secure";
-        //        message.IsBodyHtml = true;
-        //        message.Body = SendVerificationEmail(user, emailVerficationToken);
-        //        smtpClient.Host = _appSettings.Host;
-        //        smtpClient.Port = Convert.ToInt32(_appSettings.Port);
-        //        smtpClient.EnableSsl = true;
-        //        smtpClient.UseDefaultCredentials = false;
-        //        smtpClient.Credentials = new System.Net.NetworkCredential(_appSettings.EmailFrom, _appSettings.Password);
-        //        smtpClient.Send(message);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
+                ResetPasswordVerification model = new ResetPasswordVerification
+                {
+                    GeneratedToken = token,
+                    GeneratedDate = DateTime.Now,
+                    UserId = user.Id,
+                    VerificationStatus = false
+                };
+
+                _unitOfWork.GetRepository<ResetPasswordVerification>().Add(model);
+                _unitOfWork.Save();
+                var body = SendVerificationEmail(user, token);
+
+                _mailServices.SendEmailAsync(user.Email, "Reset Password Link", body);
+
+            }
+            catch (Exception ex) { throw; }
+            //;            MailMessage message = new MailMessage();
+            //            SmtpClient smtpClient = new SmtpClient();
+            //            try
+            //            {
+            //                MailAddress fromAddress = new MailAddress(_emailSettings.EmailFrom);
+            //                message.From = fromAddress;
+            //                message.To.Add(user.Email);
+            //                message.Subject = "Welcome to Web Secure";
+            //                message.IsBodyHtml = true;
+            //                message.Body = SendVerificationEmail(user, token);
+            //                smtpClient.Host = _emailSettings.Host;
+            //                smtpClient.Port = Convert.ToInt32(_emailSettings.Port);
+            //                smtpClient.EnableSsl = true;
+            //                smtpClient.UseDefaultCredentials = false;
+            //                smtpClient.Credentials = new System.Net.NetworkCredential(_emailSettings.EmailFrom, _emailSettings.Password);
+            //                smtpClient.Send(message);
+            //            }
+            //            catch (Exception)
+            //            {
+            //                throw;
+            //            }
+        }
 
         public string SendVerificationEmail(Employee user, string token)
         {
-            AesAlgorithm aesAlgorithm = new AesAlgorithm();
-            var key = string.Join(":", new string[] { DateTime.Now.Ticks.ToString(), user.Id.ToString() });
-            var encrypt = aesAlgorithm.EncryptToBase64String(key);
+            //AesAlgorithm aesAlgorithm = new AesAlgorithm();
+            //var key = string.Join(":", new string[] { DateTime.Now.Ticks.ToString(), user.Id.ToString() });
+            //var encrypt = aesAlgorithm.EncryptToBase64String(key);
 
-            var linktoverify = _emailSettings.VerifyResetPasswordUrl + "?key=" + HttpUtility.UrlEncode(encrypt) + "&hashtoken=" + HttpUtility.UrlEncode(token);
+            var linktoverify = _emailSettings.VerifyResetPasswordUrl + "?userId=" + user.Id + "&token=" + token;
             var stringtemplate = new StringBuilder();
             stringtemplate.Append("Welcome");
             stringtemplate.Append("<br/>");
-            stringtemplate.Append("Dear " + string.Concat(user.FirstName," ",user.LastName));
+            stringtemplate.Append("Dear " + string.Concat(user.FirstName, " ", user.LastName));
             stringtemplate.Append("<br/>");
             stringtemplate.Append("Please click the following link to reset your password.");
             stringtemplate.Append("<br/>");
