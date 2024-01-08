@@ -12,5 +12,7 @@ namespace LMS.Application.ViewModels
         [EmailAddress]
         [Required(ErrorMessage = "Enter Email")]
         public string EmailAddress { get; set; }
+
+        public string Token { get; set; }
     }
 }

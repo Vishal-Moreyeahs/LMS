@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using System.Net.Mail;
 using System.Text;
 using System.Web;
@@ -43,6 +44,18 @@ namespace LMS.Api.Controllers
         {
             _userManagerServices.ForgotPassword(forgotPasswordViewModel);
             return Ok();
+        }
+
+        [HttpPost("verify-token")]
+        public IActionResult VerifyResetToken(string token)
+        {
+            return Ok(_authenticationService.IsTokenValid(token));
+        }
+
+        [HttpPost("reset-password")]
+        public IActionResult ResetPassword(ResetPasswordViewModel token)
+        {
+            return Ok(_userManagerServices.ResetPassword(token));
         }
     }
 }

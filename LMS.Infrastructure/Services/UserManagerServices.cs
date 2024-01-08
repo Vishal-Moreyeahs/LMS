@@ -1,9 +1,13 @@
 ﻿using LMS.Application.Contracts.Infrastructure;
 using LMS.Application.Contracts.Persistence;
+using LMS.Application.Models;
 using LMS.Application.ViewModels;
 using LMS.Domain.Models;
 using LMS.Infrastructure.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,15 +23,17 @@ namespace LMS.Infrastructure.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly EmailSettings _emailSettings;
+        private readonly ICryptographyService _cryptographyService;
         private readonly IAuthService _authService;
         private readonly IMailServices _mailServices;
         public UserManagerServices(IUnitOfWork unitOfWork, IOptions<EmailSettings> emailSettings, IAuthService authService
-            , IMailServices mailServices)
+            , IMailServices mailServices, ICryptographyService cryptographyService)
         {
             _unitOfWork = unitOfWork;
             _emailSettings = emailSettings.Value;
             _authService = authService;
             _mailServices = mailServices;
+            _cryptographyService = cryptographyService;
         }
 
         public void ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
@@ -51,6 +57,39 @@ namespace LMS.Infrastructure.Services
         public void ResetPassword()
         {
             throw new NotImplementedException();
+        }
+
+        public Response<bool> ResetPassword(ResetPasswordViewModel resetPasswordViewModel)
+        {
+            var userdetails = _unitOfWork.GetRepository<Employee>().Get(resetPasswordViewModel.UserId).Result;
+            if (userdetails == null)
+            {
+                throw new ApplicationException("User does not Exists");
+            }
+            var password = _cryptographyService.EncryptPassword(userdetails.Email + resetPasswordViewModel.Password);
+            userdetails.Password = password;
+            _unitOfWork.GetRepository<Employee>().Update(userdetails);
+            var isReset = _unitOfWork.Save().Result;
+            if (isReset <= 0)
+            {
+                throw new ApplicationException("Password Not Updated. Please try later");
+            }
+            var tokens = _unitOfWork.GetRepository<ResetPasswordVerification>().GetAll().Result;
+            var resetPasswordVerification = tokens.Where(x => x.GeneratedToken == resetPasswordViewModel.Token && x.VerificationStatus == false).FirstOrDefault();
+            if (resetPasswordVerification == null)
+            {
+                throw new ApplicationException("Invalid Request !!!");
+            }
+            resetPasswordVerification.VerificationStatus = true;
+            _unitOfWork.GetRepository<ResetPasswordVerification>().Add(resetPasswordVerification);
+            _unitOfWork.Save();
+            var response = new Response<bool>
+            {
+                Status = true,
+                Message = "Reset Password Successfully",
+                Data = true
+            };
+            return response;
         }
 
         public void Send(Employee user)
@@ -97,6 +136,7 @@ namespace LMS.Infrastructure.Services
             //      throw;
             //  }
         }
+
 
         public string SendVerificationEmail(Employee user, string token)
         {

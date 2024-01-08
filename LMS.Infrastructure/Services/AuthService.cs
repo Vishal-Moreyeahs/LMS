@@ -131,6 +131,31 @@ namespace LMS.Infrastructure.Services
             return jwtSecurityToken;
         }
 
+        public async Task<Response<bool>> IsTokenValid(string jwtToken)
+        {
+            if (string.IsNullOrEmpty(jwtToken))
+            {
+                throw new ArgumentNullException(nameof(jwtToken), "JWT token cannot be null or empty.");
+            }
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(jwtToken) as JwtSecurityToken;
+
+            if (jsonToken == null)
+            {
+                throw new ArgumentException("Invalid JWT token.");
+            }
+
+            var now = DateTime.UtcNow;
+            var response = new Response<bool>
+            {
+                Status = true,
+                Message = "Token Validated",
+                Data = now < jsonToken.ValidTo
+            };
+            
+            return response;
+        }
+
         public static class CustomClaimTypes
         {
             public const string CompanyId = "CompanyId";

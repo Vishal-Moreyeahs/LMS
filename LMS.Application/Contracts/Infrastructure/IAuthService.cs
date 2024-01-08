@@ -16,6 +16,7 @@ namespace LMS.Application.Contracts.Infrastructure
         Task<Response<AuthResponse>> Login(AuthRequest request);
         Task<Response<RegistrationResponse>> Register(RegistrationRequest request);
         Task<JwtSecurityToken> GenerateToken(Employee user);
+        Task<Response<bool>> IsTokenValid(string jwtToken);
 
     }
 }
