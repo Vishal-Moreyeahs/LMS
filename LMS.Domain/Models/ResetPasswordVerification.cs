@@ -12,12 +12,10 @@ namespace LMS.Domain.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long ResetTokenId { get; set; }
+        public int ResetTokenId { get; set; }
         public string GeneratedToken { get; set; }
         public DateTime? GeneratedDate { get; set; }
         public bool VerificationStatus { get; set; }
-        public bool Status { get; set; }
         public int UserId { get; set; }
-        public DateTime? VerificationDate { get; set; }
     }
 }

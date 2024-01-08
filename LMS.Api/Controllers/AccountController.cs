@@ -32,11 +32,11 @@ namespace LMS.Api.Controllers
             return Ok(await _authenticationService.Login(request));
         }
 
-        [HttpPost("register")]
-        public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
-        {
-            return Ok(await _authenticationService.Register(request));
-        }
+        //[HttpPost("register")]
+        //public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
+        //{
+        //    return Ok(await _authenticationService.Register(request));
+        //}
 
         [HttpPost("forgot-password")]
         public async Task<IActionResult> Process(ForgotPasswordViewModel forgotPasswordViewModel)

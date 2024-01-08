@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using LMS.Application.Contracts.Infrastructure;
 using LMS.Application.Models;
@@ -24,7 +20,8 @@ namespace LMS.Infrastructure
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<ICryptographyService, CryptographyService>();
             services.AddTransient<IUserManagerServices, UserManagerServices>();
-
+            services.AddTransient<IMailServices,MailServices>();
+            
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
             services.AddAuthentication(options =>

@@ -82,8 +82,8 @@ namespace LMS.Infrastructure.Services
             var user = _mapper.Map<Employee>(request);
             user.CreatedDate = DateTime.UtcNow;
             user.UpdatedDate = DateTime.UtcNow;
-            //user.CreatedBy = loggedInUser.EmployeeId;
-            //user.UpdatedBy = loggedInUser.EmployeeId;
+            user.CreatedBy = loggedInUser.EmployeeId;
+            user.UpdatedBy = loggedInUser.EmployeeId;
             user.Password = _cryptographyService.EncryptPassword(request.Email + request.RealPassword);
 
             var registerUser = await _unitOfWork.GetRepository<Employee>().Add(user);
@@ -103,7 +103,7 @@ namespace LMS.Infrastructure.Services
             return response;
         }
 
-        private async Task<JwtSecurityToken> GenerateToken(Employee user)
+        public async Task<JwtSecurityToken> GenerateToken(Employee user)
         {
             
             var role = await _unitOfWork.GetRepository<Role>().Get(user.Role_Id);

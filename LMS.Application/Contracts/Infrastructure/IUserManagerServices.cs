@@ -9,7 +9,7 @@ namespace LMS.Application.Contracts.Infrastructure
 {
     public interface IUserManagerServices
     {
-        string ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel);
+        Task ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel);
         void ResetPassword();
     }
 }
