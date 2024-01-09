@@ -94,11 +94,12 @@ namespace LMS.Application.Services.AdminServices
 
         public async Task<Response<List<UserData>>> GetAllUser()
         {
+            var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
             var employeeList = await _unitOfWork.GetRepository<Employee>().GetAll();
 
-            var adminData = employeeList.Where(x => x.Role_Id == (int)RoleEnum.Admin).ToList();
-
-            if (adminData != null)
+            //var list = employeeList.ToList();
+            var result = employeeList.Where(x => x.Company_Id == loggedInUser.CompanyId && x.IsActive).ToList();
+            if (result == null)
             {
                 throw new ApplicationException($"Data not found");
             }
@@ -107,7 +108,7 @@ namespace LMS.Application.Services.AdminServices
             {
                 Status = true,
                 Message = $"User retrieved successfully",
-                Data = _mapper.Map<List<UserData>>(adminData.ToList())
+                Data = _mapper.Map<List<UserData>>(result.ToList())
             };
 
             return response;

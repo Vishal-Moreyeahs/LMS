@@ -18,9 +18,13 @@ namespace LMS.Application.Profiles
             CreateMap<CompanyRequest, Company>().ReverseMap();
             CreateMap<CompanyData, Company>().ReverseMap();
             CreateMap<DomainRequest, Domains>().ReverseMap();
+            CreateMap<UserData, Employee>().ReverseMap();
             CreateMap<DomainDTO, Domains>().ReverseMap();
+            CreateMap<FileBankResponse, FileBank>().ReverseMap();
+            CreateMap<FileBankDTO, FileBank>().ReverseMap();
             CreateMap<SubDomainDTO, SubDomain>().ReverseMap();
             CreateMap<SubDomainRequest, SubDomain>().ReverseMap();
+            CreateMap<UploadFileBankRequest, FileBank>().ReverseMap();
         }
     }
 }
