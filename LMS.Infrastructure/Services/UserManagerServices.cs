@@ -143,21 +143,22 @@ namespace LMS.Infrastructure.Services
             //AesAlgorithm aesAlgorithm = new AesAlgorithm();
             //var key = string.Join(":", new string[] { DateTime.Now.Ticks.ToString(), user.Id.ToString() });
             //var encrypt = aesAlgorithm.EncryptToBase64String(key);
+            var company = _unitOfWork.GetRepository<Company>().Get(user.Company_Id).Result;
 
             var linktoverify = _emailSettings.VerifyResetPasswordUrl + "?userId=" + user.Id + "&token=" + token;
             var stringtemplate = new StringBuilder();
             stringtemplate.Append("Welcome");
-            stringtemplate.Append("<br/>");
+            stringtemplate.Append("<br/> <br/>");
             stringtemplate.Append("Dear " + string.Concat(user.FirstName, " ", user.LastName));
-            stringtemplate.Append("<br/>");
+            stringtemplate.Append("<br/><br/>");
             stringtemplate.Append("Please click the following link to reset your password.");
-            stringtemplate.Append("<br/>");
+            stringtemplate.Append("<br/><br/>");
             stringtemplate.Append("Reset password link : <a target='_blank' href=" + linktoverify + ">Link</a>");
-            stringtemplate.Append("<br/>");
-            stringtemplate.Append("If the link does not work, copy and paste the URL into a new browser window. The URL will expire in 24 hours for security reasons.");
-            stringtemplate.Append("<br/>");
+            stringtemplate.Append("<br/><br/>");
+            stringtemplate.Append("If the link does not work, copy and paste the URL into a new browser window. The URL will expire in 1 hours for security reasons.");
+            stringtemplate.Append("<br/><br/>");
             stringtemplate.Append("Best regards,");
-            stringtemplate.Append("Saineshwar Begari");
+            stringtemplate.Append(company.Name);
             stringtemplate.Append("<br/>");
             return stringtemplate.ToString();
         }

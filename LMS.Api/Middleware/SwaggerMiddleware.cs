@@ -9,7 +9,6 @@ namespace LMS.Api.Middleware
         public static IServiceCollection ConfigureSwaggerServices(this IServiceCollection services)
         {
 
-            //Swagger Config
             services.AddSwaggerGen(c =>
             {
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -45,7 +44,7 @@ namespace LMS.Api.Middleware
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "HR Leave Management Api",
+                    Title = "Learning Management System",
 
                 });
 
