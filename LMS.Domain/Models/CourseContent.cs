@@ -14,11 +14,11 @@ namespace LMS.Domain.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public string Title { get; set; }
         public int Sequence { get; set; }
         public int Courses_Id { get; set; }
         public string Type { get; set; }
         public string Media { get; set; }
-
 
         public virtual Course Courses { get; set; }
 

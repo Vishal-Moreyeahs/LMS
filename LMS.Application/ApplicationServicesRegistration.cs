@@ -2,6 +2,7 @@
 using LMS.Application.Contracts.Repositories;
 using LMS.Application.Services.AdminServices;
 using LMS.Application.Services.CompanyServices;
+using LMS.Application.Services.CourseManager;
 using LMS.Application.Services.DomainServices;
 using LMS.Application.Services.FileBankManager;
 using LMS.Application.Services.RoleManager;
@@ -20,6 +21,7 @@ namespace LMS.Application
             services.AddTransient<IDomainServices, DomainServices>();
             services.AddTransient<IRoleServices,RoleServices>();
             services.AddTransient<IFileBankServices, FileBankServices>();
+            services.AddTransient<ICourseServices, CourseServices>();
 
             return services;
         }

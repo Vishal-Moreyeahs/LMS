@@ -2,18 +2,9 @@
 using LMS.Application.Request;
 using LMS.Application.Response;
 using LMS.Application.ViewModels;
-using LMS.Domain.Models;
-using LMS.Infrastructure.Helpers;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
-using System.Net.Mail;
-using System.Text;
-using System.Web;
 
 namespace LMS.Api.Controllers
 {

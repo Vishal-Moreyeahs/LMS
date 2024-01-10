@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using LMS.Application.ViewModels;
+using LMS.Application.Models.Blob;
 
 namespace LMS.Infrastructure
 {
@@ -25,8 +26,10 @@ namespace LMS.Infrastructure
             services.AddTransient<ICryptographyService, CryptographyService>();
             services.AddTransient<IUserManagerServices, UserManagerServices>();
             services.AddTransient<IMailServices, MailServices>();
+            services.AddTransient<IAzureService, AzureService>();
 
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+            services.Configure<AzureStorageConfig>(configuration.GetSection("AzureStorageConfig"));
 
             services.AddAuthentication(options =>
             {

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
+using LMS.Application.Contracts.Infrastructure;
 using LMS.Application.Contracts.Persistence;
 using LMS.Application.Contracts.Repositories;
 using LMS.Application.Models;
@@ -21,14 +22,16 @@ namespace LMS.Application.Services.FileBankManager
     public class FileBankServices : IFileBankServices
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAzureService _azureService;
         private readonly IMapper _mapper;
         private readonly IAuthenticatedUserService _authenticatedUserService;
         public FileBankServices(IUnitOfWork unitOfWork, IAuthenticatedUserService authenticatedUserService
-                , IMapper mapper)
+                , IMapper mapper, IAzureService azureService)
         { 
             _unitOfWork = unitOfWork;
             _authenticatedUserService = authenticatedUserService;
             _mapper = mapper;
+            _azureService = azureService;
         }
 
         public async Task<Response<FileBankResponse>> DeleteFileFromFileBank(int id)
@@ -39,6 +42,7 @@ namespace LMS.Application.Services.FileBankManager
             {
                 throw new ApplicationException("File Not Found");
             }
+
             fileDetails.IsActive = false;
             fileDetails.UpdatedDate = DateTime.UtcNow;
             fileDetails.UpdatedBy = loggedInUser.EmployeeId;
@@ -123,10 +127,16 @@ namespace LMS.Application.Services.FileBankManager
             }
             try
             {
+                var isUploaded = await _azureService.UploadAsync(fileBankRequest.File);
+
+                if (isUploaded.Error)
+                {
+                    throw new ApplicationException($"{isUploaded.Status}");
+                }
+
                 var loggedInUser =await _authenticatedUserService.GetLoggedInUser();
                 long fileSizeInBytes = fileBankRequest.File.Length;
                 double fileSizeInKb = fileSizeInBytes / 1024.0;
-                double fileSizeInMb = fileSizeInKb / 1024.0;
                 byte[] file;
                 using (var memoryStream = new MemoryStream())
                 {
@@ -137,13 +147,14 @@ namespace LMS.Application.Services.FileBankManager
                 var entity = _mapper.Map<FileBank>(fileBankRequest);
                 entity.Format = fileBankRequest.File.ContentType;
                 entity.Size = fileSizeInKb.ToString();
-                entity.Path = file;
+                entity.Path = isUploaded.Blob.Name;
                 entity.Company_Id = loggedInUser.CompanyId;
                 entity.UpdatedBy = loggedInUser.EmployeeId;
                 entity.CreatedBy = loggedInUser.EmployeeId;
                 entity.CreatedDate = DateTime.UtcNow;
                 entity.UpdatedDate = DateTime.UtcNow;
                 entity.IsActive = true;
+
                 await _unitOfWork.GetRepository<FileBank>().Add(entity);
                 var isFileUploaded = await _unitOfWork.Save();
                 if (isFileUploaded <= 0)
