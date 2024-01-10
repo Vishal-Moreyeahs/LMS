@@ -41,14 +41,14 @@ namespace LMS.Api.Controllers
             return Ok(await _domainRepository.DeleteDomain(domainId));
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("getAllDomain")]
         public async Task<IActionResult> GetAllDomain()
         {
             return Ok(await _domainRepository.GetAllDomain());
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("getById")]
         public async Task<IActionResult> GetDomainById(int domainId)
         {
@@ -76,14 +76,14 @@ namespace LMS.Api.Controllers
             return Ok(await _domainRepository.DeleteSubDomain(subDomainId));
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("getAllSubDomain")]
         public async Task<IActionResult> GetAllSubDomain()
         {
             return Ok(await _domainRepository.GetAllSubDomain());
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("getSubDomainByDomainId")]
         public async Task<IActionResult> GetSubDomainByDomainId(int domainId)
         {

@@ -40,14 +40,14 @@ namespace LMS.Api.Controllers
             return Ok(await _companyRepository.DeleteCompany(companyId));
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("getAllCompanies")]
         public async Task<IActionResult> GetAllCompany()
         {
             return Ok(await _companyRepository.GetAllCompany());
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("getById")]
         public async Task<IActionResult> GetCompanyById(int id)
         {

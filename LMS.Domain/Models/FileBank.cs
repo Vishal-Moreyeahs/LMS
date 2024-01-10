@@ -19,7 +19,7 @@ namespace LMS.Domain.Models
         public string Format { get; set; }
         public int Company_Id { get; set; }
         public string? Size { get; set; }
-        public string Path { get; set; }
+        public byte[] Path { get; set; }
 
         public virtual Company Company { get; set; } = null!;
 

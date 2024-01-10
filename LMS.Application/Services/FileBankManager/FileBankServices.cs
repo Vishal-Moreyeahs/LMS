@@ -57,6 +57,25 @@ namespace LMS.Application.Services.FileBankManager
             };
         }
 
+        public async Task<Response<List<FileBankDTO>>> GetAllFileFromFileBank()
+        {
+            var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
+            var fileDetails = await _unitOfWork.GetRepository<FileBank>().GetAll();
+            if (fileDetails == null)
+            { 
+                throw new ApplicationException("Files not found");
+            }
+
+            var files = fileDetails.Where(x => x.Company_Id == loggedInUser.CompanyId && x.IsActive).ToList();
+            var response = new Response<List<FileBankDTO>>
+            {
+                Status = true,
+                Message = "File Retreived successfully",
+                Data = _mapper.Map<List<FileBankDTO>>(files)
+            };
+            return response;
+        }
+
         public async Task<FileBank> GetFileFromFileBank(int id)
         {
             var fileDetails = await _unitOfWork.GetRepository<FileBank>().Get(id);

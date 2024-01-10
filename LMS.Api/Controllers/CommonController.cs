@@ -39,14 +39,14 @@ namespace LMS.Api.Controllers
             return Ok(await _userRepository.DeleteUser(id));
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("getAllUser")]
         public async Task<IActionResult> GetAllUser()
         {
             return Ok(await _userRepository.GetAllUser());
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("getUserById")]
         public async Task<IActionResult> GetUserById(int id)
         {
