@@ -15,6 +15,8 @@ namespace LMS.Application.Request
         public string Title { get; set; }
 
         public string? Description { get; set; }
+        public string Format { get; set; }
+        public bool IsActive { get; set; } = true;
 
         [Required]
         public IFormFile File { get; set; }

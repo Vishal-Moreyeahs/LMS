@@ -49,7 +49,6 @@ namespace LMS.Api.Controllers
         {
             BlobDto? file = await _storage.DownloadAsync(filename);
 
-            // Check if file was found
             if (file == null)
             {
                 // Was not, return error message to client

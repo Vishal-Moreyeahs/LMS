@@ -96,15 +96,17 @@ namespace LMS.Application.Services.DomainServices
 
         public async Task<Response<DomainDTO>> GetDomainById(int domainId)
         {
-
             var domainDetail = await _unitOfWork.GetRepository<Domains>().Get(domainId);
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
-
             if (domainDetail == null || domainDetail.Company_Id != loggedInUser.CompanyId || !domainDetail.IsActive)
             {
                 throw new ApplicationException($"Domain with id - {domainId} not exists");
             }
+
+            var subDomains = await _unitOfWork.GetRepository<SubDomain>().GetAll();
             
+            domainDetail.SubDomains = subDomains.Where(x => x.IsActive && x.Domain_Id == domainDetail.Id).ToList();
+
             var response = new Response<DomainDTO>
             {
                 Status = true,

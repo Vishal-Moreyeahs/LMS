@@ -12,5 +12,9 @@ namespace LMS.Application.Contracts.Repositories
     public interface ICourseServices
     {
         Task<Response<CourseRequest>> AddCourse(CourseRequest course);
+
+        Task<Response<List<CourseDTO>>> GetAllCourse();
+        Task<Response<CourseRequest>> GetCourseById(int id);
+        Task<Response<List<string>>> GetAllContentType();
     }
 }

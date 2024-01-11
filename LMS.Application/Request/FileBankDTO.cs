@@ -16,5 +16,6 @@ namespace LMS.Application.Request
 
         public string? Description { get; set; }
         public string Format { get; set; }
+        public string? Path { get; set; }
     }
 }

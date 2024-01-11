@@ -53,10 +53,16 @@ namespace LMS.Application.Services.FileBankManager
             {
                 throw new ApplicationException("Fail to delete data");
             }
+            var fileName = fileDetails.Path.Split("/").ToList().Last();
+            var isDeletedFromCloud = await _azureService.DeleteAsync(fileName);
+            if (isDeletedFromCloud.Error)
+            {
+                throw new ApplicationException($"{isDeletedFromCloud.Status}");
+            }
             return new Response<FileBankResponse>
             {
                 Status = true,
-                Message = $"Deleted file {id}",
+                Message = $"Deleted file - {id}",
                 Data = _mapper.Map<FileBankResponse>(fileDetails)
             };
         }
@@ -145,9 +151,8 @@ namespace LMS.Application.Services.FileBankManager
                     
                 }
                 var entity = _mapper.Map<FileBank>(fileBankRequest);
-                entity.Format = fileBankRequest.File.ContentType;
                 entity.Size = fileSizeInKb.ToString();
-                entity.Path = isUploaded.Blob.Name;
+                entity.Path = isUploaded.Blob.Uri;
                 entity.Company_Id = loggedInUser.CompanyId;
                 entity.UpdatedBy = loggedInUser.EmployeeId;
                 entity.CreatedBy = loggedInUser.EmployeeId;

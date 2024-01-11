@@ -17,7 +17,7 @@ namespace LMS.Domain.Models
         public string Title { get; set; }
         public int Sequence { get; set; }
         public int Courses_Id { get; set; }
-        public string Type { get; set; }
+        public string Format { get; set; }
         public string Media { get; set; }
 
         public virtual Course Courses { get; set; }
