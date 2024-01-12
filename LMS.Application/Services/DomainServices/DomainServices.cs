@@ -55,8 +55,8 @@ namespace LMS.Application.Services.DomainServices
                 throw new ApplicationException($"Domain with Id - {domainId} not exist");
             }
 
-            domain.IsActive = true;
-            var result = _unitOfWork.GetRepository<Domains>().Update(domain);
+            domain.IsActive = false;
+            await _unitOfWork.GetRepository<Domains>().Update(domain);
             await _unitOfWork.Save();
             var isDomainDeleted = await _unitOfWork.Save();
             if (isDomainDeleted <= 0)
@@ -196,20 +196,19 @@ namespace LMS.Application.Services.DomainServices
                 throw new ApplicationException($"Sub Domain with Id - {subDomainId} not exist");
             }
 
-            domain.IsActive = true;
-            var result = _unitOfWork.GetRepository<Domains>().Update(domain);
-            await _unitOfWork.Save();
+            subDomain.IsActive = false;
+            await _unitOfWork.GetRepository<SubDomain>().Update(subDomain);
             var isSubDomainDeleted = await _unitOfWork.Save();
             if (isSubDomainDeleted <= 0)
             {
                 throw new ApplicationException($"Sub Domain with Id - {subDomainId} should not delete");
             }
-            var data = _mapper.Map<SubDomainDTO>(domain);
+
             var response = new Response<SubDomainDTO>
             {
                 Status = true,
                 Message = $"Sub Domain with Id - {subDomainId} deleted Successfully",
-                Data = data
+                Data = _mapper.Map<SubDomainDTO>(domain)
             };
             return response;
         }
@@ -282,7 +281,7 @@ namespace LMS.Application.Services.DomainServices
             subDomainData.UpdatedDate = DateTime.UtcNow;
             subDomainData.UpdatedBy = loggedInUser.EmployeeId;
 
-            var result = _unitOfWork.GetRepository<SubDomain>().Update(subDomainData);
+            await _unitOfWork.GetRepository<SubDomain>().Update(subDomainData);
             var isSubDomainUpdated = await _unitOfWork.Save();
 
             if (isSubDomainUpdated <= 0)
