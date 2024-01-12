@@ -46,7 +46,7 @@ namespace LMS.Api.Controllers
         [Route("updateCourse")]
         public async Task<IActionResult> UpdateCourse(CourseDTO course)
         {
-            return Ok(await _courseServices.UpdateCompany(course));
+            return Ok(await _courseServices.UpdateCourse(course));
         }
 
         [HttpGet]
@@ -58,9 +58,37 @@ namespace LMS.Api.Controllers
 
         [HttpPost]
         [Route("addCourseContent")]
-        public async Task<IActionResult> AddSubDomain(List<CourseContentRequest> courseContent)
+        public async Task<IActionResult> AddCourseContents(List<CourseContentRequest> courseContent)
         {
-            return Ok();
+            return Ok(await _courseServices.AddCourseContent(courseContent));
+        }
+
+        [HttpDelete]
+        [Route("deleteCourseContent")]
+        public async Task<IActionResult> DeleteCourseContent(int id)
+        {
+            return Ok(await _courseServices.DeleteCourseContent(id));
+        }
+
+        [HttpGet]
+        [Route("getCourseContent")]
+        public async Task<IActionResult> GetCourseContent(int id)
+        {
+            return Ok(await _courseServices.GetCourseContentById(id));
+        }
+
+        [HttpGet]
+        [Route("getAllContentForCourse")]
+        public async Task<IActionResult> GetAllCourseContentFromCourseId(int courseId)
+        {
+            return Ok(await _courseServices.GetAllCourseContentByCourseId(courseId));
+        }
+
+        [HttpGet]
+        [Route("updateCourseContent")]
+        public async Task<IActionResult> UpdateCourseContent(CourseContentDto courseContentDto)
+        {
+            return Ok(await _courseServices.UpdateCourseContent(courseContentDto));
         }
     }
 }

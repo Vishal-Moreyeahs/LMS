@@ -13,10 +13,15 @@ namespace LMS.Application.Contracts.Repositories
     public interface ICourseServices
     {
         Task<Response<CourseRequest>> AddCourse(CourseRequest course);
-        Task<Response<CourseDTO>> UpdateCompany(CourseDTO course);
+        Task<Response<CourseDTO>> UpdateCourse(CourseDTO course);
         Task<Response<List<CourseDTO>>> GetAllCourse();
         Task<Response<CourseRequest>> GetCourseById(int id);
         Task<Response<List<string>>> GetAllContentType();
         Task<Response<CourseDTO>> DeleteCourse(int id);
+        Task<Response<CourseContentDto>> AddCourseContent(List<CourseContentRequest> courseContents);
+        Task<Response<CourseContentDto>> DeleteCourseContent(int id);
+        Task<Response<CourseContentDto>> GetCourseContentById(int id);
+        Task<Response<List<CourseContentDto>>> GetAllCourseContentByCourseId(int courseId);
+        Task<Response<CourseContentDto>> UpdateCourseContent(CourseContentDto courseContentDto);
     }
 }

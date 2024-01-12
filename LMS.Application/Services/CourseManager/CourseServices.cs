@@ -66,7 +66,35 @@ namespace LMS.Application.Services.CourseManager
             return response;
         }
 
-        public async Task<Response<CourseDTO>> UpdateCompany(CourseDTO course)
+        public async Task<Response<CourseContentDto>> DeleteCourseContent(int id)
+        {
+            var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
+            var courseContent = await _unitOfWork.GetRepository<CourseContent>().Get(id);
+            var course = await _unitOfWork.GetRepository<Course>().Get(courseContent.Courses_Id);
+            if (course == null || course.Company_Id != loggedInUser.CompanyId || courseContent == null)
+            {
+                throw new ApplicationException($"Course Content with Id - {id} not exist");
+            }
+
+            courseContent.IsActive = false;
+            await _unitOfWork.GetRepository<CourseContent>().Update(courseContent);
+            await _unitOfWork.Save();
+            var isCourseContentAdded = await _unitOfWork.Save();
+            if (isCourseContentAdded <= 0)
+            {
+                throw new ApplicationException($"Course Content with Id - {id} should not delete");
+            }
+            var data = _mapper.Map<CourseContentDto>(courseContent);
+            var response = new Response<CourseContentDto>
+            {
+                Status = true,
+                Message = $"Course content with Id - {id} deleted Successfully",
+                Data = data
+            };
+            return response;
+        }
+
+        public async Task<Response<CourseDTO>> UpdateCourse(CourseDTO course)
         {
             var courseDetails = await _unitOfWork.GetRepository<Course>().Get(course.Id);
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
@@ -197,59 +225,132 @@ namespace LMS.Application.Services.CourseManager
             return response;
         }
 
-        //public async Task<Response<CourseContentDto>> AddCourseContent(List<CourseContentRequest> courseContents)
-        //{
-        //    if (courseContents == null || courseContents.Count <= 0)
-        //    {
-        //        throw new ApplicationException($"Course Content is empty !!");
-        //    }
-        //    foreach (var item in courseContents)
-        //    {
-        //        await CreateCourseContent(item);
-        //    }
-        //    var response = new Response<SubDomainDTO>
-        //    {
-        //        Status = true,
-        //        Message = $"Course content added for particular course."
-        //    };
-        //    return response;
-        //}
+        public async Task<Response<CourseContentDto>> AddCourseContent(List<CourseContentRequest> courseContents)
+        {
+            if (courseContents == null || courseContents.Count <= 0)
+            {
+                throw new ApplicationException($"Course Content is empty !!");
+            }
+            foreach (var item in courseContents)
+            {
+                await CreateCourseContent(item);
+            }
+            var response = new Response<CourseContentDto>
+            {
+                Status = true,
+                Message = $"Course content added for particular course."
+            };
+            return response;
+        }
 
-        //public async Task CreateCourseContent(CourseContentRequest courseContent)
-        //{
-        //    var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
+        public async Task CreateCourseContent(CourseContentRequest courseContent)
+        {
+            var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
 
-        //    if (loggedInUser == null || loggedInUser.RoleId != (int)RoleEnum.Admin)
-        //    {
-        //        throw new ApplicationException($"Logged in user does not have Permission to Add course content");
-        //    }
+            if (loggedInUser == null || loggedInUser.RoleId != (int)RoleEnum.Admin)
+            {
+                throw new ApplicationException($"Logged in user does not have Permission to Add course content");
+            }
 
-        //    var course = await GetCourseById(courseContent.Courses_Id);
+            var course = await GetCourseById((int)courseContent.Courses_Id);
 
-        //    if (course == null)
-        //    {
-        //        throw new ApplicationException($"course Id - {courseContent.Courses_Id} not exist");
-        //    }
+            if (course == null)
+            {
+                throw new ApplicationException($"course Id - {courseContent.Courses_Id} not exist");
+            }
 
-        //    var courseContents = await _unitOfWork.GetRepository<CourseContent>().GetAll();
-        //    var isCourseContentsExist = courseContents.Any(x => x.Title == courseContent.Title && x.IsActive);
-        //    if (isCourseContentsExist)
-        //    {
-        //        return;
-        //    }
+            var courseContents = await _unitOfWork.GetRepository<CourseContent>().GetAll();
+            var isCourseContentsExist = courseContents.Any(x => x.Title == courseContent.Title && x.IsActive);
+            if (isCourseContentsExist)
+            {
+                return;
+            }
 
-        //    var data = _mapper.Map<SubDomain>(courseContents);
-        //    data.CreatedDate = DateTime.UtcNow;
-        //    data.UpdatedDate = DateTime.UtcNow;
-        //    data.UpdatedBy = loggedInUser.EmployeeId;
-        //    data.CreatedBy = loggedInUser.EmployeeId;
+            var data = _mapper.Map<CourseContent>(courseContents);
+            data.CreatedDate = DateTime.UtcNow;
+            data.UpdatedDate = DateTime.UtcNow;
+            data.UpdatedBy = loggedInUser.EmployeeId;
+            data.CreatedBy = loggedInUser.EmployeeId;
 
-        //    await _unitOfWork.GetRepository<SubDomain>().Add(data);
-        //    var isDataAdded = await _unitOfWork.Save();
-        //    if (isDataAdded <= 0)
-        //    {
-        //        throw new ApplicationException($"Sub Domain should not be added");
-        //    }
-        //}
+            await _unitOfWork.GetRepository<CourseContent>().Add(data);
+            var isDataAdded = await _unitOfWork.Save();
+            if (isDataAdded <= 0)
+            {
+                throw new ApplicationException($"Sub Domain should not be added");
+            }
+        }
+
+        public async Task<Response<CourseContentDto>> GetCourseContentById(int id)
+        {
+            var courseContent = await _unitOfWork.GetRepository<CourseContent>().Get(id);
+            var course = await _unitOfWork.GetRepository<Course>().Get(courseContent.Id);
+            var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
+            if (courseContent == null || loggedInUser.CompanyId == course.Company_Id || course == null)
+            {
+                throw new ApplicationException($"Course content with id - {id} does not exist");
+            }
+            var response = new Response<CourseContentDto>()
+            { 
+                Status = true,
+                Message = $"Course content retreived",
+                Data = _mapper.Map<CourseContentDto>(courseContent)
+            };
+            return response;
+        }
+
+        public async Task<Response<List<CourseContentDto>>> GetAllCourseContentByCourseId(int courseId)
+        {
+            var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
+            var course = await _unitOfWork.GetRepository<Course>().Get(courseId);
+            if (course == null || course.Company_Id == loggedInUser.CompanyId)
+            {
+                throw new ApplicationException($"Course with course id - {courseId} not exists");
+            }
+            var allCourseContents = await _unitOfWork.GetRepository<CourseContent>().GetAll();
+
+            var courseContent = allCourseContents.Where(x => x.IsActive && x.Courses_Id == courseId).ToList();
+
+            var response = new Response<List<CourseContentDto>>
+            { 
+                Status = true,
+                Message = $"",
+                Data = _mapper.Map<List<CourseContentDto>>(courseContent)
+            };
+            return response;
+        }
+
+        public async Task<Response<CourseContentDto>> UpdateCourseContent(CourseContentDto courseContentDto)
+        {
+            var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
+
+            var courseContentDetails = await _unitOfWork.GetRepository<CourseContent>().Get(courseContentDto.Id);
+
+            if (courseContentDetails == null)
+            {
+                throw new ApplicationException($"Course content does not exists");
+            }
+
+            _mapper.Map<CourseContent>(courseContentDto);
+            _mapper.Map(courseContentDto, courseContentDetails);
+            courseContentDetails.UpdatedDate = DateTime.UtcNow;
+            courseContentDetails.UpdatedBy = loggedInUser.EmployeeId;
+
+            await _unitOfWork.GetRepository<CourseContent>().Update(courseContentDetails);
+            var isCourseContentUpdate = await _unitOfWork.Save();
+
+            if (isCourseContentUpdate <= 0)
+            {
+                throw new ApplicationException($"Course content with Id - {courseContentDto.Id} should not update");
+            }
+
+            var response = new Response<CourseContentDto>
+            {
+                Status = true,
+                Message = $"Course with id - {courseContentDto.Id} Updated Successfully",
+                Data = _mapper.Map<CourseContentDto>(courseContentDetails)
+            };
+
+            return response;
+        }
     }
 }
