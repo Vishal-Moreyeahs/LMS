@@ -5,6 +5,7 @@ using LMS.Application.Services.CompanyServices;
 using LMS.Application.Services.CourseManager;
 using LMS.Application.Services.DomainServices;
 using LMS.Application.Services.FileBankManager;
+using LMS.Application.Services.QuestionBankManager;
 using LMS.Application.Services.RoleManager;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +23,7 @@ namespace LMS.Application
             services.AddTransient<IRoleServices,RoleServices>();
             services.AddTransient<IFileBankServices, FileBankServices>();
             services.AddTransient<ICourseServices, CourseServices>();
+            services.AddTransient<IQuestionBankServices, QuestionBankServices>();
 
             return services;
         }
