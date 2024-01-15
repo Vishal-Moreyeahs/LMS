@@ -32,7 +32,7 @@ namespace LMS.Api.Controllers
             return Ok(await _companyRepository.UpdateCompany(companyRequest));
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteCompanyById(int companyId)
         {

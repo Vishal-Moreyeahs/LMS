@@ -34,7 +34,7 @@ namespace LMS.Api.Controllers
             return Ok(await _domainRepository.UpdateDomain(domain));
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteDomainById(int domainId)
         {
@@ -69,7 +69,7 @@ namespace LMS.Api.Controllers
             return Ok(await _domainRepository.UpdateSubDomain(subDomain));
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("deleteSubDomainWithId")]
         public async Task<IActionResult> DeleteSubDomainById(int subDomainId)
         {

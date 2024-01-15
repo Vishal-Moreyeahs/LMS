@@ -32,7 +32,7 @@ namespace LMS.Api.Controllers
             return Ok(await _userRepository.UpdateUser(user));
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteUserById(int id)
         {

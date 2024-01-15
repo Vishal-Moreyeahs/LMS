@@ -41,7 +41,7 @@ namespace LMS.Api.Controllers
             return Ok(await _fileBankServices.GetAllFileFromFileBank());
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("deleteFile")]
         public async Task<IActionResult> RemoveFileFromFileBank(int id)
         {
