@@ -166,7 +166,7 @@ namespace LMS.Application.Services.DomainServices
             }
 
             var subDomains = await _unitOfWork.GetRepository<SubDomain>().GetAll();
-            var isSubDomainExist = subDomains.Any(x => x.Name == subDomain.Name && x.IsActive);
+            var isSubDomainExist = subDomains.Any(x => x.IsActive);
             if (isSubDomainExist)
             {
                 return;
@@ -215,22 +215,24 @@ namespace LMS.Application.Services.DomainServices
 
         public async Task<Response<List<SubDomainDTO>>> GetAllSubDomain()
         {
-            var allSubDomains = await _unitOfWork.GetRepository<SubDomain>().GetAll();
-            var allDomains = await _unitOfWork.GetRepository<Domains>().GetAll();
+            //var allSubDomains = await _unitOfWork.GetRepository<SubDomain>().GetAll();
+            //var allDomains = await _unitOfWork.GetRepository<Domains>().GetAll();
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
 
-            var subDomains = from subDomain in allSubDomains
-                             join dmn in allDomains
-                             on subDomain.Domain_Id equals dmn.Id
-                             where dmn.Company_Id == loggedInUser.CompanyId && subDomain.IsActive
-                             select new SubDomainDTO
-                             {
-                                 Domain_Id = dmn.Id,
-                                 Description = subDomain.Description,
-                                 Id = subDomain.Id,
-                                 Name = subDomain.Name,
-                             };
+            //var subDomains = from subDomain in allSubDomains
+            //                 join dmn in allDomains
+            //                 on subDomain.Domain_Id equals dmn.Id
+            //                 where dmn.Company_Id == loggedInUser.CompanyId && subDomain.IsActive
+            //                 select new SubDomainDTO
+            //                 {
+            //                     Domain_Id = dmn.Id,
+            //                     Description = subDomain.Description,
+            //                     Id = subDomain.Id,
+            //                     Name = subDomain.Name,
+            //                 };
 
+            var subDomains = _unitOfWork.GetRepository<SubDomain>().GetAllRelatedEntity();
+            subDomains = subDomains.Where(x => x.IsActive && x.Domain.Company_Id == loggedInUser.CompanyId).ToList();
             var response = new Response<List<SubDomainDTO>>
             {
                 Status = true,

@@ -53,12 +53,12 @@ namespace LMS.Application.Services.FileBankManager
             {
                 throw new ApplicationException("Fail to delete data");
             }
-            var fileName = fileDetails.Path.Split("/").ToList().Last();
-            var isDeletedFromCloud = await _azureService.DeleteAsync(fileName);
-            if (isDeletedFromCloud.Error)
-            {
-                throw new ApplicationException($"{isDeletedFromCloud.Status}");
-            }
+            //var fileName = fileDetails.Path.Split("/").ToList().Last();
+            //var isDeletedFromCloud = await _azureService.DeleteAsync(fileName);
+            //if (isDeletedFromCloud.Error)
+            //{
+            //    throw new ApplicationException($"{isDeletedFromCloud.Status}");
+            //}
             return new Response<FileBankResponse>
             {
                 Status = true,

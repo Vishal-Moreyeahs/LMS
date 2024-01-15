@@ -36,11 +36,6 @@ C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Persistence\obj\Debug\net6.0
 C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.pdb
 C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.genruntimeconfig.cache
 C:\Users\visha\OneDrive\Desktop\LMS-Project\LMS\LMS.Persistence\obj\Debug\net6.0\ref\LMS.Persistence.dll
-C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.csproj.AssemblyReference.cache
-C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.GeneratedMSBuildEditorConfig.editorconfig
-C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.AssemblyInfoInputs.cache
-C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.AssemblyInfo.cs
-C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.csproj.CoreCompileInputs.cache
 C:\LMS_Project\LMS\LMS.Persistence\bin\Debug\net6.0\LMS.Persistence.deps.json
 C:\LMS_Project\LMS\LMS.Persistence\bin\Debug\net6.0\LMS.Persistence.runtimeconfig.json
 C:\LMS_Project\LMS\LMS.Persistence\bin\Debug\net6.0\LMS.Persistence.dll
@@ -49,6 +44,11 @@ C:\LMS_Project\LMS\LMS.Persistence\bin\Debug\net6.0\LMS.Application.dll
 C:\LMS_Project\LMS\LMS.Persistence\bin\Debug\net6.0\LMS.Domain.dll
 C:\LMS_Project\LMS\LMS.Persistence\bin\Debug\net6.0\LMS.Application.pdb
 C:\LMS_Project\LMS\LMS.Persistence\bin\Debug\net6.0\LMS.Domain.pdb
+C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.csproj.AssemblyReference.cache
+C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.AssemblyInfoInputs.cache
+C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.AssemblyInfo.cs
+C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.csproj.CoreCompileInputs.cache
 C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.csproj.CopyComplete
 C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\LMS.Persistence.dll
 C:\LMS_Project\LMS\LMS.Persistence\obj\Debug\net6.0\refint\LMS.Persistence.dll

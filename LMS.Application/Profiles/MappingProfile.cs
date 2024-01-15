@@ -29,6 +29,9 @@ namespace LMS.Application.Profiles
             CreateMap<SubDomainDTO, SubDomain>().ReverseMap();
             CreateMap<SubDomainRequest, SubDomain>().ReverseMap();
             CreateMap<UploadFileBankRequest, FileBank>().ReverseMap();
+            CreateMap<QuestionBankRequest, QuestionBank>().ReverseMap();
+            CreateMap<QuestionBankDto, QuestionBank>().ReverseMap();
+            CreateMap<QuestionBankResponse, QuestionBank>().ReverseMap();
         }
     }
 }

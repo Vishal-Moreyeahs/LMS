@@ -65,7 +65,7 @@ namespace LMS.Api.Controllers
         [HttpPost]
         [Route("updateSubDomain")]
         public async Task<IActionResult> UpdateSubDomain(SubDomainDTO subDomain)
-        {
+        { 
             return Ok(await _domainRepository.UpdateSubDomain(subDomain));
         }
 

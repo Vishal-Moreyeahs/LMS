@@ -9,7 +9,14 @@ namespace LMS.Application.Models.Blob
     public class AzureStorageConfig
     {
         public string StorageConnectionString { get; set; }
-        public string StorageContainerName { get; set; }
         public string StorageAccountKey { get; set; }
+    }
+    public class FileBankStorageConfig
+    {
+        public string FileBankContainerName { get; set; }
+    }
+    public class ImageStorageConfig
+    {
+        public string ImageStorageContainerName { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace LMS.Domain.Models
         public string Name { get; set; }
         public string? Description { get; set; }
         public bool IsImageAttached { get; set; }
-        public byte[]? ImagePath { get; set; }
+        public string? ImagePath { get; set; }
         public int SubDomain_Id { get; set; }
 
         public virtual SubDomain SubDomain { get; set; } = null!;

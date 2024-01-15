@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LMS.Domain.Models;
 
 namespace LMS.Application.Contracts.Persistence
 {
@@ -13,5 +14,6 @@ namespace LMS.Application.Contracts.Persistence
         Task Add(T entity);
         Task Update(T entity);
         Task Delete(T entity);
+        IEnumerable<T> GetAllRelatedEntity();
     }
 }

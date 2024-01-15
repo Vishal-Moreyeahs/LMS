@@ -10,12 +10,12 @@ namespace LMS.Application.Contracts.Infrastructure
 {
     public interface IAzureService
     {
-        Task<BlobResponseDto> UploadAsync(IFormFile file);
+        Task<BlobResponseDto> UploadAsync(IFormFile file, string containerName = null);
 
-        Task<BlobDto> DownloadAsync(string blobFilename);
+        Task<BlobDto> DownloadAsync(string blobFilename, string containerName = null);
 
-        Task<BlobResponseDto> DeleteAsync(string blobFilename);
+        Task<BlobResponseDto> DeleteAsync(string blobFilename, string containerName = null);
 
-        Task<List<BlobDto>> ListAsync();
+        Task<List<BlobDto>> ListAsync(string containerName = null);
     }
 }

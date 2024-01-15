@@ -20,15 +20,18 @@ namespace LMS.Infrastructure.Services
     public class AzureService : IAzureService
     {
         private readonly AzureStorageConfig _azureStorage;
-
-        public AzureService(IOptions<AzureStorageConfig> azureStorage)
+        private readonly FileBankStorageConfig _fileStorage;
+        public AzureService(IOptions<AzureStorageConfig> azureStorage, IOptions<FileBankStorageConfig> fileStorage)
         {
             _azureStorage = azureStorage.Value;
+            _fileStorage = fileStorage.Value;
         }
 
-        public async Task<BlobResponseDto> DeleteAsync(string blobFilename)
+        public async Task<BlobResponseDto> DeleteAsync(string blobFilename, string containerName = null)
         {
-            BlobContainerClient client = new BlobContainerClient(_azureStorage.StorageConnectionString, _azureStorage.StorageContainerName);
+            containerName = string.IsNullOrEmpty(containerName) ? _fileStorage.FileBankContainerName : containerName;
+
+            BlobContainerClient client = new BlobContainerClient(_azureStorage.StorageConnectionString, containerName);
 
             BlobClient file = client.GetBlobClient(blobFilename);
 
@@ -49,10 +52,12 @@ namespace LMS.Infrastructure.Services
 
         }
 
-        public async Task<BlobDto> DownloadAsync(string blobFilename)
+        public async Task<BlobDto> DownloadAsync(string blobFilename, string containerName = null)
         {
+            containerName = string.IsNullOrEmpty(containerName) ? _fileStorage.FileBankContainerName : containerName;
+
             // Get a reference to a container named in appsettings.json
-            BlobContainerClient client = new BlobContainerClient(_azureStorage.StorageConnectionString, _azureStorage.StorageContainerName);
+            BlobContainerClient client = new BlobContainerClient(_azureStorage.StorageConnectionString, containerName);
 
             try
             {
@@ -87,10 +92,12 @@ namespace LMS.Infrastructure.Services
             return null;
         }
 
-        public async Task<List<BlobDto>> ListAsync()
+        public async Task<List<BlobDto>> ListAsync(string containerName = null)
         {
+            containerName = string.IsNullOrEmpty(containerName) ? _fileStorage.FileBankContainerName : containerName;
+
             // Get a reference to a container named in appsettings.json
-            BlobContainerClient container = new BlobContainerClient(_azureStorage.StorageConnectionString, _azureStorage.StorageContainerName);
+            BlobContainerClient container = new BlobContainerClient(_azureStorage.StorageConnectionString, containerName);
 
             // Create a new list object for 
             List<BlobDto> files = new List<BlobDto>();
@@ -115,15 +122,17 @@ namespace LMS.Infrastructure.Services
             return files;
         }
 
-        public async Task<BlobResponseDto> UploadAsync(IFormFile blob)
+        public async Task<BlobResponseDto> UploadAsync(IFormFile blob, string containerName = null)
         {
+            containerName = string.IsNullOrEmpty(containerName) ? _fileStorage.FileBankContainerName : containerName;
+
             // Create new upload response object that we can return to the requesting method
             BlobResponseDto response = new();
 
 
 
             // Get a reference to a container named in appsettings.json and then create it
-            BlobContainerClient container = new BlobContainerClient(_azureStorage.StorageConnectionString, _azureStorage.StorageContainerName);
+            BlobContainerClient container = new BlobContainerClient(_azureStorage.StorageConnectionString, containerName);
 
             // Create the container if it does not exist
             await container.CreateIfNotExistsAsync();

@@ -11,7 +11,6 @@ namespace LMS.Application.Contracts.Repositories
         Task<CompanyResponse<CompanyData>> DeleteCompany(int companyId);
         Task<CompanyResponse<CompanyData>> UpdateCompany(CompanyData company);
         Task<CompanyResponse<List<CompanyData>>> GetAllCompany();
-
         Task<CompanyResponse<CompanyData>> GetCompanyById(int id);
     }
 }

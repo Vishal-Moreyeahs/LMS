@@ -30,6 +30,8 @@ namespace LMS.Infrastructure
 
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
             services.Configure<AzureStorageConfig>(configuration.GetSection("AzureStorageConfig"));
+            services.Configure<FileBankStorageConfig>(configuration.GetSection("AzureStorageConfig"));
+            services.Configure<ImageStorageConfig>(configuration.GetSection("AzureStorageConfig"));
 
             services.AddAuthentication(options =>
             {

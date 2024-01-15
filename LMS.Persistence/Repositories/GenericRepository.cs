@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LMS.Application.Contracts.Persistence;
+using LMS.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -43,5 +44,18 @@ namespace LMS.Persistence.Repositories
             _dbContext.Entry(entity).State = EntityState.Modified;
         }
 
+        public IEnumerable<T> GetAllRelatedEntity()
+        {
+            var entityType = _dbContext.Model.FindEntityType(typeof(T));
+
+            var query = _dbContext.Set<T>().AsQueryable();
+
+            foreach (var navigation in entityType.GetNavigations())
+            {
+                query = query.Include(navigation.Name);
+            }
+
+            return query.ToList();
+        }
     }
 }
