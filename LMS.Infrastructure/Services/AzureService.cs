@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -120,6 +121,25 @@ namespace LMS.Infrastructure.Services
 
             // Return all files to the requesting method
             return files;
+        }
+
+        public async Task<BlobResponseDto> ReplaceAsync(IFormFile file, string blobFilename, string containerName = null)
+        {
+            containerName = string.IsNullOrEmpty(containerName) ? _fileStorage.FileBankContainerName : containerName;
+
+            if (!string.IsNullOrEmpty(blobFilename))
+            { 
+                // Delete the existing file
+                var deleted = await DeleteAsync(blobFilename, containerName);
+
+                if (deleted.Error)
+                {
+                    throw new ApplicationException($"{deleted.Status}");
+                }
+            }
+
+            // Upload the new file
+            return await UploadAsync(file, containerName);
         }
 
         public async Task<BlobResponseDto> UploadAsync(IFormFile blob, string containerName = null)

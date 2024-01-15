@@ -27,7 +27,8 @@ namespace LMS.Api.Controllers
 
         [HttpPost]
         [Route("addQuestion")]
-        public async Task<IActionResult> GetAllQuestions([FromForm] QuestionBankRequest question)
+        [DisableRequestSizeLimit]
+        public async Task<IActionResult> AddQuestionToQuestionBank([FromForm] QuestionBankRequest question)
         {
             return Ok(await _questionBankServices.CreateQuestion(question));
         }
@@ -44,6 +45,13 @@ namespace LMS.Api.Controllers
         public async Task<IActionResult> DeleteQuestionFromId(int id)
         {
             return Ok(await _questionBankServices.GetAllQuestions());
+        }
+
+        [HttpPost]
+        [Route("updateQuestion")]
+        public async Task<IActionResult> UpdateQuestion([FromForm] QuestionBankDto question)
+        {
+            return Ok();
         }
     }
 }

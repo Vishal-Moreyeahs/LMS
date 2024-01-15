@@ -9,11 +9,6 @@ using LMS.Application.Response;
 using LMS.Domain.Enums;
 using LMS.Domain.Models;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LMS.Application.Services.QuestionBankManager
 {
@@ -145,6 +140,49 @@ namespace LMS.Application.Services.QuestionBankManager
             var response = new Response<dynamic> { Status = true, Message = "Question Deleted Successfully" };
 
             return response;
+        }
+
+        public async Task<Response<QuestionBankResponse>> UpdateQuestion(QuestionBankDto question)
+        {
+            var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
+            var newFilePath = "";
+            var questionData = await _unitOfWork.GetRepository<QuestionBank>().Get(question.Id);
+
+            if (question.IsImageAttached)
+            {
+                if(question.ImageFile == null)
+                {
+                    throw new ApplicationException("Please attach file, file can not be empty");
+                }
+
+                var fileName = questionData.IsImageAttached ? questionData.ImagePath.Split("/").ToList().Last() : "";
+
+                var isImageUploaded = await _azureService.ReplaceAsync(question.ImageFile, fileName, _imageStorage.ImageStorageContainerName);
+
+                if (isImageUploaded.Error)
+                {
+                    throw new ApplicationException($"{isImageUploaded.Status}");
+                }
+                newFilePath = isImageUploaded.Blob.Uri;
+            }
+
+            _mapper.Map(question, questionData);
+            questionData.ImagePath = newFilePath;
+            questionData.UpdatedDate = DateTime.UtcNow;
+            questionData.UpdatedBy = loggedInUser.EmployeeId;
+
+            await _unitOfWork.GetRepository<QuestionBank>().Update(questionData);
+            var isQuestionUpdated = await _unitOfWork.Save();
+
+            if (isQuestionUpdated <= 0)
+            {
+                throw new ApplicationException($"Sub Domain with Id - {question.Id} should not Update");
+            }
+
+            var response = new Response<QuestionBankResponse> { Status = true, Message = "Question Updated Successfully", Data = _mapper.Map<QuestionBankResponse>(questionData) };
+
+            return response;
+
         }
     }
 }

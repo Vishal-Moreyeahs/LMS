@@ -17,5 +17,7 @@ namespace LMS.Application.Contracts.Infrastructure
         Task<BlobResponseDto> DeleteAsync(string blobFilename, string containerName = null);
 
         Task<List<BlobDto>> ListAsync(string containerName = null);
+
+        Task<BlobResponseDto> ReplaceAsync(IFormFile file, string blobFilename, string containerName = null);
     }
 }

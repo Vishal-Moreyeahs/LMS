@@ -14,7 +14,7 @@ namespace LMS.Application.Contracts.Repositories
         Task<Response<dynamic>> GetAllQuestions();
         Task<Response<QuestionBankResponse>> CreateQuestion(QuestionBankRequest question);
         Task<Response<QuestionBankResponse>> GetQuestionsById(int id);
-
+        Task<Response<QuestionBankResponse>> UpdateQuestion(QuestionBankDto question);
         Task<Response<dynamic>> DeleteQuestionById(int id);
 
     }
