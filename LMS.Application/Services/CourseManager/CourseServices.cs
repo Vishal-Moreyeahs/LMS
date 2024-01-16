@@ -55,7 +55,7 @@ namespace LMS.Application.Services.CourseManager
 
             courseDetails.IsActive = false;
             await _unitOfWork.GetRepository<Course>().Update(courseDetails);
-            await _unitOfWork.Save();
+            await _unitOfWork.SaveChangesAsync();
 
             var response = new Response<CourseDTO>
             {
@@ -78,8 +78,8 @@ namespace LMS.Application.Services.CourseManager
 
             courseContent.IsActive = false;
             await _unitOfWork.GetRepository<CourseContent>().Update(courseContent);
-            await _unitOfWork.Save();
-            var isCourseContentAdded = await _unitOfWork.Save();
+            await _unitOfWork.SaveChangesAsync();
+            var isCourseContentAdded = await _unitOfWork.SaveChangesAsync();
             if (isCourseContentAdded <= 0)
             {
                 throw new ApplicationException($"Course Content with Id - {id} should not delete");
@@ -105,11 +105,11 @@ namespace LMS.Application.Services.CourseManager
             }
 
             _mapper.Map(course, courseDetails);
-            courseDetails.UpdatedDate = DateTime.UtcNow;
-            courseDetails.UpdatedBy = loggedInUser.EmployeeId;
+            //courseDetails.UpdatedDate = DateTime.UtcNow;
+            //courseDetails.UpdatedBy = loggedInUser.EmployeeId;
 
             await _unitOfWork.GetRepository<Course>().Update(courseDetails);
-            var isCourseUpdate = await _unitOfWork.Save();
+            var isCourseUpdate = await _unitOfWork.SaveChangesAsync();
 
             if (isCourseUpdate <= 0)
             {
@@ -201,10 +201,10 @@ namespace LMS.Application.Services.CourseManager
             }
 
             var data = _mapper.Map<Course>(course);
-            data.CreatedDate = DateTime.UtcNow;
-            data.UpdatedDate = DateTime.UtcNow;
-            data.UpdatedBy = loggedInUser.EmployeeId;
-            data.CreatedBy = loggedInUser.EmployeeId;
+            //data.CreatedDate = DateTime.UtcNow;
+            //data.UpdatedDate = DateTime.UtcNow;
+            //data.UpdatedBy = loggedInUser.EmployeeId;
+            //data.CreatedBy = loggedInUser.EmployeeId;
             data.Company_Id = loggedInUser.CompanyId;
             if (data.CourseContents != null)
             {
@@ -216,7 +216,7 @@ namespace LMS.Application.Services.CourseManager
             }
 
             await _unitOfWork.GetRepository<Course>().Add(data);
-            var isDataAdded = await _unitOfWork.Save();
+            var isDataAdded = await _unitOfWork.SaveChangesAsync();
             if (isDataAdded <= 0)
             {
                 throw new ApplicationException($"domain should not be added");
@@ -267,13 +267,13 @@ namespace LMS.Application.Services.CourseManager
             }
 
             var data = _mapper.Map<CourseContent>(courseContents);
-            data.CreatedDate = DateTime.UtcNow;
-            data.UpdatedDate = DateTime.UtcNow;
-            data.UpdatedBy = loggedInUser.EmployeeId;
-            data.CreatedBy = loggedInUser.EmployeeId;
+            //data.CreatedDate = DateTime.UtcNow;
+            //data.UpdatedDate = DateTime.UtcNow;
+            //data.UpdatedBy = loggedInUser.EmployeeId;
+            //data.CreatedBy = loggedInUser.EmployeeId;
 
             await _unitOfWork.GetRepository<CourseContent>().Add(data);
-            var isDataAdded = await _unitOfWork.Save();
+            var isDataAdded = await _unitOfWork.SaveChangesAsync();
             if (isDataAdded <= 0)
             {
                 throw new ApplicationException($"Sub Domain should not be added");
@@ -332,11 +332,11 @@ namespace LMS.Application.Services.CourseManager
 
             _mapper.Map<CourseContent>(courseContentDto);
             _mapper.Map(courseContentDto, courseContentDetails);
-            courseContentDetails.UpdatedDate = DateTime.UtcNow;
-            courseContentDetails.UpdatedBy = loggedInUser.EmployeeId;
+            //courseContentDetails.UpdatedDate = DateTime.UtcNow;
+            //courseContentDetails.UpdatedBy = loggedInUser.EmployeeId;
 
             await _unitOfWork.GetRepository<CourseContent>().Update(courseContentDetails);
-            var isCourseContentUpdate = await _unitOfWork.Save();
+            var isCourseContentUpdate = await _unitOfWork.SaveChangesAsync();
 
             if (isCourseContentUpdate <= 0)
             {

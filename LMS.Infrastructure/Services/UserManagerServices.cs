@@ -69,7 +69,7 @@ namespace LMS.Infrastructure.Services
             var password = _cryptographyService.EncryptPassword(userdetails.Email + resetPasswordViewModel.Password);
             userdetails.Password = password;
             _unitOfWork.GetRepository<Employee>().Update(userdetails);
-            var isReset = _unitOfWork.Save().Result;
+            var isReset = _unitOfWork.SaveChangesAsync().Result;
             if (isReset <= 0)
             {
                 throw new ApplicationException("Password Not Updated. Please try later");
@@ -82,7 +82,7 @@ namespace LMS.Infrastructure.Services
             }
             resetPasswordVerification.VerificationStatus = true;
             _unitOfWork.GetRepository<ResetPasswordVerification>().Add(resetPasswordVerification);
-            _unitOfWork.Save();
+            _unitOfWork.SaveChangesAsync();
             var response = new Response<bool>
             {
                 Status = true,
@@ -106,7 +106,7 @@ namespace LMS.Infrastructure.Services
             };
 
             _unitOfWork.GetRepository<ResetPasswordVerification>().Add(model);
-            _unitOfWork.Save();
+            _unitOfWork.SaveChangesAsync();
             var body = SendVerificationEmail(user, token);
 
             _mailServices.SendEmailAsync(user.Email, "Reset Password Link", body);

@@ -11,7 +11,7 @@ namespace LMS.Application.Request
 
         public bool IsActive { get; set; } = true;
 
-        public List<SubDomainRequest> SubDomains { get; set; }
+        public List<SubDomainRequest>? SubDomains { get; set; }
         [Required]
         public string Description { get; set; }
 

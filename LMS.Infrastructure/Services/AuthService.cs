@@ -87,7 +87,7 @@ namespace LMS.Infrastructure.Services
             user.Password = _cryptographyService.EncryptPassword(request.Email + request.RealPassword);
 
             await _unitOfWork.GetRepository<Employee>().Add(user);
-            var isDataAdded = await _unitOfWork.Save();
+            var isDataAdded = await _unitOfWork.SaveChangesAsync();
             if (isDataAdded <= 0)
             {
                 throw new ApplicationException($"User {user.Email} should not be added");

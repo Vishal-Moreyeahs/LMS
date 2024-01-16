@@ -44,6 +44,7 @@ namespace LMS.Persistence.Repositories
             _dbContext.Entry(entity).State = EntityState.Modified;
         }
 
+        //Get All data with all foreign key related data.
         public IEnumerable<T> GetAllRelatedEntity()
         {
             var entityType = _dbContext.Model.FindEntityType(typeof(T));

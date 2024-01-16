@@ -18,6 +18,6 @@ namespace LMS.Application.Contracts.Repositories
         Task<Response<UserData>> UpdateUser(UserData admin);
         Task<Response<List<UserData>>> GetAllUser();
 
-        Task<Response<UserData>> GetUserById(int admninId);
+        Task<Response<UserData>> GetUserById(int adminId);
     }
 }

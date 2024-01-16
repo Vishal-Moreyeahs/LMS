@@ -4,20 +4,23 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LMS.Application.Contracts.Repositories;
 using LMS.Domain.Models;
+using LMS.Domain.Models.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace LMS.Persistence
 {
     public class DataBaseContext : DbContext
     {
-        public DataBaseContext(DbContextOptions<DataBaseContext> options)
+        private readonly IAuthenticatedUserService _authenticatedUserServices;
+
+        public DataBaseContext(DbContextOptions<DataBaseContext> options, IAuthenticatedUserService authenticatedUserService)
             : base(options)
         {
             ChangeTracker.LazyLoadingEnabled = true;
+            _authenticatedUserServices = authenticatedUserService;
         }
-
-
 
         //Db Sets or tables
         public virtual DbSet<Company> Companies { get; set; }
@@ -39,6 +42,24 @@ namespace LMS.Persistence
         public virtual DbSet<ResetPasswordVerification> ResetPasswordVerifications { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SubDomain> SubDomains { get; set; }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var loggedInUser = _authenticatedUserServices.GetLoggedInUser();
+            foreach (var entry in ChangeTracker.Entries<BaseEntityClass>())
+            {
+                entry.Entity.UpdatedDate = DateTime.UtcNow;
+                entry.Entity.UpdatedBy = loggedInUser.Result.EmployeeId;
+
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreatedDate = DateTime.UtcNow;
+                    entry.Entity.CreatedBy = loggedInUser.Result.EmployeeId;
+                }
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -22,7 +22,7 @@ namespace LMS.Persistence.Repositories
             _dbContext = context;
         }
 
-        public async Task<int> Save()
+        public async Task<int> SaveChangesAsync()
         {
             return await _dbContext.SaveChangesAsync();
         }

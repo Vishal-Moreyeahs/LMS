@@ -42,13 +42,13 @@ namespace LMS.Application.Services.CompanyServices
                 var loggedInUser= await _authenticatedUserService.GetLoggedInUser();
 
                 var data = _mapper.Map<Company>(company);
-                data.CreatedDate = DateTime.UtcNow;
-                data.UpdatedDate = DateTime.UtcNow;
-                data.UpdatedBy = loggedInUser.EmployeeId;
-                data.CreatedBy = loggedInUser.EmployeeId;
+                //data.CreatedDate = DateTime.UtcNow;
+                //data.UpdatedDate = DateTime.UtcNow;
+                //data.UpdatedBy = loggedInUser.EmployeeId;
+                //data.CreatedBy = loggedInUser.EmployeeId;
 
                 await _unitOfWork.GetRepository<Company>().Add(data);
-                await _unitOfWork.Save();
+                await _unitOfWork.SaveChangesAsync();
 
                 if (data == null)
                 {
@@ -76,7 +76,7 @@ namespace LMS.Application.Services.CompanyServices
 
             companyDetails.IsActive = false;
             var result = _unitOfWork.GetRepository<Company>().Update(companyDetails);
-            await _unitOfWork.Save();
+            await _unitOfWork.SaveChangesAsync();
 
             var response = new CompanyResponse<CompanyData>
             {
@@ -137,11 +137,11 @@ namespace LMS.Application.Services.CompanyServices
 
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
             _mapper.Map(company, companyData);
-            companyData.UpdatedDate = DateTime.UtcNow;
-            companyData.UpdatedBy = loggedInUser.EmployeeId;
+            //companyData.UpdatedDate = DateTime.UtcNow;
+            //companyData.UpdatedBy = loggedInUser.EmployeeId;
 
             var result = _company.Update(companyData);
-            await _unitOfWork.Save();
+            await _unitOfWork.SaveChangesAsync();
 
             var response = new CompanyResponse<CompanyData>
             {

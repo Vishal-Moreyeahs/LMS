@@ -4,12 +4,6 @@ using LMS.Application.Contracts.Repositories;
 using LMS.Application.Models;
 using LMS.Application.Request;
 using LMS.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LMS.Application.Services.QuizManager
 {
@@ -30,7 +24,46 @@ namespace LMS.Application.Services.QuizManager
         {
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
 
-            return null;
+            var data = _mapper.Map<Quiz>(quiz);
+            data.Company_Id = loggedInUser.CompanyId;
+
+            await _unitOfWork.GetRepository<Quiz>().Add(data);
+            var isDataSaved = await _unitOfWork.SaveChangesAsync();
+
+            if (isDataSaved <= 0)
+            {
+                throw new ApplicationException($"Fail to add quiz");
+            }
+            var response =  new Response<dynamic> { 
+                Status = true,
+                Message = "Quiz added successfully."
+            };
+            return response;
+        }
+
+        public async Task<Response<dynamic>> DeleteQuizById(int id)
+        {
+            var loggedInUser = _authenticatedUserService.GetLoggedInUser();
+
+            var quiz = await _unitOfWork.GetRepository<Quiz>().Get(id);
+            if (quiz == null)
+            {
+                throw new ApplicationException($"Quiz with id - {id} not exist");
+            }
+
+            quiz.IsActive = false;
+            await _unitOfWork.GetRepository<Quiz>().Update(quiz);
+            var isQuizDeleted = await _unitOfWork.SaveChangesAsync();
+
+            if (isQuizDeleted <= 0)
+            {
+                throw new ApplicationException("Quiz not deleted");
+            }
+            var response = new Response<dynamic> { 
+                Status= true,
+                Message = "Quiz Deleted Successfully."
+            };
+            return response;
         }
 
         public async Task<Response<dynamic>> GetAllQuizes()
@@ -68,6 +101,36 @@ namespace LMS.Application.Services.QuizManager
             }
 
             var response = new Response<dynamic> { Status = true, Message = "Quiz Retrieved Successfully", Data = quiz };
+            return response;
+        }
+
+        public async Task<Response<dynamic>> UpdateQuiz(QuizDto quiz)
+        {
+            var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
+
+            var quizData = await _unitOfWork.GetRepository<Quiz>().Get(quiz.Id);
+
+            if (quizData == null || !quizData.IsActive || quizData.Company_Id != loggedInUser.CompanyId)
+            {
+                throw new ApplicationException("Quiz not found");
+            }
+
+            _mapper.Map(quiz, quizData);
+            
+            await _unitOfWork.GetRepository<Quiz>().Update(quizData);
+            var isQuizUpdated = await _unitOfWork.SaveChangesAsync();
+
+            if (isQuizUpdated <= 0)
+            {
+                throw new ApplicationException("Quiz not updated");
+            }
+
+            var response = new Response<dynamic>
+            { 
+                Status = true,
+                Message = "Quiz updated successfully",
+                Data = quizData
+            };
             return response;
         }
     }

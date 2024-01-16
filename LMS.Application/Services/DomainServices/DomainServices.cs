@@ -57,8 +57,7 @@ namespace LMS.Application.Services.DomainServices
 
             domain.IsActive = false;
             await _unitOfWork.GetRepository<Domains>().Update(domain);
-            await _unitOfWork.Save();
-            var isDomainDeleted = await _unitOfWork.Save();
+            var isDomainDeleted = await _unitOfWork.SaveChangesAsync();
             if (isDomainDeleted <= 0)
             {
                 throw new ApplicationException($"Domain with Id - {domainId} should not delete");
@@ -128,11 +127,11 @@ namespace LMS.Application.Services.DomainServices
             }
 
             _mapper.Map(domain, domainData);
-            domainData.UpdatedDate = DateTime.UtcNow;
-            domainData.UpdatedBy = loggedInUser.EmployeeId;
+            //domainData.UpdatedDate = DateTime.UtcNow;
+            //domainData.UpdatedBy = loggedInUser.EmployeeId;
 
             var result = _unitOfWork.GetRepository<Domains>().Update(domainData);
-            var isDomainUpdated = await _unitOfWork.Save();
+            var isDomainUpdated = await _unitOfWork.SaveChangesAsync();
 
             if (isDomainUpdated <= 0)
             {
@@ -173,13 +172,13 @@ namespace LMS.Application.Services.DomainServices
             }
 
             var data = _mapper.Map<SubDomain>(subDomain);
-            data.CreatedDate = DateTime.UtcNow;
-            data.UpdatedDate = DateTime.UtcNow;
-            data.UpdatedBy = loggedInUser.EmployeeId;
-            data.CreatedBy = loggedInUser.EmployeeId;
+            //data.CreatedDate = DateTime.UtcNow;
+            //data.UpdatedDate = DateTime.UtcNow;
+            //data.UpdatedBy = loggedInUser.EmployeeId;
+            //data.CreatedBy = loggedInUser.EmployeeId;
 
              await _unitOfWork.GetRepository<SubDomain>().Add(data);
-            var isDataAdded = await _unitOfWork.Save();
+            var isDataAdded = await _unitOfWork.SaveChangesAsync();
             if (isDataAdded <= 0)
             {
                 throw new ApplicationException($"Sub Domain should not be added");
@@ -198,7 +197,7 @@ namespace LMS.Application.Services.DomainServices
 
             subDomain.IsActive = false;
             await _unitOfWork.GetRepository<SubDomain>().Update(subDomain);
-            var isSubDomainDeleted = await _unitOfWork.Save();
+            var isSubDomainDeleted = await _unitOfWork.SaveChangesAsync();
             if (isSubDomainDeleted <= 0)
             {
                 throw new ApplicationException($"Sub Domain with Id - {subDomainId} should not delete");
@@ -280,11 +279,11 @@ namespace LMS.Application.Services.DomainServices
             }
 
             _mapper.Map(subDomain, subDomainData);
-            subDomainData.UpdatedDate = DateTime.UtcNow;
-            subDomainData.UpdatedBy = loggedInUser.EmployeeId;
+            //subDomainData.UpdatedDate = DateTime.UtcNow;
+            //subDomainData.UpdatedBy = loggedInUser.EmployeeId;
 
             await _unitOfWork.GetRepository<SubDomain>().Update(subDomainData);
-            var isSubDomainUpdated = await _unitOfWork.Save();
+            var isSubDomainUpdated = await _unitOfWork.SaveChangesAsync();
 
             if (isSubDomainUpdated <= 0)
             {
@@ -319,10 +318,10 @@ namespace LMS.Application.Services.DomainServices
             }
 
             var data = _mapper.Map<Domains>(domain);
-            data.CreatedDate = DateTime.UtcNow;
-            data.UpdatedDate = DateTime.UtcNow;
-            data.UpdatedBy = loggedInUser.EmployeeId;
-            data.CreatedBy = loggedInUser.EmployeeId;
+            //data.CreatedDate = DateTime.UtcNow;
+            //data.UpdatedDate = DateTime.UtcNow;
+            //data.UpdatedBy = loggedInUser.EmployeeId;
+            //data.CreatedBy = loggedInUser.EmployeeId;
             data.Company_Id = loggedInUser.CompanyId;
             if(data.SubDomains != null)
             {
@@ -334,7 +333,7 @@ namespace LMS.Application.Services.DomainServices
             }
 
             await _unitOfWork.GetRepository<Domains>().Add(data);
-            var isDataAdded = await _unitOfWork.Save();
+            var isDataAdded = await _unitOfWork.SaveChangesAsync();
             if (isDataAdded <= 0)
             {
                 throw new ApplicationException($"domain should not be added");

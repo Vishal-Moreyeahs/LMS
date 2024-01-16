@@ -44,11 +44,11 @@ namespace LMS.Application.Services.FileBankManager
             }
 
             fileDetails.IsActive = false;
-            fileDetails.UpdatedDate = DateTime.UtcNow;
-            fileDetails.UpdatedBy = loggedInUser.EmployeeId;
+            //fileDetails.UpdatedDate = DateTime.UtcNow;
+            //fileDetails.UpdatedBy = loggedInUser.EmployeeId;
 
             await _unitOfWork.GetRepository<FileBank>().Add(fileDetails);
-            var isDeleted = await _unitOfWork.Save();
+            var isDeleted = await _unitOfWork.SaveChangesAsync();
             if (isDeleted <= 0)
             {
                 throw new ApplicationException("Fail to delete data");
@@ -107,11 +107,11 @@ namespace LMS.Application.Services.FileBankManager
             }
 
             _mapper.Map(fileBankDTO, fileDetails);
-            fileDetails.UpdatedDate = DateTime.UtcNow;
-            fileDetails.UpdatedBy = loggedInUser.EmployeeId;
+            //fileDetails.UpdatedDate = DateTime.UtcNow;
+            //fileDetails.UpdatedBy = loggedInUser.EmployeeId;
 
             var result = _unitOfWork.GetRepository<FileBank>().Update(fileDetails);
-            var isUpdated = await _unitOfWork.Save();
+            var isUpdated = await _unitOfWork.SaveChangesAsync();
             if (isUpdated <= 0)
             {
                 throw new ApplicationException("Data updation failed.");
@@ -154,14 +154,14 @@ namespace LMS.Application.Services.FileBankManager
                 entity.Size = fileSizeInKb.ToString();
                 entity.Path = isUploaded.Blob.Uri;
                 entity.Company_Id = loggedInUser.CompanyId;
-                entity.UpdatedBy = loggedInUser.EmployeeId;
-                entity.CreatedBy = loggedInUser.EmployeeId;
-                entity.CreatedDate = DateTime.UtcNow;
-                entity.UpdatedDate = DateTime.UtcNow;
+                //entity.UpdatedBy = loggedInUser.EmployeeId;
+                //entity.CreatedBy = loggedInUser.EmployeeId;
+                //entity.CreatedDate = DateTime.UtcNow;
+                //entity.UpdatedDate = DateTime.UtcNow;
                 entity.IsActive = true;
 
                 await _unitOfWork.GetRepository<FileBank>().Add(entity);
-                var isFileUploaded = await _unitOfWork.Save();
+                var isFileUploaded = await _unitOfWork.SaveChangesAsync();
                 if (isFileUploaded <= 0)
                 {
                     throw new ApplicationException("File Can not uploaded. please try after sometime.");

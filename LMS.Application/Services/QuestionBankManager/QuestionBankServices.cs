@@ -77,13 +77,13 @@ namespace LMS.Application.Services.QuestionBankManager
 
             var data = _mapper.Map<QuestionBank>(question);
             data.ImagePath = filePath;
-            data.CreatedDate = DateTime.UtcNow;
-            data.UpdatedDate = DateTime.UtcNow;
-            data.UpdatedBy = loggedInUser.EmployeeId;
-            data.CreatedBy = loggedInUser.EmployeeId;
+            //data.CreatedDate = DateTime.UtcNow;
+            //data.UpdatedDate = DateTime.UtcNow;
+            //data.UpdatedBy = loggedInUser.EmployeeId;
+            //data.CreatedBy = loggedInUser.EmployeeId;
 
             await _unitOfWork.GetRepository<QuestionBank>().Add(data);
-            var isDataAdded = await _unitOfWork.Save();
+            var isDataAdded = await _unitOfWork.SaveChangesAsync();
 
             if (isDataAdded <= 0)
             {
@@ -127,11 +127,11 @@ namespace LMS.Application.Services.QuestionBankManager
             }
 
             question.IsActive = false;
-            question.UpdatedDate = DateTime.UtcNow;
-            question.UpdatedBy = loggedInUser.EmployeeId;
+            //question.UpdatedDate = DateTime.UtcNow;
+            //question.UpdatedBy = loggedInUser.EmployeeId;
 
             await _unitOfWork.GetRepository<QuestionBank>().Add(question);
-            var isDeleted = await _unitOfWork.Save();
+            var isDeleted = await _unitOfWork.SaveChangesAsync();
             if (isDeleted <= 0)
             {
                 throw new ApplicationException("Fail to delete data");
@@ -168,11 +168,11 @@ namespace LMS.Application.Services.QuestionBankManager
 
             _mapper.Map(question, questionData);
             questionData.ImagePath = newFilePath;
-            questionData.UpdatedDate = DateTime.UtcNow;
-            questionData.UpdatedBy = loggedInUser.EmployeeId;
+            //questionData.UpdatedDate = DateTime.UtcNow;
+            //questionData.UpdatedBy = loggedInUser.EmployeeId;
 
             await _unitOfWork.GetRepository<QuestionBank>().Update(questionData);
-            var isQuestionUpdated = await _unitOfWork.Save();
+            var isQuestionUpdated = await _unitOfWork.SaveChangesAsync();
 
             if (isQuestionUpdated <= 0)
             {

@@ -51,7 +51,7 @@ namespace LMS.Api.Controllers
         [Route("updateQuestion")]
         public async Task<IActionResult> UpdateQuestion([FromForm] QuestionBankDto question)
         {
-            return Ok();
+            return Ok(await _questionBankServices.UpdateQuestion(question));
         }
     }
 }

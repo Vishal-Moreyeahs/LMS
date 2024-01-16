@@ -9,6 +9,6 @@ namespace LMS.Application.Contracts.Persistence
     public interface IUnitOfWork
     {
         IGenericRepository<T> GetRepository<T>() where T : class;
-        Task<int> Save();
+        Task<int> SaveChangesAsync();
     }
 }

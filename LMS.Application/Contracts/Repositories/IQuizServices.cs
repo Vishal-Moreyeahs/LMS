@@ -13,5 +13,8 @@ namespace LMS.Application.Contracts.Repositories
         Task<Response<dynamic>> GetAllQuizes();
         Task<Response<dynamic>> GetQuizById(int id);
         Task<Response<dynamic>> CreateQuiz(QuizRequest quiz);
+        Task<Response<dynamic>> DeleteQuizById(int id);
+
+        Task<Response<dynamic>> UpdateQuiz(QuizDto quiz);
     }
 }

@@ -61,7 +61,7 @@ namespace LMS.Application.Services.AdminServices
 
             userDetails.IsActive = false;
             var result = _unitOfWork.GetRepository<Employee>().Update(userDetails);
-            await _unitOfWork.Save(); 
+            await _unitOfWork.SaveChangesAsync(); 
 
             var response = new Response<UserData>
             {
@@ -125,11 +125,11 @@ namespace LMS.Application.Services.AdminServices
 
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
             _mapper.Map(admin, adminData);
-            adminData.UpdatedDate = DateTime.UtcNow;
-            adminData.UpdatedBy = loggedInUser.EmployeeId;
+            //adminData.UpdatedDate = DateTime.UtcNow;
+            //adminData.UpdatedBy = loggedInUser.EmployeeId;
 
             var result = _unitOfWork.GetRepository<Employee>().Update(adminData);
-            await _unitOfWork.Save();
+            await _unitOfWork.SaveChangesAsync();
 
             var response = new Response<UserData>
             {
@@ -152,14 +152,14 @@ namespace LMS.Application.Services.AdminServices
                 }
             }
             var user = _mapper.Map<Employee>(request);
-            user.CreatedDate = DateTime.UtcNow;
-            user.UpdatedDate = DateTime.UtcNow;
-            user.CreatedBy = loggedInUser.EmployeeId;
-            user.UpdatedBy = loggedInUser.EmployeeId;
+            //user.CreatedDate = DateTime.UtcNow;
+            //user.UpdatedDate = DateTime.UtcNow;
+            //user.CreatedBy = loggedInUser.EmployeeId;
+            //user.UpdatedBy = loggedInUser.EmployeeId;
             user.Password = _cryptographyService.EncryptPassword(request.Email + request.RealPassword);
 
             await _unitOfWork.GetRepository<Employee>().Add(user);
-            var isDataAdded = await _unitOfWork.Save();
+            var isDataAdded = await _unitOfWork.SaveChangesAsync();
             if (isDataAdded <= 0)
             {
                 throw new ApplicationException($"User {user.Email} should not be added");
