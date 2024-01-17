@@ -36,7 +36,7 @@ namespace LMS.Persistence
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<QuestionBank> QuestionBanks { get; set; }
         public virtual DbSet<Quiz> Quizes { get; set; }
-        public virtual DbSet<QuizOption> QuizOptions { get; set; } 
+        public virtual DbSet<Option> Options { get; set; }
         public virtual DbSet<QuizQuestion> QuizQuestions { get; set; }
         public virtual DbSet<Report> Reports { get; set; } 
         public virtual DbSet<ResetPasswordVerification> ResetPasswordVerifications { get; set; }
@@ -220,10 +220,10 @@ namespace LMS.Persistence
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
-            modelBuilder.Entity<QuizOption>(entity =>
+            modelBuilder.Entity<Option>(entity =>
             {
                 entity.HasOne(d => d.QuestionBank)
-                    .WithMany(p => p.QuizOptions)
+                    .WithMany(p => p.Options)
                     .HasForeignKey(d => d.QuestionBank_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });

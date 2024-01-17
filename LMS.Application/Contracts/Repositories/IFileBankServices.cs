@@ -14,7 +14,7 @@ namespace LMS.Application.Contracts.Repositories
     public interface IFileBankServices
     {
         Task<Response<bool>> UploadFileInFileBank(UploadFileBankRequest fileBankRequest);
-        Task<FileBank> GetFileFromFileBank(int id);
+        Task<dynamic> GetFileFromFileBank(int id);
         Task<Response<List<FileBankDTO>>> GetAllFileFromFileBank();
         Task<Response<FileBankResponse>> DeleteFileFromFileBank(int id);
         Task<Response<FileBankResponse>> UpdateFileInFileBank(FileBankDTO fileBankDTO);

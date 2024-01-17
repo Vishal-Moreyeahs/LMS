@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using LMS.Application.Response;
+using LMS.Domain.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace LMS.Application.Request
@@ -20,6 +21,7 @@ namespace LMS.Application.Request
         [JsonPropertyName("imagePath")]
         public IFormFile? ImageFile { get; set; }
         public bool isActive { get; set; } = true;
+        public List<OptionRequest> Options { get; set; }
 
         [Required]
         public int SubDomain_Id { get; set; }

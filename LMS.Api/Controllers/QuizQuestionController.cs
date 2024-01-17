@@ -7,5 +7,8 @@ namespace LMS.Api.Controllers
     [ApiController]
     public class QuizQuestionController : ControllerBase
     {
+        //[HttpGet]
+        //[Route("getAll")]
+        //public async Task<IActionResult> 
     }
 }

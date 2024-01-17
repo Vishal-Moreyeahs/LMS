@@ -32,6 +32,7 @@ namespace LMS.Application.Profiles
             CreateMap<QuestionBankRequest, QuestionBank>().ReverseMap();
             CreateMap<QuestionBankDto, QuestionBank>().ReverseMap();
             CreateMap<QuestionBankResponse, QuestionBank>().ReverseMap();
+            CreateMap<OptionRequest, Option>().ReverseMap();
         }
     }
 }

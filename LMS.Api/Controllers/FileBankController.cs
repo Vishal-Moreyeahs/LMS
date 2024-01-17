@@ -1,4 +1,5 @@
-﻿using LMS.Application.Contracts.Repositories;
+﻿using System.IO;
+using LMS.Application.Contracts.Repositories;
 using LMS.Application.Request;
 using LMS.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -31,7 +32,7 @@ namespace LMS.Api.Controllers
         public async Task<IActionResult> GetFileById(int id)
         {
             var data = await _fileBankServices.GetFileFromFileBank(id);
-            return File(data.Path, data.Format);
+            return File(data.Content, data.ContentType);
         }
 
         [HttpGet]

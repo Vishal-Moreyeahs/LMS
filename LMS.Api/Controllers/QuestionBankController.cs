@@ -28,7 +28,7 @@ namespace LMS.Api.Controllers
         [HttpPost]
         [Route("addQuestion")]
         [DisableRequestSizeLimit]
-        public async Task<IActionResult> AddQuestionToQuestionBank([FromForm] QuestionBankRequest question)
+        public async Task<IActionResult> AddQuestionToQuestionBank([FromBody] QuestionBankRequest question)
         {
             return Ok(await _questionBankServices.CreateQuestion(question));
         }

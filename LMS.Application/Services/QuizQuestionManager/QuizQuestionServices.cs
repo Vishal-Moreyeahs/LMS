@@ -79,6 +79,7 @@ namespace LMS.Application.Services.QuizQuestionManager
 
             var questions = quizQuestion.Select(x => x.QuestionBank).ToList();
 
+
             var response = new Response<dynamic> { 
                 Status = true,
                 Message = "Question for Quiz is retreived successfully",

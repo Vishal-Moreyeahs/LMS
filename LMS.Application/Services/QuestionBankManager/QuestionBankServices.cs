@@ -18,6 +18,7 @@ namespace LMS.Application.Services.QuestionBankManager
         private readonly IAuthenticatedUserService _authenticatedUserService;
         private readonly IMapper _mapper;
         private readonly IAzureService _azureService;
+        private readonly IOptionServices _optionServices;
         private readonly ImageStorageConfig _imageStorage;
         public QuestionBankServices(IUnitOfWork unitOfWork, IAuthenticatedUserService authenticatedUserService, IMapper mapper, IOptions<ImageStorageConfig> imageStorage,
                                     IAzureService azureService)
@@ -77,10 +78,9 @@ namespace LMS.Application.Services.QuestionBankManager
 
             var data = _mapper.Map<QuestionBank>(question);
             data.ImagePath = filePath;
-            //data.CreatedDate = DateTime.UtcNow;
-            //data.UpdatedDate = DateTime.UtcNow;
-            //data.UpdatedBy = loggedInUser.EmployeeId;
-            //data.CreatedBy = loggedInUser.EmployeeId;
+
+            //need to create answer here.
+           // var isOptionAdded = await _optionServices.AddOptionsToQuestion(question.Options);
 
             await _unitOfWork.GetRepository<QuestionBank>().Add(data);
             var isDataAdded = await _unitOfWork.SaveChangesAsync();

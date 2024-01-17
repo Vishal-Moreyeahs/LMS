@@ -86,14 +86,19 @@ namespace LMS.Application.Services.FileBankManager
             return response;
         }
 
-        public async Task<FileBank> GetFileFromFileBank(int id)
+        public async Task<dynamic> GetFileFromFileBank(int id)
         {
             var fileDetails = await _unitOfWork.GetRepository<FileBank>().Get(id);
+            
             if (fileDetails == null)
             {
                 throw new ApplicationException("File Not Found");
             }
-            return fileDetails;
+
+            var fileName = fileDetails.Path.Split("/").Last();
+            var file = await _azureService.DownloadAsync(fileName);
+
+            return file;
         }
 
         public async Task<Response<FileBankResponse>> UpdateFileInFileBank(FileBankDTO fileBankDTO)

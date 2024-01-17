@@ -22,7 +22,7 @@ namespace LMS.Domain.Models
         public int SubDomain_Id { get; set; }
 
         public virtual SubDomain SubDomain { get; set; } = null!;
-        public virtual ICollection<QuizOption> QuizOptions { get; set; }
+        public virtual ICollection<Option> Options { get; set; }
         public virtual ICollection<QuizQuestion> QuizQuestions { get; set; }
     }
 }

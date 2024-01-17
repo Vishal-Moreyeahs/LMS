@@ -97,18 +97,25 @@ namespace LMS.Application.Services.AdminServices
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
             var employeeList = await _unitOfWork.GetRepository<Employee>().GetAll();
 
-            //var list = employeeList.ToList();
-            var result = employeeList.Where(x => x.Company_Id == loggedInUser.CompanyId && x.IsActive).ToList();
-            if (result == null)
+            if (loggedInUser.RoleId == (int)RoleEnum.SuperAdmin)
             {
-                throw new ApplicationException($"Data not found");
+                employeeList = employeeList.Where(x => x.IsActive && x.CreatedBy == loggedInUser.EmployeeId);
+            }
+            else
+            { 
+                //var list = employeeList.ToList();
+                employeeList = employeeList.Where(x => x.Company_Id == loggedInUser.CompanyId && x.IsActive).ToList();
+                if (employeeList == null)
+                {
+                    throw new ApplicationException($"Data not found");
+                }
             }
 
             var response = new Response<List<UserData>>
             {
                 Status = true,
                 Message = $"User retrieved successfully",
-                Data = _mapper.Map<List<UserData>>(result.ToList())
+                Data = _mapper.Map<List<UserData>>(employeeList.ToList())
             };
 
             return response;
