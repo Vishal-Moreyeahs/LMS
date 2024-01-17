@@ -8,6 +8,7 @@ using LMS.Application.Contracts.Persistence;
 using LMS.Application.Contracts.Repositories;
 using LMS.Application.Models;
 using LMS.Application.Request;
+using LMS.Application.Response;
 using LMS.Domain.Models;
 
 namespace LMS.Application.Services.QuizQuestionManager
@@ -76,14 +77,13 @@ namespace LMS.Application.Services.QuizQuestionManager
             var quizQuestion = _unitOfWork.GetRepository<QuizQuestion>().GetAllRelatedEntity();
 
             quizQuestion = quizQuestion.Where(x => x.Quiz_Id == quizId && x.IsActive).OrderBy(x => x.SequenceNo).ToList();
-
+            
             var questions = quizQuestion.Select(x => x.QuestionBank).ToList();
 
-
-            var response = new Response<dynamic> { 
+            var response = new Response<dynamic> {
                 Status = true,
                 Message = "Question for Quiz is retreived successfully",
-                Data = questions
+                Data = _mapper.Map<List<QuizQuestionResponse>>(questions)
             };
             return response;
         }
