@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LMS.Persistence.Migrations
 {
-    public partial class Initial : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,6 @@ namespace LMS.Persistence.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OfficialMailId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PrimaryMailId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PrimaryContact = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AlternateContact = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -36,6 +35,22 @@ namespace LMS.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ResetPasswordVerifications",
+                columns: table => new
+                {
+                    ResetTokenId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GeneratedToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GeneratedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    VerificationStatus = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ResetPasswordVerifications", x => x.ResetTokenId);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,7 +281,7 @@ namespace LMS.Persistence.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsImageAttached = table.Column<bool>(type: "bit", nullable: false),
-                    ImagePath = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SubDomain_Id = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -290,9 +305,10 @@ namespace LMS.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Sequence = table.Column<int>(type: "int", nullable: false),
                     Courses_Id = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Format = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Media = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -384,7 +400,7 @@ namespace LMS.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "QuizOptions",
+                name: "Options",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -402,9 +418,9 @@ namespace LMS.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuizOptions", x => x.Id);
+                    table.PrimaryKey("PK_Options", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuizOptions_QuestionBanks_QuestionBank_Id",
+                        name: "FK_Options_QuestionBanks_QuestionBank_Id",
                         column: x => x.QuestionBank_Id,
                         principalTable: "QuestionBanks",
                         principalColumn: "Id");
@@ -624,6 +640,11 @@ namespace LMS.Persistence.Migrations
                 column: "Employees_Id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Options_QuestionBank_Id",
+                table: "Options",
+                column: "QuestionBank_Id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_QuestionBanks_SubDomain_Id",
                 table: "QuestionBanks",
                 column: "SubDomain_Id");
@@ -642,11 +663,6 @@ namespace LMS.Persistence.Migrations
                 name: "IX_Quizes_SubDomain_Id",
                 table: "Quizes",
                 column: "SubDomain_Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QuizOptions_QuestionBank_Id",
-                table: "QuizOptions",
-                column: "QuestionBank_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuizQuestions_QuestionBank_Id",
@@ -687,10 +703,13 @@ namespace LMS.Persistence.Migrations
                 name: "FileBanks");
 
             migrationBuilder.DropTable(
-                name: "QuizOptions");
+                name: "Options");
 
             migrationBuilder.DropTable(
                 name: "Reports");
+
+            migrationBuilder.DropTable(
+                name: "ResetPasswordVerifications");
 
             migrationBuilder.DropTable(
                 name: "QuizQuestions");
