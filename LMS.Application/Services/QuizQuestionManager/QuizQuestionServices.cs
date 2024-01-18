@@ -32,7 +32,23 @@ namespace LMS.Application.Services.QuizQuestionManager
                 throw new ApplicationException("Invalid Request Format");
             }
 
-            //await _unitOfWork.GetRepository<QuizQuestion>()
+            foreach (var quizQuestion in quizQuestionRequests)
+            {
+                var quiz = await _unitOfWork.GetRepository<Quiz>().Get(quizQuestion.Quiz_Id);
+
+                if (quiz != null && quiz.IsActive)
+                {
+                    var data = _mapper.Map<QuizQuestion>(quizQuestion);
+                    await _unitOfWork.GetRepository<QuizQuestion>().Add(data);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            }
+
+            var response = new Response<dynamic>
+            {
+                Status = true,
+                Message = "Question added successfully to quiz"
+            };
 
             return null;
         }

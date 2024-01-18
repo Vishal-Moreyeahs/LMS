@@ -13,6 +13,7 @@ namespace LMS.Application.Request
         public int Quiz_Id { get; set; }
         public int QuestionBank_Id { get; set; }
         public int Mark { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 
     public class QuizQuestionDto : QuizQuestionRequest
