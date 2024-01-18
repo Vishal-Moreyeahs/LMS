@@ -47,7 +47,7 @@ namespace LMS.Application.Services.RoleManager
                 Message = "Roles Retreived Successfully"
             };
 
-            if (loggedInUser.RoleId == (int)RoleEnum.Admin)
+            if (loggedInUser.RoleId == (int)RoleEnum.SuperAdmin)
             {
                 roleList = roleList.Where(x => x.Id != (int)RoleEnum.SuperAdmin).ToList();
             }
