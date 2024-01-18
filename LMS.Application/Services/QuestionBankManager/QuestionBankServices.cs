@@ -41,6 +41,7 @@ namespace LMS.Application.Services.QuestionBankManager
             }
 
             questions = questions.Where(x => x.IsActive);
+            //questions = questions.Where(x => x.IsActive && x.SubDomain.Domain.Company_Id == loggedInUser.CompanyId);
 
             var response = new Response<dynamic> { 
                 Status = true,

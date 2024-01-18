@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LMS.Application.Request;
 using Microsoft.AspNetCore.Http;
 
 namespace LMS.Application.Response
@@ -16,5 +17,6 @@ namespace LMS.Application.Response
         public bool IsImageAttached { get; set; }
         public string? ImagePath { get; set; }
         public int SubDomain_Id { get; set; }
+        public List<OptionRequest> Options { get; set; }
     }
 }
