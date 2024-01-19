@@ -49,9 +49,9 @@ namespace LMS.Application.Services.RoleManager
 
             if (loggedInUser.RoleId == (int)RoleEnum.SuperAdmin)
             {
-                roleList = roleList.Where(x => x.Id != (int)RoleEnum.User && x.Id != (int)RoleEnum.Guest).ToList();
+                roleList = roleList.Where(x => x.Id != (int)RoleEnum.User && x.Id != (int)RoleEnum.Guest && x.Id != (int)RoleEnum.SuperAdmin).ToList();
             }
-            if (loggedInUser.RoleId == (int)RoleEnum.SuperAdmin)
+            if (loggedInUser.RoleId == (int)RoleEnum.Admin)
             {
                 roleList = roleList.Where(x => x.Id != (int)RoleEnum.SuperAdmin).ToList();
             }
