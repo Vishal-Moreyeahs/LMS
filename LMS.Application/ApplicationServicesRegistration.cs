@@ -4,6 +4,7 @@ using LMS.Application.Services.AdminServices;
 using LMS.Application.Services.CompanyServices;
 using LMS.Application.Services.CourseManager;
 using LMS.Application.Services.DomainServices;
+using LMS.Application.Services.EmployeeCourseManager;
 using LMS.Application.Services.FileBankManager;
 using LMS.Application.Services.QuestionBankManager;
 using LMS.Application.Services.QuizManager;
@@ -28,6 +29,7 @@ namespace LMS.Application
             services.AddTransient<IQuestionBankServices, QuestionBankServices>();
             services.AddTransient<IQuizServices, QuizServices>();
             services.AddTransient<IQuizQuestionServices, QuizQuestionServices>();
+            services.AddTransient<IEmployeeCourseServices, EmployeeCourseServices>();
 
             return services;
         }

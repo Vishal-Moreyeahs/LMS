@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20231227111720_second")]
-    partial class second
+    [Migration("20240117140634_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -165,6 +165,10 @@ namespace LMS.Persistence.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Format")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -175,7 +179,7 @@ namespace LMS.Persistence.Migrations
                     b.Property<int>("Sequence")
                         .HasColumnType("int");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -540,6 +544,51 @@ namespace LMS.Persistence.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("LMS.Domain.Models.Option", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsImageAttached")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OptionValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuestionBank_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionBank_Id");
+
+                    b.ToTable("Options");
+                });
+
             modelBuilder.Entity("LMS.Domain.Models.QuestionBank", b =>
                 {
                     b.Property<int>("Id")
@@ -557,8 +606,8 @@ namespace LMS.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("ImagePath")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -646,51 +695,6 @@ namespace LMS.Persistence.Migrations
                     b.HasIndex("SubDomain_Id");
 
                     b.ToTable("Quizes");
-                });
-
-            modelBuilder.Entity("LMS.Domain.Models.QuizOption", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsCorrect")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsImageAttached")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("OptionValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("QuestionBank_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionBank_Id");
-
-                    b.ToTable("QuizOptions");
                 });
 
             modelBuilder.Entity("LMS.Domain.Models.QuizQuestion", b =>
@@ -783,6 +787,32 @@ namespace LMS.Persistence.Migrations
                     b.HasIndex("EmployeeQuiz_Id");
 
                     b.ToTable("Reports");
+                });
+
+            modelBuilder.Entity("LMS.Domain.Models.ResetPasswordVerification", b =>
+                {
+                    b.Property<long>("ResetTokenId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ResetTokenId"), 1L, 1);
+
+                    b.Property<DateTime?>("GeneratedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GeneratedToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("VerificationStatus")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ResetTokenId");
+
+                    b.ToTable("ResetPasswordVerifications");
                 });
 
             modelBuilder.Entity("LMS.Domain.Models.Role", b =>
@@ -1013,6 +1043,16 @@ namespace LMS.Persistence.Migrations
                     b.Navigation("Employees");
                 });
 
+            modelBuilder.Entity("LMS.Domain.Models.Option", b =>
+                {
+                    b.HasOne("LMS.Domain.Models.QuestionBank", "QuestionBank")
+                        .WithMany("Options")
+                        .HasForeignKey("QuestionBank_Id")
+                        .IsRequired();
+
+                    b.Navigation("QuestionBank");
+                });
+
             modelBuilder.Entity("LMS.Domain.Models.QuestionBank", b =>
                 {
                     b.HasOne("LMS.Domain.Models.SubDomain", "SubDomain")
@@ -1045,16 +1085,6 @@ namespace LMS.Persistence.Migrations
                     b.Navigation("Courses");
 
                     b.Navigation("SubDomain");
-                });
-
-            modelBuilder.Entity("LMS.Domain.Models.QuizOption", b =>
-                {
-                    b.HasOne("LMS.Domain.Models.QuestionBank", "QuestionBank")
-                        .WithMany("QuizOptions")
-                        .HasForeignKey("QuestionBank_Id")
-                        .IsRequired();
-
-                    b.Navigation("QuestionBank");
                 });
 
             modelBuilder.Entity("LMS.Domain.Models.QuizQuestion", b =>
@@ -1138,7 +1168,7 @@ namespace LMS.Persistence.Migrations
 
             modelBuilder.Entity("LMS.Domain.Models.QuestionBank", b =>
                 {
-                    b.Navigation("QuizOptions");
+                    b.Navigation("Options");
 
                     b.Navigation("QuizQuestions");
                 });

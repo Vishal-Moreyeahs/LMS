@@ -99,12 +99,12 @@ namespace LMS.Application.Services.AdminServices
 
             if (loggedInUser.RoleId == (int)RoleEnum.SuperAdmin)
             {
-                employeeList = employeeList.Where(x => x.IsActive && x.CreatedBy == loggedInUser.EmployeeId);
+                employeeList = employeeList.Where(x => x.IsActive && x.CreatedBy == loggedInUser.EmployeeId && x.Id != loggedInUser.EmployeeId);
             }
             else
             { 
                 //var list = employeeList.ToList();
-                employeeList = employeeList.Where(x => x.Company_Id == loggedInUser.CompanyId && x.IsActive).ToList();
+                employeeList = employeeList.Where(x => x.Company_Id == loggedInUser.CompanyId && x.IsActive && x.Id != loggedInUser.EmployeeId).ToList();
                 if (employeeList == null)
                 {
                     throw new ApplicationException($"Data not found");
