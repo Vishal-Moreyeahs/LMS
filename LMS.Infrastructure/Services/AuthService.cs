@@ -58,7 +58,8 @@ namespace LMS.Infrastructure.Services
                 Id = user.Id,
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 Email = user.Email,
-                Role = roleName
+                Role = roleName,
+                UserName = string.Concat(user.FirstName, " ", user.LastName)
             };
             var response = new Response<AuthResponse> {
                 Status = true,
