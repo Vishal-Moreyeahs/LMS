@@ -11,5 +11,7 @@ namespace LMS.Application.Contracts.Repositories
     public interface IRoleServices
     {
         Task<Response<List<Role>>> GetRoleForLoggedInUser();
+
+        Task<string> GetRoleNameById(int id);
     }
 }

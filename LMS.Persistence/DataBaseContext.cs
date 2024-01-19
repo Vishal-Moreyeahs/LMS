@@ -110,7 +110,6 @@ namespace LMS.Persistence
 
             modelBuilder.Entity<EmployeeCourse>(entity =>
             {
-                entity.HasNoKey();
 
                 entity.HasOne(d => d.Courses)
                     .WithMany()

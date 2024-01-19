@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20240117140634_First")]
-    partial class First
+    [Migration("20240119104650_addKey")]
+    partial class addKey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -308,6 +308,12 @@ namespace LMS.Persistence.Migrations
 
             modelBuilder.Entity("LMS.Domain.Models.EmployeeCourse", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<int>("Courses_Id")
                         .HasColumnType("int");
 
@@ -331,6 +337,8 @@ namespace LMS.Persistence.Migrations
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("Courses_Id");
 

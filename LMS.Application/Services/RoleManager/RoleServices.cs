@@ -49,6 +49,10 @@ namespace LMS.Application.Services.RoleManager
 
             if (loggedInUser.RoleId == (int)RoleEnum.SuperAdmin)
             {
+                roleList = roleList.Where(x => x.Id != (int)RoleEnum.User && x.Id != (int)RoleEnum.Guest).ToList();
+            }
+            if (loggedInUser.RoleId == (int)RoleEnum.SuperAdmin)
+            {
                 roleList = roleList.Where(x => x.Id != (int)RoleEnum.SuperAdmin).ToList();
             }
             if (loggedInUser.RoleId == (int)RoleEnum.User)
@@ -61,6 +65,12 @@ namespace LMS.Application.Services.RoleManager
             }
             response.Data = roleList.ToList();
             return response;
+        }
+
+        public async Task<string> GetRoleNameById(int id)
+        {
+            var role = await _unitOfWork.GetRepository<Role>().Get(id);
+            return role.Name;
         }
     }
 }

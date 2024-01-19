@@ -13,6 +13,9 @@ namespace LMS.Domain.Models
 {
     public class EmployeeCourse : BaseEntityClass
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public int Employee_Id { get; set; }
         public int Courses_Id { get; set; }
         public int? Group_Id { get; set; }

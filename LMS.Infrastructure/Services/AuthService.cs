@@ -21,15 +21,17 @@ namespace LMS.Infrastructure.Services
         private readonly JwtSettings _jwtSettings;
         private readonly ICryptographyService _cryptographyService;
         private readonly IAuthenticatedUserService _authenticatedUserService;
+        private readonly IRoleServices _roleServices;
 
         public AuthService(IOptions<JwtSettings> jwtSettings, IMapper mapper, ICryptographyService cryptographyService
-                        , IAuthenticatedUserService authenticatedUserService, IUnitOfWork unitOfWork)
+                        , IAuthenticatedUserService authenticatedUserService, IUnitOfWork unitOfWork, IRoleServices roleServices)
         {
             _jwtSettings = jwtSettings.Value;
             _mapper = mapper;
             _cryptographyService = cryptographyService;
             _authenticatedUserService = authenticatedUserService;
             _unitOfWork = unitOfWork;
+            _roleServices = roleServices;
         }
 
         public async Task<Response<AuthResponse>> Login(AuthRequest request)
@@ -50,12 +52,13 @@ namespace LMS.Infrastructure.Services
             }
 
             JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
-
+            var roleName = await _roleServices.GetRoleNameById(user.Role_Id);
             var authResponse = new AuthResponse
             {
                 Id = user.Id,
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
-                Email = user.Email
+                Email = user.Email,
+                Role = roleName
             };
             var response = new Response<AuthResponse> {
                 Status = true,
