@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Data;
+using AutoMapper;
 using LMS.Application.Contracts.Infrastructure;
 using LMS.Application.Contracts.Persistence;
 using LMS.Application.Contracts.Repositories;
@@ -16,13 +17,17 @@ namespace LMS.Application.Services.AdminServices
         private readonly IMapper _mapper;
         private readonly ICryptographyService _cryptographyService;
         private readonly IAuthenticatedUserService _authenticatedUserService;
+        private readonly IEmployeeCourseServices _employeeCourseServices;
+        private readonly ICourseServices _courseServices;
         public UserRepository(IMapper mapper, IAuthenticatedUserService authenticatedUserService,ICryptographyService cryptographyService
-                                ,IUnitOfWork unitOfWork)
+                                ,IUnitOfWork unitOfWork, ICourseServices courseServices, IEmployeeCourseServices employeeCourseServices)
         {
             _mapper = mapper;
             _authenticatedUserService = authenticatedUserService;
             _unitOfWork = unitOfWork;
             _cryptographyService = cryptographyService;
+            _employeeCourseServices = employeeCourseServices;
+            _courseServices = courseServices;
         }
         public async Task<Response<List<RegistrationResponse>>> AddUser(List<RegistrationRequest> users)
         {
@@ -30,13 +35,17 @@ namespace LMS.Application.Services.AdminServices
             {
                 throw new ApplicationException($"Invalid Request");
             }
+
+            var allCourses = await _courseServices.GetAllCourse();
+            var courses = allCourses.Data.Where(x => x.IsMandatory).ToList();
+
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
             foreach (var user in users)
             {
                 var existingUser = _unitOfWork.GetRepository<Employee>().GetAll().Result.Where(x => x.Email == user.Email && x.IsActive).ToList();
                 if (!(existingUser.Count > 0))
                 { 
-                    await Register(user);
+                    await Register(user, courses);
                 }
             }
 
@@ -148,7 +157,7 @@ namespace LMS.Application.Services.AdminServices
             return response;
         }
 
-        private async Task Register(RegistrationRequest request)
+        private async Task Register(RegistrationRequest request, List<CourseDTO> courses)
         {
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
             if (loggedInUser.RoleId != (int)RoleEnum.SuperAdmin)
@@ -159,18 +168,32 @@ namespace LMS.Application.Services.AdminServices
                 }
             }
             var user = _mapper.Map<Employee>(request);
-            //user.CreatedDate = DateTime.UtcNow;
-            //user.UpdatedDate = DateTime.UtcNow;
-            //user.CreatedBy = loggedInUser.EmployeeId;
-            //user.UpdatedBy = loggedInUser.EmployeeId;
             user.Password = _cryptographyService.EncryptPassword(request.Email + request.RealPassword);
 
             await _unitOfWork.GetRepository<Employee>().Add(user);
             var isDataAdded = await _unitOfWork.SaveChangesAsync();
+
+            if (courses != null && courses.Count > 0)
+            { 
+                var listCourseAssignment = new List<EmployeeCourseRequest>();
+
+                foreach (var course in courses)
+                {
+                    listCourseAssignment.Add(new EmployeeCourseRequest { Employee_Id = user.Id , Courses_Id = course.Id});
+                }
+
+                var isCoursesAssigned = await _employeeCourseServices.AssignCourseToEmployee(listCourseAssignment);
+
+                if (!isCoursesAssigned.Status)
+                {
+                    throw new ApplicationException($"Courses not assigned for user {user.FirstName}");
+                }
+            }
             if (isDataAdded <= 0)
             {
                 throw new ApplicationException($"User {user.Email} should not be added");
             }
+
         }
     }
 }

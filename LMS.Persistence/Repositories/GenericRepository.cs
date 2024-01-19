@@ -24,9 +24,9 @@ namespace LMS.Persistence.Repositories
             await _dbContext.AddAsync(entity);
         }
 
-        public async Task AddRange(List<T> entity)
-        { 
-            await _dbContext.AddRangeAsync(entity);
+        public async Task AddRange(IEnumerable<T> entities)
+        {
+            await _dbContext.Set<T>().AddRangeAsync(entities);
         }
 
         public async Task Delete(T entity)

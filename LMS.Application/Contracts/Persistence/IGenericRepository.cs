@@ -12,7 +12,7 @@ namespace LMS.Application.Contracts.Persistence
         Task<T> Get(int id);
         Task<IEnumerable<T>> GetAll();
         Task Add(T entity);
-        Task AddRange(List<T> entity);
+        Task AddRange(IEnumerable<T> entities);
         Task Update(T entity);
         Task Delete(T entity);
         IEnumerable<T> GetAllRelatedEntity();
