@@ -17,7 +17,7 @@ namespace LMS.Application.Profiles
             CreateMap<RegistrationRequest, Employee>().ReverseMap();
             CreateMap<CompanyRequest, Company>().ReverseMap();
             CreateMap<CompanyData, Company>().ReverseMap();
-            CreateMap<DomainRequest, Domains>().ReverseMap();
+            CreateMap<DomainRequest, Domains>().ReverseMap().ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.ToString().ToUpper())); ;
             CreateMap<UserData, Employee>().ReverseMap();
             CreateMap<CourseDTO, Course>().ReverseMap();
             CreateMap<CourseRequest, Course>().ReverseMap();
@@ -28,6 +28,7 @@ namespace LMS.Application.Profiles
             CreateMap<FileBankDTO, FileBank>().ReverseMap();
             CreateMap<SubDomainDTO, SubDomain>().ReverseMap();
             CreateMap<SubDomainRequest, SubDomain>().ReverseMap();
+            CreateMap<SubDomainResponse, SubDomain>().ReverseMap();
             CreateMap<UploadFileBankRequest, FileBank>().ReverseMap();
             CreateMap<QuestionBankRequest, QuestionBank>().ReverseMap();
             CreateMap<QuestionBankDto, QuestionBank>().ReverseMap();

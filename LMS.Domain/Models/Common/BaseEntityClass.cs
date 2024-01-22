@@ -10,7 +10,7 @@ namespace LMS.Domain.Models.Common
     public class BaseEntityClass
     {
         [Required]
-        public bool IsActive { get; set; } = false;
+        public bool IsActive { get; set; } = true;
         public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedDate { get; set;} = DateTime.UtcNow;
         public int? CreatedBy { get; set; }

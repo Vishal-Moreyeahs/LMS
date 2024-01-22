@@ -6,12 +6,15 @@ namespace LMS.Application.Request
 {
     public class DomainRequest
     {
+        private string _name;
+
         [Required]
-        public string Name { get; set; }
+        public string Name
+        {
+            get => _name;
+            set => _name = value?.ToUpper();
+        }
 
-        public bool IsActive { get; set; } = true;
-
-        public List<SubDomainRequest>? SubDomains { get; set; }
         [Required]
         public string Description { get; set; }
 
@@ -36,7 +39,6 @@ namespace LMS.Application.Request
 
         public string Description { get; set; }
 
-        public bool IsActive { get; set; }  = true;
         [Required]
         [JsonPropertyName("domainId")]
         public int Domain_Id { get; set; }

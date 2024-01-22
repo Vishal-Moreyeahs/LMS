@@ -22,7 +22,7 @@ namespace LMS.Application.Contracts.Repositories
         Task<Response<SubDomainDTO>> AddSubDomain(List<SubDomainRequest> subDomain);
         Task<Response<SubDomainDTO>> DeleteSubDomain(int domainId);
         Task<Response<SubDomainDTO>> UpdateSubDomain(SubDomainDTO admin);
-        Task<Response<List<SubDomainDTO>>> GetAllSubDomain();
-        Task<Response<List<SubDomainDTO>>> GetSubDomainByDomainId(int domainId);
+        Task<Response<List<SubDomainResponse>>> GetAllSubDomain();
+        Task<Response<List<SubDomainResponse>>> GetSubDomainByDomainId(int domainId);
     }
 }

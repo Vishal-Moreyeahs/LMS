@@ -31,10 +31,6 @@ namespace LMS.Application.Services.DomainServices
 
         public async Task<Response<DomainDTO>> AddDomain(DomainRequest domain)
         {
-            if (domain.SubDomains == null || domain.SubDomains.Count <= 0)
-            {
-                throw new ApplicationException($"Request does not contain SubDomain !!");
-            }
             var domainData = await CreateDomain(domain);
             var response = new Response<DomainDTO>
             {
@@ -165,19 +161,15 @@ namespace LMS.Application.Services.DomainServices
             }
 
             var subDomains = await _unitOfWork.GetRepository<SubDomain>().GetAll();
-            var isSubDomainExist = subDomains.Any(x => x.IsActive);
+            var isSubDomainExist = subDomains.Any(x => x.IsActive && x.Name == subDomain.Name);
             if (isSubDomainExist)
             {
                 return;
             }
 
             var data = _mapper.Map<SubDomain>(subDomain);
-            //data.CreatedDate = DateTime.UtcNow;
-            //data.UpdatedDate = DateTime.UtcNow;
-            //data.UpdatedBy = loggedInUser.EmployeeId;
-            //data.CreatedBy = loggedInUser.EmployeeId;
 
-             await _unitOfWork.GetRepository<SubDomain>().Add(data);
+            await _unitOfWork.GetRepository<SubDomain>().Add(data);
             var isDataAdded = await _unitOfWork.SaveChangesAsync();
             if (isDataAdded <= 0)
             {
@@ -212,7 +204,7 @@ namespace LMS.Application.Services.DomainServices
             return response;
         }
 
-        public async Task<Response<List<SubDomainDTO>>> GetAllSubDomain()
+        public async Task<Response<List<SubDomainResponse>>> GetAllSubDomain()
         {
             //var allSubDomains = await _unitOfWork.GetRepository<SubDomain>().GetAll();
             //var allDomains = await _unitOfWork.GetRepository<Domains>().GetAll();
@@ -232,19 +224,19 @@ namespace LMS.Application.Services.DomainServices
 
             var subDomains = _unitOfWork.GetRepository<SubDomain>().GetAllRelatedEntity();
             subDomains = subDomains.Where(x => x.IsActive && x.Domain.Company_Id == loggedInUser.CompanyId).ToList();
-            var response = new Response<List<SubDomainDTO>>
+            var response = new Response<List<SubDomainResponse>>
             {
                 Status = true,
                 Message = $"Sub Domain retrieved successfully",
-                Data = _mapper.Map<List<SubDomainDTO>>(subDomains.ToList())
+                Data = _mapper.Map<List<SubDomainResponse>>(subDomains.ToList())
             };
 
             return response;
         }
 
-        public async Task<Response<List<SubDomainDTO>>> GetSubDomainByDomainId(int domainId)
+        public async Task<Response<List<SubDomainResponse>>> GetSubDomainByDomainId(int domainId)
         {
-            var allSubDomains = await _unitOfWork.GetRepository<SubDomain>().GetAll();
+            var allSubDomains = _unitOfWork.GetRepository<SubDomain>().GetAllRelatedEntity();
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
             var domain = await _unitOfWork.GetRepository<Domains>().Get(domainId);
             if (domain == null || domain.Company_Id != loggedInUser.CompanyId)
@@ -253,11 +245,11 @@ namespace LMS.Application.Services.DomainServices
             }
             var domainRelatedSubDomains = allSubDomains.Where(x => x.Domain_Id == domainId && x.IsActive).ToList();
 
-            var response = new Response<List<SubDomainDTO>>
+            var response = new Response<List<SubDomainResponse>>
             {
                 Status = true,
                 Message = $"Sub Domain retrieved successfully",
-                Data = _mapper.Map<List<SubDomainDTO>>(domainRelatedSubDomains.ToList())
+                Data = _mapper.Map<List<SubDomainResponse>>(domainRelatedSubDomains.ToList())
             };
 
             return response;
@@ -310,7 +302,7 @@ namespace LMS.Application.Services.DomainServices
             }
 
             var domains = await _unitOfWork.GetRepository<Domains>().GetAll();
-            var isDomainExist = domains.Any(x => x.Name == domain.Name && x.Company_Id == loggedInUser.CompanyId);
+            var isDomainExist = domains.Any(x => x.Name == domain.Name && x.Company_Id == loggedInUser.CompanyId && x.IsActive);
 
             if (isDomainExist)
             {
@@ -318,19 +310,15 @@ namespace LMS.Application.Services.DomainServices
             }
 
             var data = _mapper.Map<Domains>(domain);
-            //data.CreatedDate = DateTime.UtcNow;
-            //data.UpdatedDate = DateTime.UtcNow;
-            //data.UpdatedBy = loggedInUser.EmployeeId;
-            //data.CreatedBy = loggedInUser.EmployeeId;
             data.Company_Id = loggedInUser.CompanyId;
-            if(data.SubDomains != null)
-            {
-                foreach (var subdomain in data.SubDomains)
-                {
-                    subdomain.CreatedBy = loggedInUser.EmployeeId;
-                    subdomain.UpdatedBy = loggedInUser.EmployeeId;
-                }
-            }
+            //if(data.SubDomains != null)
+            //{
+            //    foreach (var subdomain in data.SubDomains)
+            //    {
+            //        subdomain.CreatedBy = loggedInUser.EmployeeId;
+            //        subdomain.UpdatedBy = loggedInUser.EmployeeId;
+            //    }
+            //}
 
             await _unitOfWork.GetRepository<Domains>().Add(data);
             var isDataAdded = await _unitOfWork.SaveChangesAsync();

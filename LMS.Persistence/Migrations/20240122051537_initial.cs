@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LMS.Persistence.Migrations
 {
-    public partial class addKey : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -330,8 +330,6 @@ namespace LMS.Persistence.Migrations
                 name: "EmployeeCourses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     Employee_Id = table.Column<int>(type: "int", nullable: false),
                     Courses_Id = table.Column<int>(type: "int", nullable: false),
                     Group_Id = table.Column<int>(type: "int", nullable: true),
@@ -343,7 +341,6 @@ namespace LMS.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeCourses", x => x.Id);
                     table.ForeignKey(
                         name: "FK_EmployeeCourses_Courses_Courses_Id",
                         column: x => x.Courses_Id,

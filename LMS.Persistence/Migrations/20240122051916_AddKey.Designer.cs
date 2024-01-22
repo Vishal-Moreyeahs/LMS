@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20240119104650_addKey")]
-    partial class addKey
+    [Migration("20240122051916_AddKey")]
+    partial class AddKey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

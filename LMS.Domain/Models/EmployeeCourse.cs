@@ -24,5 +24,4 @@ namespace LMS.Domain.Models
         public virtual Employee Employee { get; set; } = null!;
         public virtual Group Group { get; set; } = null!;
     }
-
 }

@@ -193,7 +193,7 @@ namespace LMS.Application.Services.CourseManager
             }
 
             var courses = await _unitOfWork.GetRepository<Course>().GetAll();
-            var isDomainExist = courses.Any(x => x.Name == course.Name && x.Company_Id == loggedInUser.CompanyId);
+            var isDomainExist = courses.Any(x => x.Name == course.Name && x.Company_Id == loggedInUser.CompanyId && x.IsActive);
 
             if (isDomainExist)
             {
