@@ -157,6 +157,7 @@ namespace LMS.Application.Services.FileBankManager
                 }
                 var entity = _mapper.Map<FileBank>(fileBankRequest);
                 entity.Size = fileSizeInKb.ToString();
+                entity.Format = fileBankRequest.File.ContentType;
                 entity.Path = isUploaded.Blob.Uri;
                 entity.Company_Id = loggedInUser.CompanyId;
                 //entity.UpdatedBy = loggedInUser.EmployeeId;

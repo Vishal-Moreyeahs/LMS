@@ -57,7 +57,7 @@ namespace LMS.Api.Controllers
 
         [HttpPost]
         [Route("addSubDomain")]
-        public async Task<IActionResult> AddSubDomain(List<SubDomainRequest> subDomain)
+        public async Task<IActionResult> AddSubDomain(AddSubDomainModel subDomain)
         {
             return Ok(await _domainRepository.AddSubDomain(subDomain));
         }

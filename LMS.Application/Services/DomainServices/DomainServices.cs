@@ -31,6 +31,10 @@ namespace LMS.Application.Services.DomainServices
 
         public async Task<Response<DomainDTO>> AddDomain(DomainRequest domain)
         {
+            if (string.IsNullOrEmpty(domain.Name))
+            {
+                throw new ApplicationException($"Domain name should not be empty.");
+            }
             var domainData = await CreateDomain(domain);
             var response = new Response<DomainDTO>
             {
@@ -117,6 +121,11 @@ namespace LMS.Application.Services.DomainServices
             var domainData = await _unitOfWork.GetRepository<Domains>().Get(domain.Id);
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
 
+            if (string.IsNullOrEmpty(domain.Name))
+            {
+                throw new ApplicationException($"Domain name should not be empty.");
+            }
+
             if (domainData == null || domainData.Company_Id != loggedInUser.CompanyId)
             {
                 throw new ApplicationException($"Domain with id - {domain.Id} not exists");
@@ -144,7 +153,7 @@ namespace LMS.Application.Services.DomainServices
             return response;
         }
 
-        public async Task CreateSubDomain(SubDomainRequest subDomain)
+        public async Task CreateSubDomain(SubDomainRequest subDomain, int domainId)
         {
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
 
@@ -153,11 +162,11 @@ namespace LMS.Application.Services.DomainServices
                 throw new ApplicationException($"Logged in user does not have Permission to Add Sub-Domain");
             }
 
-            var domain = await GetDomainById(subDomain.Domain_Id);
+            var domain = await GetDomainById(domainId);
             
             if (domain == null)
             {
-                throw new ApplicationException($"Domain Id - {subDomain.Domain_Id} not exist");
+                throw new ApplicationException($"Domain Id - {domainId} not exist");
             }
 
             var subDomains = await _unitOfWork.GetRepository<SubDomain>().GetAll();
@@ -168,7 +177,7 @@ namespace LMS.Application.Services.DomainServices
             }
 
             var data = _mapper.Map<SubDomain>(subDomain);
-
+            data.Domain_Id = domainId;
             await _unitOfWork.GetRepository<SubDomain>().Add(data);
             var isDataAdded = await _unitOfWork.SaveChangesAsync();
             if (isDataAdded <= 0)
@@ -314,7 +323,7 @@ namespace LMS.Application.Services.DomainServices
             //if(data.SubDomains != null)
             //{
             //    foreach (var subdomain in data.SubDomains)
-            //    {
+            //    {     
             //        subdomain.CreatedBy = loggedInUser.EmployeeId;
             //        subdomain.UpdatedBy = loggedInUser.EmployeeId;
             //    }
@@ -330,15 +339,15 @@ namespace LMS.Application.Services.DomainServices
             return response;
         }
 
-        public async Task<Response<SubDomainDTO>> AddSubDomain(List<SubDomainRequest> subDomains)
+        public async Task<Response<SubDomainDTO>> AddSubDomain(AddSubDomainModel subDomains)
         {
-            if (subDomains == null || subDomains.Count <= 0)
+            if (subDomains == null || subDomains.SubDomains.Count <= 0)
             {
                 throw new ApplicationException($"SubDomain is empty !!");
             }
-            foreach (var item in subDomains)
+            foreach (var item in subDomains.SubDomains)
             { 
-                await CreateSubDomain(item);
+                await CreateSubDomain(item, subDomains.DomainId);
             }
             var response = new Response<SubDomainDTO>
             {

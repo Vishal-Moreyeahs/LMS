@@ -39,8 +39,12 @@ namespace LMS.Application.Request
 
         public string Description { get; set; }
 
-        [Required]
-        [JsonPropertyName("domainId")]
-        public int Domain_Id { get; set; }
+    }
+
+    public class AddSubDomainModel
+    {
+        public int DomainId { get; set; }
+        public List<SubDomainRequest> SubDomains { get; set; }
+
     }
 }
