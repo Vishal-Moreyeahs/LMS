@@ -101,7 +101,7 @@ namespace LMS.Application.Services.FileBankManager
             return file;
         }
 
-        public async Task<Response<FileBankResponse>> UpdateFileInFileBank(FileBankDTO fileBankDTO)
+        public async Task<Response<FileBankResponse>> UpdateFileInFileBank(UpdateFileBankModel fileBankDTO)
         {
             var loggedInUser = await _authenticatedUserService.GetLoggedInUser();
             var fileDetails = await _unitOfWork.GetRepository<FileBank>().Get(fileBankDTO.Id);

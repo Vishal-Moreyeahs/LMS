@@ -17,6 +17,6 @@ namespace LMS.Application.Contracts.Repositories
         Task<dynamic> GetFileFromFileBank(int id);
         Task<Response<List<FileBankDTO>>> GetAllFileFromFileBank();
         Task<Response<FileBankResponse>> DeleteFileFromFileBank(int id);
-        Task<Response<FileBankResponse>> UpdateFileInFileBank(FileBankDTO fileBankDTO);
+        Task<Response<FileBankResponse>> UpdateFileInFileBank(UpdateFileBankModel fileBankDTO);
     }
 }

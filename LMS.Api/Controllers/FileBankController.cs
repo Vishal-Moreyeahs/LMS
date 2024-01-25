@@ -51,7 +51,7 @@ namespace LMS.Api.Controllers
 
         [HttpPost]
         [Route("updateFile")]
-        public async Task<IActionResult> UpdateFileInFileBank(FileBankDTO fileBankDTO)
+        public async Task<IActionResult> UpdateFileInFileBank(UpdateFileBankModel fileBankDTO)
         {
             return Ok(await _fileBankServices.UpdateFileInFileBank(fileBankDTO));
         }
